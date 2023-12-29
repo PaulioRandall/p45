@@ -1,0 +1,39 @@
+{
+	"author": "Paul Williams",
+	"name": "p45",
+	"description": "Svelte library for programmatically crafting grid based SVGs.",
+	"type": "module",
+	"license": "MIT",
+	"version": "0.1.0",
+	"keywords": [
+		"svg",
+		"design",
+		"grid",
+		"svelte",
+		"plunder"
+	],
+	"exports": {
+		".": "./src/index.js"
+	},
+	"engines": {
+		"node": ">=18.18.2 <19.0.0",
+		"npm": ">=9.8.1 < 10.0.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/PaulioRandall/p45.git"
+	},
+	"scripts": {
+		"fmt": "prettier --plugin prettier-plugin-svelte --log-level warn --write .",
+		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests",
+		"debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
+		"commit": "npm run fmt && npm run test && cat ./scripts/ready-to-ship.txt"
+	},
+	"devDependencies": {
+		"jest": "^29.7.0",
+		"prettier": "^3.0.0",
+		"prettier-plugin-svelte": "^3.0.0",
+		"svelte": "^4.0.0",
+		"victor": "^1.0.0"
+	}
+}
