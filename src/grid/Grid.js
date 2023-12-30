@@ -95,6 +95,11 @@ export default class Grid {
 		Object.freeze(this)
 	}
 
+	isInBounds(v1 = 0, v2 = 0) {
+		const is = (v) => v >= -this.lastIdx && v <= this.lastIdx * 2
+		return is(v1) && is(v2)
+	}
+
 	node(col, row, offX = 0, offY = 0) {
 		return this._node(col, row, offX, offY)
 	}
@@ -131,23 +136,37 @@ export default class Grid {
 		return Grid.checkLen(...arguments)
 	}
 
-	_node(col, row, offX, offY) {
-		const colRow = Grid.parseXY(col, row)
+	_node(col, row, offX, offY, funcName = '_node') {
+		const cr = Grid.parseXY(col, row)
 		const off = Grid.parseXY(offX, offY)
 
-		if (colRow === null || off === null) {
-			return null
-		}
+		this._checkExists(cr, 'col or row', funcName)
+		this._checkExists(off, 'offset', funcName)
+		this._checkBounds(cr.x, 'col', funcName)
+		this._checkBounds(cr.y, 'row', funcName)
 
 		return {
 			id: Grid.idOf(col, row, off.x, off.y),
-			col: colRow.x,
-			row: colRow.y,
-			x: colRow.x * Grid.UNIT + off.x,
-			y: colRow.y * Grid.UNIT + off.y,
+			col: cr.x,
+			row: cr.y,
+			x: cr.x * Grid.UNIT + off.x,
+			y: cr.y * Grid.UNIT + off.y,
 			offX: off.x,
 			offY: off.y,
 			grid: this,
+		}
+	}
+
+	_checkExists(v, name, funcName) {
+		if (v === null) {
+			throw new Error(`[P45:Grid:${funcName}] Unable to parse ${name}: ${v}`)
+		}
+	}
+
+	_checkBounds(n, name, funcName) {
+		if (!this.isInBounds(n)) {
+			const b = `[${-this.lastIdx} < ${n} < ${this.lastIdx * 2}]`
+			throw new Error(`[P45:Grid:${funcName}] ${name} out of bounds ${b}`)
 		}
 	}
 }
