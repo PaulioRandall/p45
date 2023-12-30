@@ -1,4 +1,4 @@
-import { cmd, A, JL } from './path'
+import { cmd, A, JL } from './path.js'
 
 const twoByTwo = { x: 2, y: 2 }
 const fourByFour = { x: 4, y: 4 }

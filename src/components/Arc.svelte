@@ -1,5 +1,6 @@
 <script>
-	import Path, { J, M, A } from './Path.svelte'
+	import Path from './Path.svelte'
+	import { J, M, A } from './path.js'
 
 	export let from // = node
 	export let to // = node
