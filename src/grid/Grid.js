@@ -7,7 +7,7 @@ export default class Grid {
 		return 2
 	}
 
-	static nameOf(col, row, offX = 0, offY = 0, shadow = false) {
+	static idOf(col, row, offX = 0, offY = 0, shadow = false) {
 		const fmt = (n) => {
 			const sign = n < 0 ? '-' : '+'
 			return sign + Math.abs(n).toString().padStart(3, '0')
@@ -111,8 +111,8 @@ export default class Grid {
 		return this.shadowNode(...arguments)
 	}
 
-	nameOf() {
-		return Grid.nameOf(...arguments)
+	idOf() {
+		return Grid.idOf(...arguments)
 	}
 
 	lenPxOf() {
@@ -140,9 +140,13 @@ export default class Grid {
 		}
 
 		return {
-			name: Grid.nameOf(col, row, off.x, off.y),
+			id: Grid.idOf(col, row, off.x, off.y),
+			col: colRow.x,
+			row: colRow.y,
 			x: colRow.x * Grid.UNIT + off.x,
 			y: colRow.y * Grid.UNIT + off.y,
+			offX: off.x,
+			offY: off.y,
 			grid: this,
 		}
 	}
