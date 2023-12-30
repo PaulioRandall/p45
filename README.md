@@ -6,4 +6,60 @@
 
 Svelte library for programmatically crafting grid based SVGs.
 
+**Intentions?**
+
+> TODO: Why build it and what are my intentions for it?
+
+**Trade-offs**
+
+> TODO: And what trade-offs have been made?
+
+## Quick Start
+
+> TODO: How to get setup quickly
+
+## The Grid
+
+> TODO: Intro the grid
+
+## The Components
+
+> TODO: Intro the Svelte components
+
+### `<SVG>`
+
+> TODO
+
+### `<Arc>`
+
+> TODO
+
+### `<Circle>`
+
+> TODO
+
+### `<Line>`
+
+> TODO
+
+### `<Path>`
+
+> TODO
+
+> TODO: Doc the path functions
+
+### `<Polygon>`
+
+> TODO
+
+### `<RegularPolygon>`
+
+> TODO
+
+### `<Text>`
+
+> TODO
+
+## The Utilities
+
 > TODO
