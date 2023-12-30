@@ -1,32 +1,43 @@
 <script context="module">
-	export const J = (...commands) => commands.join(' ')
+	// https://www.nan.fyi/svg-paths
+	// https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
 
-	export const L = ({ x, y }) => `L ${x} ${y}`
-
-	export const M = ({ x, y }) => `M ${x} ${y}`
-
-	export const C = (cp1, cp2, to) => {
-		return `C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${to.x} ${to.y}`
+	const fmtCmd = (cmd, ...coords) => {
+		return cmd + ' ' + coords.map(({ x, y }) => `${x} ${y}`).join(', ')
 	}
 
-	export const S = (cp2, to) => {
-		return `S ${cp2.x} ${cp2.y}, ${to.x} ${to.y}`
-	}
+	export const J = (...cmds) => cmds.join(' ')
 
-	export const P = (...points) => {
-		return J(...points.map((p) => L(p)))
-	}
+	export const L = (to) => fmtCmd('L', to)
+	export const Lr = (to) => fmtCmd('l', to)
 
-	export const A = (r, to, options = {}) => {
+	export const M = (to) => fmtCmd('M', to)
+	export const Mr = (to) => fmtCmd('m', to)
+
+	export const C = (cp1, cp2, to) => fmtCmd('C', cp1, cp2, to)
+	export const Cr = (cp1, cp2, to) => fmtCmd('c', cp1, cp2, to)
+
+	export const S = (cp2, to) => fmtCmd('S', cp2, to)
+	export const Sr = (cp2, to) => fmtCmd('s', cp2, to)
+
+	export const Q = (cp, to) => fmtCmd('Q', cp, to)
+	export const Qr = (cp, to) => fmtCmd('r', cp, to)
+
+	export const P = (...points) => J(...points.map((p) => L(p)))
+	export const Pr = (...points) => J(...points.map((p) => Lr(p)))
+
+	export const A = (r, to, options = {}) => _A('A', r, to, options)
+	export const Ar = (r, to, options = {}) => _A('r', r, to, options)
+
+	const _A = (cmd, r, to, options = {}) => {
 		const {
-			rel = false, //
 			rotate = 0, //
 			large = false, //
 			clockwise = false, //
 		} = options
 
 		return [
-			rel ? 'a' : 'A',
+			cmd,
 			r.x,
 			r.y,
 			rotate,
