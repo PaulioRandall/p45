@@ -9,15 +9,11 @@ export default class Grid {
 
 	static nameOf(col, row, offX = 0, offY = 0, shadow = false) {
 		const fmt = (n) => {
-			return Math.abs(n).toString().padStart(3, '0')
-		}
-
-		const fmtOff = (n) => {
 			const sign = n < 0 ? '-' : '+'
-			return sign + fmt(n)
+			return sign + Math.abs(n).toString().padStart(3, '0')
 		}
 
-		return `COL_${fmt(col)}_${fmtOff(offX)}_ROW_${fmt(row)}_${fmtOff(offY)}`
+		return `COL_${fmt(col)}_${fmt(offX)}_ROW_${fmt(row)}_${fmt(offY)}`
 	}
 
 	static lenPxOf(n) {
@@ -115,8 +111,16 @@ export default class Grid {
 		}
 	}
 
+	shadowNode(col, row, offX = 0, offY = 0) {
+		return null
+	}
+
 	n() {
 		return this.node(...arguments)
+	}
+
+	sn() {
+		return this.shadowNode(...arguments)
 	}
 
 	nameOf() {

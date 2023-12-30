@@ -32,7 +32,60 @@ describe('Grid.js', () => {
 		})
 	})
 
-	describe('Grid.n(x, y)', () => {
+	describe('Grid.node(x, y)', () => {
+		describe('given numeric indexes', () => {
+			test('given top left coords, returns top left cell', () => {
+				const g = new Grid(3)
+				const c = g.node(0, 0)
+
+				expect(c).toEqual({
+					name: 'COL_+000_+000_ROW_+000_+000',
+					x: 0,
+					y: 0,
+					grid: g,
+				})
+			})
+
+			test('given bot right coords, returns bot right cell', () => {
+				const g = new Grid(3)
+				const c = g.node(2, 2)
+
+				expect(c).toEqual({
+					name: 'COL_+002_+000_ROW_+002_+000',
+					x: 8, // 2 * UNIT
+					y: 8, // 2 * UNIT
+					grid: g,
+				})
+			})
+
+			test('given center coords, returns center cell', () => {
+				const g = new Grid(3)
+				const c = g.node(1, 1)
+
+				expect(c).toEqual({
+					name: 'COL_+001_+000_ROW_+001_+000',
+					x: 4, // 1 * UNIT
+					y: 4, // 1 * UNIT
+					grid: g,
+				})
+			})
+
+			test('given offset, returns offset cell', () => {
+				const g = new Grid(5)
+				const c = g.node(3, 3, -4, 4)
+
+				expect(c).toEqual({
+					name: 'COL_+003_-004_ROW_+003_+004',
+					x: 8, // 3 * UNIT -4
+					y: 16, // 3 * UNIT +4
+					grid: g,
+				})
+			})
+		})
+	})
+
+	describe('Grid.shadowNode(x, y)', () => {
+		/*
 		describe('given numeric indexes', () => {
 			test('given top left coords, returns top left cell', () => {
 				const g = new Grid(3)
@@ -82,6 +135,7 @@ describe('Grid.js', () => {
 				})
 			})
 		})
+		*/
 	})
 
 	describe('Grid.center()', () => {
@@ -89,7 +143,7 @@ describe('Grid.js', () => {
 			const g = new Grid(5)
 
 			expect(g.center).toEqual({
-				name: 'COL_002_+000_ROW_002_+000',
+				name: 'COL_+002_+000_ROW_+002_+000',
 				x: 8, // 2 * UNIT
 				y: 8, // 2 * UNIT
 				grid: g,
