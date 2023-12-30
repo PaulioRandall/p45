@@ -157,11 +157,11 @@ describe('Grid.js', () => {
 		})
 	})
 
-	describe('Grid.bounds', () => {
-		test('is bounds', () => {
+	describe('Grid.boundsIdx', () => {
+		test('has correct boundsIdx', () => {
 			const g = new Grid(5)
 
-			expect(g.bounds).toEqual({
+			expect(g.boundsIdx).toEqual({
 				xMin: 0,
 				xMax: 4,
 				yMin: 0,
@@ -171,7 +171,7 @@ describe('Grid.js', () => {
 	})
 
 	describe('Grid.boundsPx', () => {
-		test('is pixel bounds', () => {
+		test('has correct boundsPx', () => {
 			const g = new Grid(5)
 
 			expect(g.boundsPx).toEqual({

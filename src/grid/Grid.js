@@ -74,7 +74,7 @@ export default class Grid {
 		this.len = len
 		this.lastIdx = len - 1
 		this.centerIdx = this.lastIdx / 2
-		this.bounds = Object.freeze({
+		this.boundsIdx = Object.freeze({
 			xMin: 0,
 			xMax: this.lastIdx,
 			yMin: 0,
