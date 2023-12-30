@@ -1,11 +1,11 @@
-import { cmd, A, JL } from './path.js'
+import { CMD, A, JL } from './path.js'
 
 const twoByTwo = { x: 2, y: 2 }
 const fourByFour = { x: 4, y: 4 }
 
 describe('path.js', () => {
-	test('cmd', () => {
-		const act = cmd('M', twoByTwo)
+	test('CMD', () => {
+		const act = CMD('M', twoByTwo)
 		expect(act).toEqual('M 2 2')
 	})
 

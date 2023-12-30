@@ -1,24 +1,24 @@
 // https://www.nan.fyi/svg-paths
 // https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
 
-export const cmd = (letter, ...coords) => {
+export const CMD = (letter, ...coords) => {
 	return letter + ' ' + coords.map(({ x, y }) => `${x} ${y}`).join(', ')
 }
 
-export const M = (to) => cmd('M', to)
-export const Mr = (to) => cmd('m', to)
+export const M = (to) => CMD('M', to)
+export const Mr = (to) => CMD('m', to)
 
-export const L = (to) => cmd('L', to)
-export const Lr = (to) => cmd('l', to)
+export const L = (to) => CMD('L', to)
+export const Lr = (to) => CMD('l', to)
 
-export const C = (cp1, cp2, to) => cmd('C', cp1, cp2, to)
-export const Cr = (cp1, cp2, to) => cmd('c', cp1, cp2, to)
+export const C = (cp1, cp2, to) => CMD('C', cp1, cp2, to)
+export const Cr = (cp1, cp2, to) => CMD('c', cp1, cp2, to)
 
-export const S = (cp2, to) => cmd('S', cp2, to)
-export const Sr = (cp2, to) => cmd('s', cp2, to)
+export const S = (cp2, to) => CMD('S', cp2, to)
+export const Sr = (cp2, to) => CMD('s', cp2, to)
 
-export const Q = (cp, to) => cmd('Q', cp, to)
-export const Qr = (cp, to) => cmd('r', cp, to)
+export const Q = (cp, to) => CMD('Q', cp, to)
+export const Qr = (cp, to) => CMD('r', cp, to)
 
 export const A = (r, to, options = {}) => _A('A', r, to, options)
 export const Ar = (r, to, options = {}) => _A('a', r, to, options)
@@ -48,7 +48,7 @@ const _A = (letter, r, to, options = {}) => {
 }
 
 export default Object.freeze({
-	cmd, //
+	CMD, //
 	M, //
 	Mr, //
 	L, //
