@@ -96,23 +96,11 @@ export default class Grid {
 	}
 
 	node(col, row, offX = 0, offY = 0) {
-		const colRow = Grid.parseXY(col, row)
-		const off = Grid.parseXY(offX, offY)
-
-		if (colRow === null || off === null) {
-			return null
-		}
-
-		return {
-			name: Grid.nameOf(col, row, off.x, off.y),
-			x: colRow.x * Grid.UNIT + off.x,
-			y: colRow.y * Grid.UNIT + off.y,
-			grid: this,
-		}
+		return this._node(col, row, offX, offY)
 	}
 
 	shadowNode(col, row, offX = 0, offY = 0) {
-		return null
+		return this._node(col - this.lastIdx, row - this.lastIdx, offX, offY)
 	}
 
 	n() {
@@ -141,5 +129,21 @@ export default class Grid {
 
 	checkLen() {
 		return Grid.checkLen(...arguments)
+	}
+
+	_node(col, row, offX, offY) {
+		const colRow = Grid.parseXY(col, row)
+		const off = Grid.parseXY(offX, offY)
+
+		if (colRow === null || off === null) {
+			return null
+		}
+
+		return {
+			name: Grid.nameOf(col, row, off.x, off.y),
+			x: colRow.x * Grid.UNIT + off.x,
+			y: colRow.y * Grid.UNIT + off.y,
+			grid: this,
+		}
 	}
 }

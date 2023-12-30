@@ -85,57 +85,43 @@ describe('Grid.js', () => {
 	})
 
 	describe('Grid.shadowNode(x, y)', () => {
-		/*
 		describe('given numeric indexes', () => {
 			test('given top left coords, returns top left cell', () => {
 				const g = new Grid(3)
-				const c = g.node(0, 0)
+				const c = g.shadowNode(0, 0)
 
 				expect(c).toEqual({
-					name: 'COL_000_+000_ROW_000_+000',
-					x: 0,
-					y: 0,
+					name: 'COL_-002_+000_ROW_-002_+000',
+					x: -8,
+					y: -8,
 					grid: g,
 				})
 			})
 
 			test('given bot right coords, returns bot right cell', () => {
 				const g = new Grid(3)
-				const c = g.node(2, 2)
+				const c = g.shadowNode(6, 6)
 
 				expect(c).toEqual({
-					name: 'COL_002_+000_ROW_002_+000',
-					x: 8, // 2 * UNIT
-					y: 8, // 2 * UNIT
+					name: 'COL_+004_+000_ROW_+004_+000',
+					x: 16, // 4 * UNIT
+					y: 16, // 4 * UNIT
 					grid: g,
 				})
 			})
 
 			test('given center coords, returns center cell', () => {
 				const g = new Grid(3)
-				const c = g.node(1, 1)
+				const c = g.shadowNode(3, 3)
 
 				expect(c).toEqual({
-					name: 'COL_001_+000_ROW_001_+000',
+					name: 'COL_+001_+000_ROW_+001_+000',
 					x: 4, // 1 * UNIT
 					y: 4, // 1 * UNIT
 					grid: g,
 				})
 			})
-
-			test('given offset, returns offset cell', () => {
-				const g = new Grid(5)
-				const c = g.node(3, 3, -4, 4)
-
-				expect(c).toEqual({
-					name: 'COL_003_-004_ROW_003_+004',
-					x: 8, // 3 * UNIT -4
-					y: 16, // 3 * UNIT +4
-					grid: g,
-				})
-			})
 		})
-		*/
 	})
 
 	describe('Grid.center()', () => {
