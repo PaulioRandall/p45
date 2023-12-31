@@ -144,25 +144,34 @@ new Grid(size) === {
 		yMax: this.lastIdx,
 	},
 
+	boundsColRow = this.boundsIdx,
+
 	lenPx: Grid.UNIT * this.lastIdx,
 	centerPx: Grid.HALF * this.lastIdx,
-	boundsPx: {
+	boundsPx: Object.freeze({
 		xMin: 0,
 		xMax: this.lenPx,
 		yMin: 0,
 		yMax: this.lenPx,
-	},
+	}),
 
 	// Shadow grid
 	shadowLen: size * 3,
 
-	shadowLastIdx: this.shadowLen - 1,
-	shadowBoundsIdx: Object.freeze({
+	shadowLastIdx = this.shadowLen - 1,
+	shadowBoundsIdx = Object.freeze({
 		xMin: 0,
 		xMax: this.shadowLastIdx,
 		yMin: 0,
 		yMax: this.shadowLastIdx,
 	}),
+
+	shadowBoundsColRow = {
+		xMin: this.shadowBoundsIdx.xMin - this.lastIdx,
+		xMax: this.shadowBoundsIdx.xMax - this.lastIdx,
+		yMin: this.shadowBoundsIdx.yMin - this.lastIdx,
+		yMax: this.shadowBoundsIdx.yMax - this.lastIdx,
+	},
 
 	shadowLenPx: Grid.UNIT * this.shadowLastIdx,
 	shadowBoundsPx: Object.freeze({
@@ -170,7 +179,7 @@ new Grid(size) === {
 		xMax: this.shadowLenPx - this.lenPx,
 		yMin: -this.lenPx,
 		yMax: this.shadowLenPx - this.lenPx,
-	}),
+	})
 
 	center: this.node(this.centerIdx, this.centerIdx),
 

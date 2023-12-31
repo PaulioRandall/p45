@@ -71,6 +71,7 @@ export default class Grid {
 		this.UNIT = Grid.UNIT
 		this.HALF = Grid.HALF
 
+		// Visible grid
 		this.len = size
 
 		this.lastIdx = size - 1
@@ -93,6 +94,7 @@ export default class Grid {
 			yMax: this.lenPx,
 		})
 
+		// Shadow grid
 		this.shadowLen = size * 3
 
 		this.shadowLastIdx = this.shadowLen - 1
