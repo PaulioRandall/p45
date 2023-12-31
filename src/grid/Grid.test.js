@@ -1,12 +1,12 @@
 import Grid from './Grid.js'
 
 describe('Grid.js', () => {
-	describe('Grid.constructor(len)', () => {
-		test('accepts odd numbered length', () => {
+	describe('Grid.constructor(size)', () => {
+		test('accepts odd numbered size', () => {
 			new Grid(3)
 		})
 
-		test('throws if even numbered length', () => {
+		test('throws if even numbered size', () => {
 			const f = () => new Grid(4)
 			expect(f).toThrow(Error)
 		})

@@ -46,24 +46,24 @@ export default class Grid {
 		return NaN
 	}
 
-	static checkLen(len) {
-		if (len % 2 === 0) {
-			return `Requires odd numbered grid length`
+	static checkSize(size) {
+		if (size % 2 === 0) {
+			return `Requires odd numbered grid size`
 		}
 
-		if (len < 3) {
-			return `Requires grid length >= 3`
+		if (size < 3) {
+			return `Requires grid size >= 3`
 		}
 
-		if (len > 99) {
-			return `Requires grid length <= 99`
+		if (size > 99) {
+			return `Requires grid size <= 99`
 		}
 
 		return null
 	}
 
-	constructor(len = 17) {
-		const e = Grid.checkLen(len)
+	constructor(size = 17) {
+		const e = Grid.checkSize(size)
 		if (e != null) {
 			throw new Error(`[P45:Grid:constructor] ${e}`)
 		}
@@ -71,8 +71,9 @@ export default class Grid {
 		this.UNIT = Grid.UNIT
 		this.HALF = Grid.HALF
 
-		this.len = len
-		this.lastIdx = len - 1
+		this.len = size
+
+		this.lastIdx = size - 1
 		this.centerIdx = this.lastIdx / 2
 		this.boundsIdx = Object.freeze({
 			xMin: 0,
@@ -95,6 +96,26 @@ export default class Grid {
 		Object.freeze(this)
 	}
 
+	idOf() {
+		return Grid.idOf(...arguments)
+	}
+
+	lenPxOf() {
+		return Grid.lenPxOf(...arguments)
+	}
+
+	parseXY() {
+		return Grid.parseXY(...arguments)
+	}
+
+	parseN() {
+		return Grid.parseN(...arguments)
+	}
+
+	checkLen() {
+		return Grid.checkLen(...arguments)
+	}
+
 	isInBounds(v1 = 0, v2 = 0) {
 		const is = (v) => v >= -this.lastIdx && v <= this.lastIdx * 2
 		return is(v1) && is(v2)
@@ -114,26 +135,6 @@ export default class Grid {
 
 	sn() {
 		return this.shadowNode(...arguments)
-	}
-
-	idOf() {
-		return Grid.idOf(...arguments)
-	}
-
-	lenPxOf() {
-		return Grid.lenPxOf(...arguments)
-	}
-
-	parseXY() {
-		return Grid.parseXY(...arguments)
-	}
-
-	parseN() {
-		return Grid.parseN(...arguments)
-	}
-
-	checkLen() {
-		return Grid.checkLen(...arguments)
 	}
 
 	_node(col, row, offX, offY, funcName = '_node') {
