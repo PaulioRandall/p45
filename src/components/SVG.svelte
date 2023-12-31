@@ -8,6 +8,10 @@
 	export let flipY = false
 	export let title = undefined
 
+	if (!grid) {
+		throw new Error("[P45:SVG] Dude, where's my grid property value?!")
+	}
+
 	const orZero = (n) => (n ? n : 0)
 
 	const center = grid.center
