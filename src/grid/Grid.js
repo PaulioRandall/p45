@@ -7,7 +7,7 @@ export default class Grid {
 		return 2
 	}
 
-	static idOf(col, row, offX = 0, offY = 0, shadow = false) {
+	static idOf(col, row, offX = 0, offY = 0) {
 		const fmt = (n) => {
 			const sign = n < 0 ? '-' : '+'
 			return sign + Math.abs(n).toString().padStart(3, '0')
@@ -82,6 +82,8 @@ export default class Grid {
 			yMax: this.lastIdx,
 		})
 
+		this.boundsColRow = this.boundsIdx
+
 		this.lenPx = Grid.UNIT * this.lastIdx
 		this.centerPx = Grid.HALF * this.lastIdx
 		this.boundsPx = Object.freeze({
@@ -89,6 +91,31 @@ export default class Grid {
 			xMax: this.lenPx,
 			yMin: 0,
 			yMax: this.lenPx,
+		})
+
+		this.shadowLen = size * 3
+
+		this.shadowLastIdx = this.shadowLen - 1
+		this.shadowBoundsIdx = Object.freeze({
+			xMin: 0,
+			xMax: this.shadowLastIdx,
+			yMin: 0,
+			yMax: this.shadowLastIdx,
+		})
+
+		this.shadowBoundsColRow = {
+			xMin: this.shadowBoundsIdx.xMin - this.lastIdx,
+			xMax: this.shadowBoundsIdx.xMax - this.lastIdx,
+			yMin: this.shadowBoundsIdx.yMin - this.lastIdx,
+			yMax: this.shadowBoundsIdx.yMax - this.lastIdx,
+		}
+
+		this.shadowLenPx = Grid.UNIT * this.shadowLastIdx
+		this.shadowBoundsPx = Object.freeze({
+			xMin: -this.lenPx,
+			xMax: this.shadowLenPx - this.lenPx,
+			yMin: -this.lenPx,
+			yMax: this.shadowLenPx - this.lenPx,
 		})
 
 		this.center = Object.freeze(this.n(this.centerIdx, this.centerIdx))
@@ -116,17 +143,39 @@ export default class Grid {
 		return Grid.checkLen(...arguments)
 	}
 
-	isInBounds(v1 = 0, v2 = 0) {
-		const is = (v) => v >= -this.lastIdx && v <= this.lastIdx * 2
+	isIndexInVisibleGrid(v1 = 0, v2 = 0) {
+		const is = (v) => {
+			return v >= this.boundsIdx.xMin && v <= this.boundsIdx.xMax
+		}
+		return is(v1) && is(v2)
+	}
+
+	isIndexInShadowGrid(v1 = 0, v2 = 0) {
+		const is = (v) => {
+			return v >= this.shadowBoundsIdx.xMin && v <= this.shadowBoundsIdx.xMax
+		}
+		return is(v1) && is(v2)
+	}
+
+	isColRowInVisibleGrid() {
+		return this.isIndexInVisibleGrid(...arguments)
+	}
+
+	isColRowInShadowGrid(v1 = 0, v2 = 0) {
+		const is = (v) => {
+			return (
+				v >= this.shadowBoundsColRow.xMin && v <= this.shadowBoundsColRow.xMax
+			)
+		}
 		return is(v1) && is(v2)
 	}
 
 	node(col, row, offX = 0, offY = 0) {
-		return this._node(col, row, offX, offY)
+		return this._node(col, row, offX, offY, 'node', false)
 	}
 
 	shadowNode(col, row, offX = 0, offY = 0) {
-		return this._node(col - this.lastIdx, row - this.lastIdx, offX, offY)
+		return this._node(col, row, offX, offY, 'shadowNode', true)
 	}
 
 	n() {
@@ -137,17 +186,26 @@ export default class Grid {
 		return this.shadowNode(...arguments)
 	}
 
-	_node(col, row, offX, offY, funcName = '_node') {
+	_node(col, row, offX, offY, funcName = '_node', shadow = false) {
 		const cr = Grid.parseXY(col, row)
 		const off = Grid.parseXY(offX, offY)
 
 		this._checkExists(cr, 'col or row', funcName)
 		this._checkExists(off, 'offset', funcName)
-		this._checkBounds(cr.x, 'col', funcName)
-		this._checkBounds(cr.y, 'row', funcName)
+
+		if (shadow) {
+			this._checkShadowBounds(cr.x, 'col', funcName)
+			this._checkShadowBounds(cr.y, 'row', funcName)
+
+			cr.x -= this.lastIdx
+			cr.y -= this.lastIdx
+		} else {
+			this._checkBounds(cr.x, 'col', funcName)
+			this._checkBounds(cr.y, 'row', funcName)
+		}
 
 		return {
-			id: Grid.idOf(col, row, off.x, off.y),
+			id: Grid.idOf(cr.x, cr.y, off.x, off.y),
 			col: cr.x,
 			row: cr.y,
 			x: cr.x * Grid.UNIT + off.x,
@@ -165,8 +223,15 @@ export default class Grid {
 	}
 
 	_checkBounds(n, name, funcName) {
-		if (!this.isInBounds(n)) {
+		if (!this.isColRowInShadowGrid(n)) {
 			const b = `[${-this.lastIdx} < ${n} < ${this.lastIdx * 2}]`
+			throw new Error(`[P45:Grid:${funcName}] ${name} out of bounds ${b}`)
+		}
+	}
+
+	_checkShadowBounds(n, name, funcName) {
+		if (!this.isIndexInShadowGrid(n)) {
+			const b = `[${this.shadowBoundsIdx.xMin} < ${n} < ${this.shadowBoundsIdx.xMax}]`
 			throw new Error(`[P45:Grid:${funcName}] ${name} out of bounds ${b}`)
 		}
 	}

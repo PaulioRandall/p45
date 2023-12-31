@@ -12,23 +12,23 @@ Throughout this README I've used example based axiomatic definitions. My hoped f
 
 Grid based diagramming aims to improve design speed, consistency, and experience by constraining where users can draw. **I like to think of it as trading-off freedom of expression for speed of expression.**
 
-A little while back I built a rather rough prototype tool [(SVG Icon Maker)](https://skepticalgoose.com/treasury/prototype-svg-maker) for crafting SVG icons on the theme of grid based diagramming. I'm finding the existing tools too fiddly and crafting SVGs by hand too tedious. This library is another, more refined, experiment.
+A little while back I built a rather rough prototype tool [(SVG Icon Maker)](https://skepticalgoose.com/treasury/prototype-svg-maker) for crafting SVG icons on the theme of grid based diagramming because I find existing tools too fiddly and crafting SVGs by hand too tedious. This library is another, more refined, experiment.
 
 > "Craftsmen engage themselves in complex tasks. The complexity of those tasks often gives a simplicity to their lives." - Edward de Bono (May he RIP)
 
-As craftsmen we are inclined to precision. It's in our nature. But unlike painting fine art, meticulousness rarely pays off when drawing small web icons, especially SVGs.
+I want to make drawing and diagramming quick and easy in scenarios where fine precision is not beneficial. As craftsmen we are inclined to precision; it's in our nature. But unlike painting fine art, meticulousness rarely pays off when drawing small web icons, especially SVGs.
 
 **Trade-offs**
 
 The implementation is rather simple and can easily be replicated by an experienced Svelte-JavaScript engineer in a day or two. I could have gone a lot further with crafting utility components and functions but it's much more economic to employ an inclusion-by-need rather than inclusion-by-foresight policy.
 
-Those articulate in mental visualisation may be able to work out grid coordinates in their head with ease, but for most of us it's just too taxing. So one caveat of my approach is that you'll usually want a paper grid to hand as reference. Drawing the icons on paper (physical or digital) first is a lot easier. For simple shapes, mapping the coordinates to code shouldn't take more than a minute.
+Those articulate in mental visualisation may be able to work out grid coordinates in their head with ease, but for most of us it's just too taxing. So one caveat of my approach is that you'll want a visual grid on hand as reference. It also helps to draw the icons on paper (physical or digital) first. For simple shapes, mapping the coordinates to code shouldn't take more than a minute.
 
 ## Quick Start
 
 ### Dependency
 
-_package.json_. May need to be within `dependencies` in some scenarios.
+_package.json_. May need to be within `dependencies` in some cases.
 
 ```json
 {
@@ -132,6 +132,7 @@ new Grid(size) === {
 	UNIT: Grid.UNIT,
 	HALF: Grid.HALF,
 
+	// Visible grid
 	len: size,
 
 	lastIdx: size - 1,
@@ -152,6 +153,25 @@ new Grid(size) === {
 		yMax: this.lenPx,
 	},
 
+	// Shadow grid
+	shadowLen: size * 3,
+
+	shadowLastIdx: this.shadowLen - 1,
+	shadowBoundsIdx: Object.freeze({
+		xMin: 0,
+		xMax: this.shadowLastIdx,
+		yMin: 0,
+		yMax: this.shadowLastIdx,
+	}),
+
+	shadowLenPx: Grid.UNIT * this.shadowLastIdx,
+	shadowBoundsPx: Object.freeze({
+		xMin: -this.lenPx,
+		xMax: this.shadowLenPx - this.lenPx,
+		yMin: -this.lenPx,
+		yMax: this.shadowLenPx - this.lenPx,
+	}),
+
 	center: this.node(this.centerIdx, this.centerIdx),
 
 	idOf(...) === Grid.idOf(...),
@@ -160,7 +180,8 @@ new Grid(size) === {
 	parseN(...) === Grid.parseN(...),
 	checkLen(...) === Grid.checkLen(...),
 
-	isInBounds(v1 = 0, v2 = 0),
+	isIndexInVisibleGrid(v1 = 0, v2 = 0),
+	isIndexInShadowGrid(v1 = 0, v2 = 0),
 
 	node(col, row, offX = 0, offY = 0),
 	shadowNode(col, row, offX = 0, offY = 0),
@@ -177,18 +198,18 @@ The distance between each node is fixed as _4_ and defined by `Grid.UNIT`. All c
 ```js
 import { Grid } from 'p45'
 
-;(Grid.UNIT === g.UNIT) === 4
-;(Grid.HALF === g.HALF) === 2
+Grid.UNIT === g.UNIT === 4
+Grid.HALF === g.HALF === 2
 
 const g = new Grid(9)
 
 g.len === 9
 g.lenPx === Grid.UNIT * 9
 
-;((top__left === g.node(0, 0)) === { x: 0 * 4, y: 0 * 4 }) === { x: 0, y: 0 }
-;((top_right === g.node(8, 0)) === { x: 8 * 4, y: 0 * 4 }) === { x: 32, y: 0 }
-;((bot__left === g.node(0, 8)) === { x: 0 * 4, y: 8 * 4 }) === { x: 0, y: 32 }
-;((bot_right === g.node(8, 8)) === { x: 8 * 4, y: 8 * 4 }) === { x: 32, y: 32 }
+top__left === g.node(0, 0) === { x: 0 * 4, y: 0 * 4 } === { x: 0, y: 0 }
+top_right === g.node(8, 0) === { x: 8 * 4, y: 0 * 4 } === { x: 32, y: 0 }
+bot__left === g.node(0, 8) === { x: 0 * 4, y: 8 * 4 } === { x: 0, y: 32 }
+bot_right === g.node(8, 8) === { x: 8 * 4, y: 8 * 4 } === { x: 32, y: 32 }
 ```
 
 #### `Grid.idOf`
@@ -200,10 +221,10 @@ Returns a unique ID for every combination of inputs which is designed to be easi
 const id = Grid.idOf(2, 4, 5, -5) === 'COL_+002_+005_ROW_+004_-005'
 
 id.split('_') === [
-	0: 'COL'
+	0: 'COL',
 	1: '+002' === 2 === // column number
 	2: '+005' === 5 === // column offset in grid pixels
-	3: 'ROW'
+	3: 'ROW',
 	4: '+005' === 2 === // row number
 	5: '-005' === -5 === // row offset in grid pixels
 ]
@@ -216,7 +237,7 @@ id.split('_') === [
 Returns the length in grid pixels of a column or row number such that:
 
 ```js
-;(Grid.lenOfPx(3) === Grid.UNIT * 3) === 12
+Grid.lenOfPx(3) === Grid.UNIT * 3 === 12
 ```
 
 #### `Grid.parseXY`
@@ -286,29 +307,27 @@ import { Grid } from 'p45'
 
 const g = new Grid(9)
 
-;(top__left === g.node(0, 0)) ===
-	{
-		id: `COL_+000_+000_ROW_+000_+000`,
-		col: 0,
-		row: 0,
-		x: 0,
-		y: 0,
-		offX: 0,
-		offY: 0,
-		grid: g,
-	}
+top__left === g.node(0, 0) === {
+	id: `COL_+000_+000_ROW_+000_+000`,
+	col: 0,
+	row: 0,
+	x: 0,
+	y: 0,
+	offX: 0,
+	offY: 0,
+	grid: g,
+}
 
-;(bot_right === g.node(8, 8)) ===
-	{
-		id: `COL_+008_+000_ROW_+008_+000`,
-		col: 8,
-		row: 8,
-		x: 32, // Grid.UNIT * 8
-		y: 32, // Grid.UNIT * 8
-		offX: 0,
-		offY: 0,
-		grid: g,
-	}
+bot_right === g.node(8, 8) === {
+	id: `COL_+008_+000_ROW_+008_+000`,
+	col: 8,
+	row: 8,
+	x: 32, // Grid.UNIT * 8
+	y: 32, // Grid.UNIT * 8
+	offX: 0,
+	offY: 0,
+	grid: g,
+}
 ```
 
 > TODO: Document each field and function.

@@ -15,8 +15,10 @@ describe('Grid.js', () => {
 			const g = new Grid(3)
 
 			expect(g.len).toEqual(3)
+
 			expect(g.lastIdx).toEqual(2)
 			expect(g.centerIdx).toEqual(1)
+
 			expect(g.lenPx).toEqual(Grid.UNIT * 2)
 			expect(g.centerPx).toEqual(Grid.HALF * 2)
 		})
@@ -25,10 +27,20 @@ describe('Grid.js', () => {
 			const g = new Grid(69)
 
 			expect(g.len).toEqual(69)
+
 			expect(g.lastIdx).toEqual(68)
 			expect(g.centerIdx).toEqual(34)
+
 			expect(g.lenPx).toEqual(Grid.UNIT * 68)
 			expect(g.centerPx).toEqual(Grid.HALF * 68)
+		})
+
+		test('sets correct properties for shadow grid', () => {
+			const g = new Grid(69)
+
+			expect(g.shadowLen).toEqual(207)
+			expect(g.shadowLastIdx).toEqual(206)
+			expect(g.shadowLenPx).toEqual(Grid.UNIT * 206)
 		})
 	})
 
@@ -219,6 +231,20 @@ describe('Grid.js', () => {
 				xMax: 16,
 				yMin: 0,
 				yMax: 16,
+			})
+		})
+	})
+
+	describe('Grid.shadowBoundsIdx', () => {
+		test('has correct shadowBoundsPx', () => {
+			const g = new Grid(3)
+
+			// g.lenPx === 8
+			expect(g.shadowBoundsPx).toEqual({
+				xMin: -8,
+				xMax: 24,
+				yMin: -8,
+				yMax: 24,
 			})
 		})
 	})
