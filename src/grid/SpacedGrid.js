@@ -32,16 +32,16 @@ export default class SpacedGrid {
 	}
 
 	constructor(size, spacing, origin = { x: 0, y: 0 }) {
-		this.xy = new OffsetGrid(size, origin)
-
 		const e = SpacedGrid.checkSpacing(spacing)
 		if (e !== null) {
 			throw new Error(`[P45:SpacedGrid:constructor] ${e}`)
 		}
 
+		Object.assign(this, OffsetGrid(size, origin))
+
 		this.spacing = spacing
-		this.centerNode = Object.freeze(
-			this.node(this.xy.center.x, this.xy.center.y) //
+		this.center = Object.freeze(
+			this.node(this.center.x, this.center.y) //
 		)
 
 		Object.freeze(this)
@@ -50,7 +50,7 @@ export default class SpacedGrid {
 	// contains returns true if the node identified by x and y is contained
 	// within the grid.
 	contains(x, y) {
-		return this.xy.contains(x, y)
+		return Util.contains(this.bounds, x, y)
 	}
 
 	// node returns a node object containing properties relevant to the node

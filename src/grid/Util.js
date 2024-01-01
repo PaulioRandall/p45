@@ -42,6 +42,17 @@ const Util = Object.freeze({
 
 		return respond(xy, null)
 	},
+
+	// contains returns true if the node identified by x and y is contained
+	// within the bounds.
+	contains(bounds, x, y) {
+		return (
+			x >= bounds.xMin && //
+			x <= bounds.xMax && //
+			y >= bounds.yMin && //
+			y <= bounds.yMax
+		)
+	},
 })
 
 export default Util
