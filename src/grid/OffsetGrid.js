@@ -77,6 +77,8 @@ export default class OffsetGrid {
 			yMin: this.origin.y, //
 			yMax: this.origin.y + this.lastIdx, //
 		}
+
+		Object.freeze(this)
 	}
 
 	// contains returns true if the node identified by x and y is contained
@@ -88,49 +90,5 @@ export default class OffsetGrid {
 			y >= this.bounds.yMin && //
 			y <= this.bounds.yMax
 		)
-	}
-
-	// node returns a node object containing properties relevant to the node
-	// identified by x and y.
-	node(x = 0, y = 0) {
-		const { xy, err } = this._parseNodeArgs(x, y)
-		if (err !== null) {
-			throw new Error(`[P45:OffsetGrid:node] ${err}`)
-		}
-
-		if (!this.contains(xy.x, xy.y)) {
-			throw new Error(`[P45:OffsetGrid:node] out of bounds: ${xy}`)
-		}
-
-		return {
-			...xy,
-			grid: this,
-		}
-	}
-
-	n() {
-		return this.node(...arguments)
-	}
-
-	_parseNodeArgs(x, y) {
-		const respond = (xy, err) => ({ xy, err })
-		let xy = x
-
-		if (!xy || typeof xy !== 'object') {
-			xy = { x, y }
-		}
-
-		xy.x = Util.parseNumber(xy.x)
-		xy.y = Util.parseNumber(xy.y)
-
-		if (isNaN(xy.x)) {
-			return respond(null, `failed to parse x to a number: ${xy.x}`)
-		}
-
-		if (isNaN(xy.x)) {
-			return respond(null, `failed to parse y to a number: ${xy.y}`)
-		}
-
-		return respond(xy, null)
 	}
 }

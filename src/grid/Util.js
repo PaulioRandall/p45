@@ -1,4 +1,4 @@
-export default Object.freeze({
+const Util = Object.freeze({
 	// parseNumber parses n into a number if it can, else it returns NaN.
 	parseNumber(n) {
 		if (typeof n === 'number') {
@@ -11,4 +11,37 @@ export default Object.freeze({
 
 		return NaN
 	},
+
+	// parseXY returns a result object containing a possible err string prop,
+	// an xy prop in the form { x, y } where both x and y are numbers, and a
+	// wasObject flag indicating the passed x value was an object containing the
+	// real x and y values.
+	//
+	// The input may either be two parsable numbers (x and y respectivily) or an
+	// object containing parsable x and y props.
+	parseXY(x, y) {
+		let wasObject = true
+		const respond = (xy, err) => ({ xy, err, wasObject })
+		let xy = x
+
+		if (!xy || typeof xy !== 'object') {
+			wasObject = false
+			xy = { x, y }
+		}
+
+		xy.x = Util.parseNumber(xy.x)
+		xy.y = Util.parseNumber(xy.y)
+
+		if (isNaN(xy.x)) {
+			return respond(null, `failed to parse x to a number: ${xy.x}`)
+		}
+
+		if (isNaN(xy.x)) {
+			return respond(null, `failed to parse y to a number: ${xy.y}`)
+		}
+
+		return respond(xy, null)
+	},
 })
+
+export default Util
