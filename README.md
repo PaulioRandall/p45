@@ -184,7 +184,7 @@ new P45Grid(size) === {
 		},
 		x,         // SVG X pixel position.
 		y,         // SVG Y pixel position.
-		grid,      // Reference to the grid that generated the node.
+		grid,      // Reference to the P45Grid that generated the node.
 	},
 
 	// center is an alias for centerNode.
@@ -212,20 +212,20 @@ new P45Grid(size) === {
 }
 ```
 
-#### `Grid.UNIT` & `Grid.HALF`
+#### `P45Grid.UNIT` & `P45Grid.HALF`
 
-The distance between each node is fixed as _4_ and defined by `Grid.UNIT`. All calculations are performed from this such that:
+The distance between each node is fixed as _4_ and defined by `P45Grid.UNIT`. All calculations are performed from this such that:
 
 ```js
-import { Grid } from 'p45'
+import { P45Grid } from 'p45'
 
-Grid.UNIT === g.UNIT === 4
-Grid.HALF === g.HALF === 2
+P45Grid.UNIT === g.UNIT === 4
+P45Grid.HALF === g.HALF === 2
 
-const g = new Grid(9)
+const g = new P45Grid(9)
 
 g.len === 9
-g.lenPx === Grid.UNIT * (9 - 1)
+g.lenPx === P45Grid.UNIT * (9 - 1)
 
 visible_top__left == g.node(0, 0) == { x: 0, y: 0 }
 visible_top_right == g.node(8, 0) == { x: 32, y: 0 }
@@ -233,13 +233,13 @@ visible_bot__left == g.node(0, 8) == { x: 0, y: 32 }
 visible_bot_right == g.node(8, 8) == { x: 32, y: 32 }
 ```
 
-#### `Grid.idOf`
+#### `P45Grid.idOf`
 
 Returns a unique ID for every combination of inputs which is designed to be easily parsed. Defining the format as an axiomatic example:
 
 ```js
 // Numbers are always signed and padded with zeros.
-const id = Grid.idOf(2, 4, 5, -5) == 'COL_+002_+005_ROW_+004_-005'
+const id = P45Grid.idOf(2, 4, 5, -5) == 'COL_+002_+005_ROW_+004_-005'
 
 id.split('_') == [
 	0: 'COL',
@@ -251,15 +251,15 @@ id.split('_') == [
 ]
 ```
 
-#### `Grid.node` & `Grid.n`
+#### `P45Grid.node` & `P45Grid.n`
 
-Visible nodes can be constructed by calling the `node` and `n` functions on a Grid instance. `n` being an alias of `node`. A new object is returned containing node properties in the form:
+Visible nodes can be constructed by calling the `node` and `n` functions on a P45Grid instance. `n` being an alias of `node`. A new object is returned containing node properties in the form:
 
 ```js
 // Note that this is mearly a user orientated
 // representation of the algorithm and output.
 grid.node(x, y, offX, offY) == {
-	id: Grid.idOf(x, y, offX, offY),
+	id: P45Grid.idOf(x, y, offX, offY),
 	coords: {
 		x: x,
 		y: y,
@@ -268,8 +268,8 @@ grid.node(x, y, offX, offY) == {
 		x: offX,
 		y: offY,
 	},
-	x: x * Grid.UNIT + offX,
-	y: y * Grid.UNIT + offY,
+	x: x * P45Grid.UNIT + offX,
+	y: y * P45Grid.UNIT + offY,
 	grid: grid,
 }
 ```
@@ -277,9 +277,9 @@ grid.node(x, y, offX, offY) == {
 Such that:
 
 ```js
-import { Grid } from 'p45'
+import { P45Grid } from 'p45'
 
-const g = new Grid(9)
+const g = new P45Grid(9)
 
 top__left == g.node(0, 0) == {
 	id: `COL_+000_+000_ROW_+000_+000`,
@@ -314,11 +314,68 @@ bot_right == g.node(8, 8) == {
 
 ## The Components
 
-> TODO: Intro the Svelte components
+To make using SVG commands and drawing common shapes easier, P45 provides a set Svelte components that accept nodes as props. Only the _SVG_ component is needed, the others are more for convenience.
 
 ### `<SVG>`
 
-> TODO
+The SVG component wraps `<svg>` applying the standard attributes, some default styling, and setting up the viewBox based on the provided grid.
+
+Boilerplate for a new SVG Svelte component:
+
+```svelte
+<script>
+	import { P45Grid, SVG } from 'p45'
+
+	const grid = new P45Grid(3)
+</script>
+
+<SVG {grid}>
+	<!-- SVG Commands -->
+</SVG>
+```
+
+Add some elements to create an icon:
+
+> TODO: Add SVG of the Clock icon
+
+```svelte
+<script>
+	// Clock.svelte
+
+	import { P45Grid, SVG, Line, Circle } from 'p45'
+	const grid = new P45Grid(17)
+</script>
+
+<SVG {grid} stroke-linecap="round">
+	<Circle o={grid.center} r="7" />
+	<Line from={grid.center} to={grid.n(5, 5)} />
+	<Line from={grid.center} to={grid.n(12, 4)} />
+</SVG>
+```
+
+It accepts the following properties. They are all optional except for `grid`:
+
+```js
+	// grid is the P45Grid for layout.
+	export let grid
+
+	// offset from the top left.
+	export let offset = { x: 0, y: 0 }
+
+	// rotate clockwise in degrees around the icon center. 
+	export let rotate = 0
+
+	// flipX axis.
+	export let flipX = false
+
+	// flipY axis.
+	export let flipY = false
+
+	// title attribute of the SVG.
+	export let title = undefined
+```
+
+The SVG component also sets context for all declared properties above. This means any slotted components have access to the grid via `getContext('grid')`.
 
 ### `<Arc>`
 
