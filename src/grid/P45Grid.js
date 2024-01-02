@@ -1,7 +1,7 @@
 import Util from './Util.js'
 import SpacedGrid from './SpacedGrid.js'
 
-export default class Grid {
+export default class P45Grid {
 	static get UNIT() {
 		return 4
 	}
@@ -22,15 +22,15 @@ export default class Grid {
 	constructor(size = 17) {
 		this._sg = new SpacedGrid(
 			size * 3, //
-			Grid.UNIT, //
+			P45Grid.UNIT, //
 			{
 				x: -size, //
 				y: -size, //
 			}
 		)
 
-		this.UNIT = Grid.UNIT
-		this.HALF = Grid.HALF
+		this.UNIT = P45Grid.UNIT
+		this.HALF = P45Grid.HALF
 
 		this.lastIdx = this._sg.lastIdx
 		this.centerIdx = this._sg.centerIdx
@@ -46,7 +46,7 @@ export default class Grid {
 	}
 
 	idOf() {
-		return Grid.idOf(...arguments)
+		return P45Grid.idOf(...arguments)
 	}
 
 	contains(x = 0, y = 0) {
@@ -56,7 +56,7 @@ export default class Grid {
 	node(x, y, offX = 0, offY = 0) {
 		const n = this._sg.node(x, y, offX, offY)
 
-		n.id = Grid.idOf(n.xy.x, n.xy.y, n.off.x, n.off.y)
+		n.id = P45Grid.idOf(n.xy.x, n.xy.y, n.off.x, n.off.y)
 		n.grid = this
 
 		return n

@@ -1,5 +1,6 @@
-// Grid
-export { default as Grid } from './grid/Grid.js'
+// Grids
+export { default as SpacedGrid } from './grid/SpacedGrid.js'
+export { default as P45Grid } from './grid/P45Grid.js'
 
 // Util
 export * from './util/Parse.js'
