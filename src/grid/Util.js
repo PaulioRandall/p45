@@ -20,13 +20,16 @@ const Util = Object.freeze({
 	// The input may either be two parsable numbers (x and y respectivily) or an
 	// object containing parsable x and y props.
 	parseXY(x, y) {
-		let wasObject = true
+		let wasObject = false
+
 		const respond = (xy, err) => ({ xy, err, wasObject })
 		let xy = x
 
 		if (!xy || typeof xy !== 'object') {
-			wasObject = false
 			xy = { x, y }
+		} else {
+			wasObject = true
+			xy = { ...xy }
 		}
 
 		xy.x = Util.parseNumber(xy.x)

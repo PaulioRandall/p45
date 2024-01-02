@@ -1,5 +1,4 @@
 import Util from './Util.js'
-import OffsetGrid from './OffsetGrid.js'
 
 // SpacedGrid represents a grid with a fixed size, spacing (pixel distance
 // between nodes), and origin offset.
@@ -17,6 +16,30 @@ import OffsetGrid from './OffsetGrid.js'
 //
 // SpacedGrid instances are immutable.
 export default class SpacedGrid {
+	// checkArgs returns a string error message if any argument cannot be used
+	// to construct a SpacedGrid.
+	static checkArgs(size, spacing, origin) {
+		return (
+			SpacedGrid.checkSize(size) || //
+			SpacedGrid.checkSpacing(spacing) || //
+			SpacedGrid.checkOrigin(origin)
+		)
+	}
+
+	// checkSize returns a string error message if the size argument cannot be
+	// used to construct a OffsetGrid.
+	static checkSize(size) {
+		if (size % 2 === 0) {
+			return `Requires odd numbered grid size`
+		}
+
+		if (size < 3) {
+			return `Requires grid size >= 3`
+		}
+
+		return null
+	}
+
 	// checkSpacing returns a string error message if the spacing argument cannot
 	// be used to construct a SpacedGrid.
 	static checkSpacing(spacing) {
@@ -31,17 +54,57 @@ export default class SpacedGrid {
 		return null
 	}
 
+	// checkOrigin returns a string error message if the origin argument cannot
+	// be used to construct a OffsetGrid.
+	static checkOrigin(origin) {
+		if (!origin || typeof origin !== 'object') {
+			return `Requires grid origin be an object`
+		}
+
+		const x = Util.parseNumber(origin.x)
+		if (isNaN(x)) {
+			return `Requires grid origin.x be a number or parsable number`
+		}
+
+		const y = Util.parseNumber(origin.y)
+		if (isNaN(y)) {
+			return `Requires grid origin.y be a number or parsable number`
+		}
+
+		return null
+	}
+
 	constructor(size, spacing, origin = { x: 0, y: 0 }) {
-		const e = SpacedGrid.checkSpacing(spacing)
+		const e = SpacedGrid.checkArgs(size, spacing, origin)
 		if (e !== null) {
 			throw new Error(`[P45:SpacedGrid:constructor] ${e}`)
 		}
 
-		Object.assign(this, OffsetGrid(size, origin))
+		this.lastIdx = size - 1
+		this.centerIdx = this.lastIdx / 2
+
+		this.origin = Object.freeze({
+			x: origin?.x || 0, //
+			y: origin?.y || 0, //
+		})
+
+		this.len = size
+
+		this.centerXY = Object.freeze({
+			x: this.origin.x + this.centerIdx, //
+			y: this.origin.y + this.centerIdx, //
+		})
+
+		this.bounds = Object.freeze({
+			xMin: this.origin.x, //
+			xMax: this.origin.x + this.lastIdx, //
+			yMax: this.origin.y + this.lastIdx, //
+			yMin: this.origin.y, //
+		})
 
 		this.spacing = spacing
-		this.center = Object.freeze(
-			this.node(this.center.x, this.center.y) //
+		this.centerNode = Object.freeze(
+			this.node(this.centerXY.x, this.centerXY.y) //
 		)
 
 		Object.freeze(this)

@@ -175,7 +175,7 @@ describe('Grid.js', () => {
 		test('is center node', () => {
 			const g = new Grid(5)
 
-			expect(g.center).toMatchObject({
+			expect(g.centerNode).toMatchObject({
 				id: 'COL_+002_+000_ROW_+002_+000',
 				xy: {
 					x: 2,

@@ -32,7 +32,7 @@ export default class Grid {
 		this.UNIT = Grid.UNIT
 		this.HALF = Grid.HALF
 
-		this.center = this.node(this._sg.center.xy)
+		this.centerNode = this.node(this._sg.centerXY)
 
 		Object.freeze(this)
 	}
