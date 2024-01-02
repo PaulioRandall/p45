@@ -1,4 +1,3 @@
-import Util from './Util.js'
 import SpacedGrid from './SpacedGrid.js'
 
 export default class P45Grid {
@@ -39,6 +38,7 @@ export default class P45Grid {
 		this.centerXY = this._sg.centerXY
 		this.bounds = this._sg.bounds
 		this.spacing = this._sg.spacing
+
 		this.centerNode = this.node(this.centerXY)
 		this.center = this.centerNode
 

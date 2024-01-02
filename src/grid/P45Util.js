@@ -46,6 +46,11 @@ const Util = Object.freeze({
 		return respond(xy, null)
 	},
 
+	// within returns true if the number n is contained within the bounds.
+	within(n, min, max) {
+		return n >= min && n <= max
+	},
+
 	// contains returns true if the node identified by x and y is contained
 	// within the bounds.
 	contains(bounds, x, y) {

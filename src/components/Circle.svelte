@@ -1,22 +1,27 @@
 <script>
 	import { getContext } from 'svelte'
+	import { P45Util } from 'p45'
+
 	import Grid from '../grid/Grid.js'
 	import { Parse } from '../util/Parse.js'
 
 	const grid = getContext('grid')
 
-	const defaultO = grid.center
-	const defaultR = 4
+	export let o = grid.centerNode
+	export let r = 4
 
-	export let ref = '<Unknown>'
-	export let oPropRef = 'o'
-	export let rPropRef = 'r'
+	o = P45Util.parseXY(o)
+	if (!grid.contains(o.x, o.y)) {
+		throw new Error(`[P45:Circle] Origin o out of bounds: ${JSON.stringify(o)}`)
+	}
 
-	export let o = defaultO
-	export let r = defaultR
+	r = P45Util.parseNumber(r)
+	if (!P45Util.within(r, 1, 7)) {
+		throw new Error(
+			`[P45:Circle] Radius modifier r out of bounds: 1 <= ${r} <= 7`
+		)
+	}
 
-	o = Parse.node(ref, oPropRef, o, defaultO, grid.boundsPx)
-	r = Parse.number(ref, rPropRef, r, defaultR, { min: 1, max: 7 })
 	r = Math.round(r * Grid.UNIT)
 </script>
 

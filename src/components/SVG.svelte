@@ -14,7 +14,7 @@
 
 	const orZero = (n) => (n ? n : 0)
 
-	const center = grid.center
+	const center = grid.centerNode
 	const offX = orZero(offset.x)
 	const offY = orZero(offset.y)
 

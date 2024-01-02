@@ -1,4 +1,4 @@
-import Util from './Util.js'
+import P45Util from './P45Util.js'
 
 // SpacedGrid represents a grid with a fixed size, spacing (pixel distance
 // between nodes), and origin offset.
@@ -61,12 +61,12 @@ export default class SpacedGrid {
 			return `Requires grid origin be an object`
 		}
 
-		const x = Util.parseNumber(origin.x)
+		const x = P45Util.parseNumber(origin.x)
 		if (isNaN(x)) {
 			return `Requires grid origin.x be a number or parsable number`
 		}
 
-		const y = Util.parseNumber(origin.y)
+		const y = P45Util.parseNumber(origin.y)
 		if (isNaN(y)) {
 			return `Requires grid origin.y be a number or parsable number`
 		}
@@ -113,7 +113,7 @@ export default class SpacedGrid {
 	// contains returns true if the node identified by x and y is contained
 	// within the grid.
 	contains(x, y) {
-		return Util.contains(this.bounds, x, y)
+		return P45Util.contains(this.bounds, x, y)
 	}
 
 	// node returns a node object containing properties relevant to the node
@@ -121,7 +121,7 @@ export default class SpacedGrid {
 	//
 	// offX and offY are optional pixel offsets applied relative to the node.
 	node(x = 0, y = 0, offX = 0, offY = 0) {
-		let { xy, err, wasObject } = Util.parseXY(x, y)
+		let { xy, err, wasObject } = P45Util.parseXY(x, y)
 		if (err !== null) {
 			throw new Error(`[P45:SpacedGrid:node] ${err}`)
 		}
@@ -130,7 +130,7 @@ export default class SpacedGrid {
 			throw new Error(`[P45:SpacedGrid:node] out of bounds: ${xy}`)
 		}
 
-		let off = wasObject ? Util.parseXY(y, offX) : Util.parseXY(offX, offY)
+		let off = wasObject ? P45Util.parseXY(y, offX) : P45Util.parseXY(offX, offY)
 		if (off.err !== null) {
 			throw new Error(`[P45:SpacedGrid:node] ${off}`)
 		}
