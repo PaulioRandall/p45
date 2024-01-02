@@ -90,113 +90,125 @@ _package.json_. May need to be within `dependencies` in some cases.
 </svg>
 ```
 
-## The Grid
+## The P45Grid
 
 ```js
-import { Grid } from 'p45'
+import { P45Grid } from 'p45'
 
-// 2 < SIZE < 100
-const g = new Grid(SIZE)
+const g = new P45Grid(SIZE)
 ```
 
 > TODO: Diagram of grid with annotated cell and annotated node as a visual reference for the text below.
 
-The Grid is a simple JavaScript class with functions for generating nodes. Nodes are the points that make up a grid (or graph) as opposed to cells which are the square areas within a set of linked nodes.
+The P45Grid is a simple JavaScript class with functions for generating nodes. Nodes are the points that make up a grid (or graph) as opposed to cells which are the square areas within a set of linked nodes.
 
-Constructing a Grid instance requires a size:
+Constructing a P45Grid instance requires a:
 
-- **an odd integer** so we always have a center node;
-- **greater than 2** because anything smaller than _3x3_ has little use;
-- **and less than 100** because I haven't coded that path yet.
+- **size** (width & height of the visible area):
+	- **an odd integer** so we always have a center node;
+	- **greater than 2** because anything smaller than _3x3_ has little use;
+
+To allow control points to be placed off canvas, there exists a _shadow_ grid with the same center that is three times bigger than the _visible_ grid. Only drawings within the given size (visible grid) will be rendered.
 
 ### Properties
 
 ```js
 // Note that this is mearly a user orientated
-// representation of the algorithm and Grid
-// properties, not the exact algorithm actually
-// used.
+// representation of the algorithm and P45Grid
+// properties, not the real thing.
 
-import { Grid } from 'p45'
+import { P45Grid } from 'p45'
 
-Grid.UNIT === 4
-Grid.HALF === 2
+P45Grid.UNIT === 4
+P45Grid.HALF === 2
+P45Grid.idOf(col, row, offX = 0, offY = 0, shadow = false)
 
-Grid.idOf(col, row, offX = 0, offY = 0, shadow = false)
-Grid.lenPxOf(col_or_row)
-Grid.parseXY(x, y)
-Grid.parseN(n)
-Grid.checkSize(size)
+new P45Grid(size) === {
+	UNIT: P45Grid.UNIT,
+	HALF: P45Grid.HALF,
 
-new Grid(size) === {
-	UNIT: Grid.UNIT,
-	HALF: Grid.HALF,
+	// lastIdx is the last index of the shadow grid.
+	lastIdx: Number,
 
-	// Visible grid
-	len: size,
+	// centerIdx is the central index of both visible and shadow grids.
+	centerIdx: Number,
 
-	lastIdx: size - 1,
-	centerIdx: this.lastIdx / 2,
-	boundsIdx: {
-		xMin: 0,
-		xMax: this.lastIdx,
-		yMin: 0,
-		yMax: this.lastIdx,
+	// The coordinate offset of the shadow grid from the visible grid.
+	// The visible grid starts at the top left with (0,0).
+	origin:	{
+		x: Number,
+		y: Number,
+	}
+
+	// centerXY holds the coordinates of the center node.
+	centerXY: {
+		x: Number,
+		y: Number,
+	}
+
+	// bounds holds the coordinate bounds of the shadow grid.
+	bounds: {
+		xMin: Number,
+		xMax: Number,
+		yMin: Number,
+		yMax: Number,
+	}
+
+	// boundsPx holds the pixel bounds of the shadow grid.
+	boundsPx: bounds: {
+		xMin: Number,
+		xMax: Number,
+		yMin: Number,
+		yMax: Number,
+	}
+
+	// len is the length of the visible grid.
+	len: Number,
+
+	// lenPx is the pixel length of the visible grid.
+	lenPx: Number,
+
+	// centerNode is the node at the center of both shadow and visible grids.
+	//
+	// Invoking the node function with center coordinates will not result in
+	// this object being returned but the contents will be identical.
+	centerNode: {
+		id,        // Unique ID of the node that includes offset
+		coords: {  // Grid coordinates of the node on the visible grid.
+			x,
+			y,
+		},
+		off: {     // Offset in pixels.
+			x,
+			y,
+		},
+		x,         // SVG X pixel position.
+		y,         // SVG Y pixel position.
+		grid,      // Reference to the grid that generated the node.
 	},
 
-	boundsColRow = this.boundsIdx,
+	// center is an alias for centerNode.
+	center: { /* see centerNode */ },
 
-	lenPx: Grid.UNIT * this.lastIdx,
-	centerPx: Grid.HALF * this.lastIdx,
-	boundsPx: Object.freeze({
-		xMin: 0,
-		xMax: this.lenPx,
-		yMin: 0,
-		yMax: this.lenPx,
-	}),
+	// idOf is a proxy for P45Grid.idOf.
+	idOf(col, row, offX = 0, offY = 0),
 
-	// Shadow grid
-	shadowLen: size * 3,
+	// contains returns true if the passed coordinates are contained within the
+	// shadow grid.
+	contains(x = 0, y = 0),
 
-	shadowLastIdx = this.shadowLen - 1,
-	shadowBoundsIdx = Object.freeze({
-		xMin: 0,
-		xMax: this.shadowLastIdx,
-		yMin: 0,
-		yMax: this.shadowLastIdx,
-	}),
+	// containsPx returns true if the passed pixel positions are contained
+	// within the shadow grid.
+	containsPx(x = 0, y = 0),
 
-	shadowBoundsColRow = {
-		xMin: this.shadowBoundsIdx.xMin - this.lastIdx,
-		xMax: this.shadowBoundsIdx.xMax - this.lastIdx,
-		yMin: this.shadowBoundsIdx.yMin - this.lastIdx,
-		yMax: this.shadowBoundsIdx.yMax - this.lastIdx,
-	},
+	// node returns a Node object containing information about the node.
+	//
+	// Critically, it provides an x and y pixel position for plotting SVG
+	// elements.
+	node(x, y, offX = 0, offY = 0),
 
-	shadowLenPx: Grid.UNIT * this.shadowLastIdx,
-	shadowBoundsPx: Object.freeze({
-		xMin: -this.lenPx,
-		xMax: this.shadowLenPx - this.lenPx,
-		yMin: -this.lenPx,
-		yMax: this.shadowLenPx - this.lenPx,
-	})
-
-	center: this.node(this.centerIdx, this.centerIdx),
-
-	idOf(...) === Grid.idOf(...),
-	lenPxOf(...) === Grid.lenPxOf(...),
-	parseXY(...) === Grid.parseXY(...),
-	parseN(...) === Grid.parseN(...),
-	checkLen(...) === Grid.checkLen(...),
-
-	isIndexInVisibleGrid(v1 = 0, v2 = 0),
-	isIndexInShadowGrid(v1 = 0, v2 = 0),
-
-	node(col, row, offX = 0, offY = 0),
-	shadowNode(col, row, offX = 0, offY = 0),
-
-	n(...) === this.node(...),
-	sn(...) === this.shadowNode(...),
+	// n is short hand alias for the node function.
+	n(x, y, offX = 0, offY = 0),
 }
 ```
 
@@ -213,12 +225,12 @@ Grid.HALF === g.HALF === 2
 const g = new Grid(9)
 
 g.len === 9
-g.lenPx === Grid.UNIT * 9
+g.lenPx === Grid.UNIT * (9 - 1)
 
-top__left === g.node(0, 0) === { x: 0 * 4, y: 0 * 4 } === { x: 0, y: 0 }
-top_right === g.node(8, 0) === { x: 8 * 4, y: 0 * 4 } === { x: 32, y: 0 }
-bot__left === g.node(0, 8) === { x: 0 * 4, y: 8 * 4 } === { x: 0, y: 32 }
-bot_right === g.node(8, 8) === { x: 8 * 4, y: 8 * 4 } === { x: 32, y: 32 }
+visible_top__left == g.node(0, 0) == { x: 0, y: 0 }
+visible_top_right == g.node(8, 0) == { x: 32, y: 0 }
+visible_bot__left == g.node(0, 8) == { x: 0, y: 32 }
+visible_bot_right == g.node(8, 8) == { x: 32, y: 32 }
 ```
 
 #### `Grid.idOf`
@@ -227,84 +239,37 @@ Returns a unique ID for every combination of inputs which is designed to be easi
 
 ```js
 // Numbers are always signed and padded with zeros.
-const id = Grid.idOf(2, 4, 5, -5) === 'COL_+002_+005_ROW_+004_-005'
+const id = Grid.idOf(2, 4, 5, -5) == 'COL_+002_+005_ROW_+004_-005'
 
-id.split('_') === [
+id.split('_') == [
 	0: 'COL',
-	1: '+002' === 2 === // column number
-	2: '+005' === 5 === // column offset in grid pixels
+	1: '+002' == 2  == // column number,
+	2: '+005' == 5  == // column offset in grid pixels,
 	3: 'ROW',
-	4: '+005' === 2 === // row number
-	5: '-005' === -5 === // row offset in grid pixels
+	4: '+005' == 2  == // row number,
+	5: '-005' == -5 == // row offset in grid pixels,
 ]
 ```
 
-> TODO: shadow flag
-
-#### `Grid.lenPxOf`
-
-Returns the length in grid pixels of a column or row number such that:
-
-```js
-Grid.lenOfPx(3) === Grid.UNIT * 3 === 12
-```
-
-#### `Grid.parseXY`
-
-Parses an _x_ and _y_ numbers or strings into an object such that:
-
-```js
-Grid.parseXY(2, '3') === { x: 2, y: 3 }
-Grid.parseXY(-2, '+3') === { x: -2, y: 3 }
-Grid.parseXY(2, NaN) === null
-Grid.parseXY(2, 'bad') === null
-```
-
-#### `Grid.parseN`
-
-Parses a number or string into a number or `NaN`. Unlike `Number()`, `NaN` is always returned if the value cannot be converted:
-
-```js
-Grid.parseN(2) === 2
-Grid.parseN(-2) === -2
-Grid.parseN('2') === 2
-Grid.parseN('bad') === NaN
-Grid.parseN({} | [] | BigInt | Symbol) === NaN
-Grid.parseN(NaN | null | undefined) === NaN
-```
-
-#### `Grid.checkSize`
-
-Returns a string error message if the size argument is cannot be used to construct a Grid:
-
-```js
-// Note that this is mearly a user orientated
-// representation of the result. The error
-// messages may be reworded at anytime as a
-// minor or patch release.
-Grid.checkSize(3) === null
-Grid.checkSize(99) === null
-Grid.checkSize(2) === `Requires odd numbered grid size`
-Grid.checkSize(1) === `Requires grid size >= 3`
-Grid.checkSize(101) === `Requires grid size <= 99`
-```
-
-#### `Grid#node` & `Grid#n`
+#### `Grid.node` & `Grid.n`
 
 Visible nodes can be constructed by calling the `node` and `n` functions on a Grid instance. `n` being an alias of `node`. A new object is returned containing node properties in the form:
 
 ```js
 // Note that this is mearly a user orientated
-// representation of the algorithm and output,
-// not the exact algorithm actually used.
-grid.node(col, row, offX, offY) = {
-	id: Grid.idOf(col, row, offX, offY),
-	col: col,
-	row: row,
-	x: col * Grid.UNIT + offX,
-	y: row * Grid.UNIT + offY,
-	offX: offX,
-	offY: offY,
+// representation of the algorithm and output.
+grid.node(x, y, offX, offY) == {
+	id: Grid.idOf(x, y, offX, offY),
+	coords: {
+		x: x,
+		y: y,
+	},
+	off: {
+		x: offX,
+		y: offY,
+	},
+	x: x * Grid.UNIT + offX,
+	y: y * Grid.UNIT + offY,
 	grid: grid,
 }
 ```
@@ -316,30 +281,36 @@ import { Grid } from 'p45'
 
 const g = new Grid(9)
 
-top__left === g.node(0, 0) === {
+top__left == g.node(0, 0) == {
 	id: `COL_+000_+000_ROW_+000_+000`,
-	col: 0,
-	row: 0,
+	coords: {
+		x: 0,
+		y: 0,
+	},
+	off: {
+		x: 0,
+		y: 0,
+	},
 	x: 0,
 	y: 0,
-	offX: 0,
-	offY: 0,
 	grid: g,
 }
 
-bot_right === g.node(8, 8) === {
+bot_right == g.node(8, 8) == {
 	id: `COL_+008_+000_ROW_+008_+000`,
-	col: 8,
-	row: 8,
-	x: 32, // Grid.UNIT * 8
-	y: 32, // Grid.UNIT * 8
-	offX: 0,
-	offY: 0,
+	coords: {
+		x: 8,
+		y: 8,
+	},
+	off: {
+		x: 0,
+		y: 0,
+	},
+	x: 32, // Grid.UNIT * x
+	y: 32, // Grid.UNIT * y
 	grid: g,
 }
 ```
-
-> TODO: Document each field and function.
 
 ## The Components
 
