@@ -187,9 +187,9 @@ describe('SpacedGrid.js', () => {
 			const n = g.node(0, 0)
 
 			expect(n).toEqual({
-				xy: XY(0, 0),
+				coords: XY(0, 0),
 				off: XY(0, 0),
-				px: XY(0, 0),
+				...XY(0, 0),
 				grid: g,
 			})
 		})
@@ -198,9 +198,9 @@ describe('SpacedGrid.js', () => {
 			const n = g.node(2, 2)
 
 			expect(n).toEqual({
-				xy: XY(2, 2),
+				coords: XY(2, 2),
 				off: XY(0, 0),
-				px: XY(4, 4),
+				...XY(4, 4),
 				grid: g,
 			})
 		})
@@ -209,9 +209,9 @@ describe('SpacedGrid.js', () => {
 			const n = g.node(-2, -2)
 
 			expect(n).toEqual({
-				xy: XY(-2, -2),
+				coords: XY(-2, -2),
 				off: XY(0, 0),
-				px: XY(-4, -4),
+				...XY(-4, -4),
 				grid: g,
 			})
 		})
@@ -220,9 +220,9 @@ describe('SpacedGrid.js', () => {
 			const n = g.node(0, 0, -1, 3)
 
 			expect(n).toEqual({
-				xy: XY(0, 0),
+				coords: XY(0, 0),
 				off: XY(-1, 3),
-				px: XY(-1, 3),
+				...XY(-1, 3),
 				grid: g,
 			})
 		})

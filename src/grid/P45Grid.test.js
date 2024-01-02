@@ -1,5 +1,7 @@
 import P45Grid from './P45Grid.js'
 
+const XY = (x, y) => ({ x, y })
+
 describe('P45Grid.js', () => {
 	describe('P45Grid.node(x, y)', () => {
 		test('returns top left node given top left coords', () => {
@@ -8,18 +10,9 @@ describe('P45Grid.js', () => {
 
 			expect(n).toEqual({
 				id: 'COL_+000_+000_ROW_+000_+000',
-				xy: {
-					x: 0,
-					y: 0,
-				},
-				px: {
-					x: 0,
-					y: 0,
-				},
-				off: {
-					x: 0,
-					y: 0,
-				},
+				coords: XY(0, 0),
+				off: XY(0, 0),
+				...XY(0, 0),
 				grid: g,
 			})
 		})
@@ -30,18 +23,9 @@ describe('P45Grid.js', () => {
 
 			expect(n).toEqual({
 				id: 'COL_+002_+000_ROW_+002_+000',
-				xy: {
-					x: 2,
-					y: 2,
-				},
-				px: {
-					x: 8, // 2 * UNIT
-					y: 8, // 2 * UNIT
-				},
-				off: {
-					x: 0,
-					y: 0,
-				},
+				coords: XY(2, 2),
+				off: XY(0, 0),
+				...XY(8, 8), // 2 * UNIT
 				grid: g,
 			})
 		})
@@ -52,18 +36,9 @@ describe('P45Grid.js', () => {
 
 			expect(n).toEqual({
 				id: 'COL_+001_+000_ROW_+001_+000',
-				xy: {
-					x: 1,
-					y: 1,
-				},
-				px: {
-					x: 4, // 1 * UNIT
-					y: 4, // 1 * UNIT
-				},
-				off: {
-					x: 0,
-					y: 0,
-				},
+				coords: XY(1, 1),
+				off: XY(0, 0),
+				...XY(4, 4), // 1 * UNIT
 				grid: g,
 			})
 		})
@@ -74,18 +49,10 @@ describe('P45Grid.js', () => {
 
 			expect(n).toEqual({
 				id: 'COL_+003_-004_ROW_+003_+004',
-				xy: {
-					x: 3,
-					y: 3,
-				},
-				px: {
-					x: 8, // 3 * UNIT -4
-					y: 16, // 3 * UNIT +4
-				},
-				off: {
-					x: -4,
-					y: 4,
-				},
+				coords: XY(3, 3),
+				off: XY(-4, 4),
+				x: 8, // 3 * UNIT -4
+				y: 16, // 3 * UNIT +4
 				grid: g,
 			})
 		})
@@ -110,18 +77,9 @@ describe('P45Grid.js', () => {
 
 			expect(n).toEqual({
 				id: 'COL_-003_+000_ROW_-003_+000',
-				xy: {
-					x: -3,
-					y: -3,
-				},
-				px: {
-					x: -12,
-					y: -12,
-				},
-				off: {
-					x: 0,
-					y: 0,
-				},
+				coords: XY(-3, -3),
+				off: XY(0, 0),
+				...XY(-12, -12), // -3 * UNIT
 				grid: g,
 			})
 		})
@@ -132,18 +90,9 @@ describe('P45Grid.js', () => {
 
 			expect(n).toEqual({
 				id: 'COL_+005_+000_ROW_+005_+000',
-				xy: {
-					x: 5,
-					y: 5,
-				},
-				px: {
-					x: 20, // 5 * UNIT
-					y: 20, // 5 * UNIT
-				},
-				off: {
-					x: 0,
-					y: 0,
-				},
+				coords: XY(5, 5),
+				off: XY(0, 0),
+				...XY(20, 20), // 5 * UNIT
 				grid: g,
 			})
 		})
@@ -154,18 +103,9 @@ describe('P45Grid.js', () => {
 
 			expect(n).toEqual({
 				id: 'COL_+002_+000_ROW_+002_+000',
-				xy: {
-					x: 2,
-					y: 2,
-				},
-				px: {
-					x: 8, // 2 * UNIT
-					y: 8, // 2 * UNIT
-				},
-				off: {
-					x: 0,
-					y: 0,
-				},
+				coords: XY(2, 2),
+				off: XY(0, 0),
+				...XY(8, 8), // 2 * UNIT
 				grid: g,
 			})
 		})
@@ -177,18 +117,9 @@ describe('P45Grid.js', () => {
 
 			expect(g.centerNode).toMatchObject({
 				id: 'COL_+002_+000_ROW_+002_+000',
-				xy: {
-					x: 2,
-					y: 2,
-				},
-				px: {
-					x: 8, // 2 * UNIT
-					y: 8, // 2 * UNIT
-				},
-				off: {
-					x: 0,
-					y: 0,
-				},
+				coords: XY(2, 2),
+				off: XY(0, 0),
+				...XY(8, 8), // 2 * UNIT
 				grid: g,
 			})
 		})

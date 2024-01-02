@@ -138,12 +138,10 @@ export default class SpacedGrid {
 		off = off.xy
 
 		return {
-			xy,
+			coords: xy,
 			off,
-			px: {
-				x: xy.x * this.spacing + off.x,
-				y: xy.y * this.spacing + off.y,
-			},
+			x: xy.x * this.spacing + off.x,
+			y: xy.y * this.spacing + off.y,
 			grid: this,
 		}
 	}
