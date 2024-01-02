@@ -1,28 +1,28 @@
 <script>
 	import { getContext } from 'svelte'
-	import { P45Util } from 'p45'
-
-	import Grid from '../grid/Grid.js'
-	import { Parse } from '../util/Parse.js'
+	import P45Grid from '../grid/P45Grid.js'
+	import P45Util from '../grid/P45Util.js'
 
 	const grid = getContext('grid')
 
 	export let o = grid.centerNode
 	export let r = 4
+	export let ref = '???'
 
-	o = P45Util.parseXY(o)
-	if (!grid.contains(o.x, o.y)) {
-		throw new Error(`[P45:Circle] Origin o out of bounds: ${JSON.stringify(o)}`)
+	if (!grid.containsPx(o.x, o.y)) {
+		throw new Error(
+			`[${ref}:P45:Circle] Origin o out of bounds: x=${o.x}, y=${o.y}`
+		)
 	}
 
 	r = P45Util.parseNumber(r)
 	if (!P45Util.within(r, 1, 7)) {
 		throw new Error(
-			`[P45:Circle] Radius modifier r out of bounds: 1 <= ${r} <= 7`
+			`[${ref}:P45:Circle] Radius modifier r out of bounds: 1 <= ${r} <= 7`
 		)
 	}
 
-	r = Math.round(r * Grid.UNIT)
+	const rPx = Math.round(r * P45Grid.UNIT)
 </script>
 
 <circle
@@ -30,4 +30,4 @@
 	vector-effect="non-scaling-stroke"
 	cx={o.x}
 	cy={o.y}
-	{r} />
+	r={rPx} />

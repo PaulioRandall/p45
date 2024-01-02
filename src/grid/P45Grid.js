@@ -34,10 +34,13 @@ export default class P45Grid {
 		this.lastIdx = this._sg.lastIdx
 		this.centerIdx = this._sg.centerIdx
 		this.origin = this._sg.origin
-		this.len = this._sg.len
 		this.centerXY = this._sg.centerXY
 		this.bounds = this._sg.bounds
+		this.boundsPx = this._sg.boundsPx
 		this.spacing = this._sg.spacing
+
+		this.len = size
+		this.lenPx = (this.len - 1) * P45Grid.UNIT
 
 		this.centerNode = this.node(this.centerXY)
 		this.center = this.centerNode
@@ -51,6 +54,10 @@ export default class P45Grid {
 
 	contains(x = 0, y = 0) {
 		return this._sg.contains(x, y)
+	}
+
+	containsPx(x = 0, y = 0) {
+		return this._sg.containsPx(x, y)
 	}
 
 	node(x, y, offX = 0, offY = 0) {

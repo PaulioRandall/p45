@@ -98,8 +98,15 @@ export default class SpacedGrid {
 		this.bounds = Object.freeze({
 			xMin: this.origin.x, //
 			xMax: this.origin.x + this.lastIdx, //
-			yMax: this.origin.y + this.lastIdx, //
 			yMin: this.origin.y, //
+			yMax: this.origin.y + this.lastIdx, //
+		})
+
+		this.boundsPx = Object.freeze({
+			xMin: this.bounds.xMin * spacing, //
+			xMax: this.bounds.xMax * spacing, //
+			yMin: this.bounds.yMin * spacing, //
+			yMax: this.bounds.yMax * spacing, //
 		})
 
 		this.spacing = spacing
@@ -116,6 +123,12 @@ export default class SpacedGrid {
 		return P45Util.contains(this.bounds, x, y)
 	}
 
+	// contains returns true if the pixel coordinate is contained within the
+	// grid.
+	containsPx(x = 0, y = 0) {
+		return P45Util.contains(this.boundsPx, x, y)
+	}
+
 	// node returns a node object containing properties relevant to the node
 	// identified by x and y.
 	//
@@ -127,7 +140,9 @@ export default class SpacedGrid {
 		}
 
 		if (!this.contains(xy.x, xy.y)) {
-			throw new Error(`[P45:SpacedGrid:node] out of bounds: ${xy}`)
+			throw new Error(
+				`[P45:SpacedGrid:node] out of bounds: ${JSON.stringify(xy)}`
+			)
 		}
 
 		let off = wasObject ? P45Util.parseXY(y, offX) : P45Util.parseXY(offX, offY)

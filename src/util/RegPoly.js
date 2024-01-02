@@ -1,5 +1,5 @@
 import Victor from 'victor'
-import Grid from '../grid/Grid.js'
+import P45Grid from '../grid/P45Grid.js'
 import { toNumber } from './Parse.js'
 
 export const RegPoly = Object.freeze({
@@ -27,11 +27,11 @@ export const RegPoly = Object.freeze({
 	offset(ref, n) {
 		switch (toNumber(ref, n)) {
 			case 3:
-				return { x: 0, y: Grid.UNIT * 1.5 }
+				return { x: 0, y: P45Grid.UNIT * 1.5 }
 			case 5:
-				return { x: 0, y: Grid.UNIT * 0.75 }
+				return { x: 0, y: P45Grid.UNIT * 0.75 }
 			case 7:
-				return { x: 0, y: Grid.UNIT * 0.3525 }
+				return { x: 0, y: P45Grid.UNIT * 0.3525 }
 			default:
 				return { x: 0, y: 0 }
 		}

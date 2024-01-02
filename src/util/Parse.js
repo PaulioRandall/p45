@@ -1,4 +1,4 @@
-import Grid from '../grid/Grid.js'
+import P45Grid from '../grid/P45Grid.js'
 
 export const toNumber = (ref, n) => {
 	switch (typeof n) {
@@ -46,7 +46,7 @@ const parseNode = (
 	alt,
 	{ xMin = null, xMax = null, yMin = null, yMax = null }
 ) => {
-	const project = (n) => (n ? n * Grid.UNIT : null)
+	const project = (n) => (n ? n * P45Grid.UNIT : null)
 
 	return parseXY(ref, propRef, xy, alt, {
 		xMin: project(xMin),
