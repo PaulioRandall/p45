@@ -32,7 +32,15 @@ export default class Grid {
 		this.UNIT = Grid.UNIT
 		this.HALF = Grid.HALF
 
-		this.centerNode = this.node(this._sg.centerXY)
+		this.lastIdx = this._sg.lastIdx
+		this.centerIdx = this._sg.centerIdx
+		this.origin = this._sg.origin
+		this.len = this._sg.len
+		this.centerXY = this._sg.centerXY
+		this.bounds = this._sg.bounds
+		this.spacing = this._sg.spacing
+		this.centerNode = this.node(this.centerXY)
+		this.center = this.centerNode
 
 		Object.freeze(this)
 	}
