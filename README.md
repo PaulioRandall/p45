@@ -16,13 +16,13 @@ A little while back I built a rather rough prototype tool [(SVG Icon Maker)](htt
 
 > "Craftsmen engage themselves in complex tasks. The complexity of those tasks often gives a simplicity to their lives." - Edward de Bono (May he RIP)
 
-I want to make drawing and diagramming quick and easy in scenarios where fine precision is not beneficial. As craftsmen we are inclined to precision; it's in our nature. But unlike painting fine art, meticulousness rarely pays off when drawing small web icons, especially SVGs.
+I want to make drawing and diagramming quick and easy in scenarios where fine precision is not beneficial. As craftsmen we are inclined to precision; it's in our nature. But unlike painting fine art, meticulousness rarely pays off when drawing small web icons, especially regarding SVGs.
 
 **Trade-offs**
 
-The implementation is rather simple and can easily be replicated by an experienced Svelte-JavaScript engineer in a day or two. I could have gone a lot further with crafting utility components and functions but it's much more economic to employ an inclusion-by-need rather than inclusion-by-foresight policy.
+This implementation is rather simple and can easily be replicated by an experienced Svelte-JavaScript engineer in a day or two. I could have gone a lot further with crafting utility components and functions but it's much more economic to employ an inclusion-by-need rather than inclusion-by-foresight policy.
 
-Those articulate in mental visualisation may be able to work out grid coordinates in their head with ease, but for most of us it's just too taxing. So one caveat of my approach is that you'll want a visual grid on hand as reference. It also helps to draw the icons on paper (physical or digital) first. For simple shapes, mapping the coordinates to code shouldn't take more than a minute.
+Those articulate in mental visualisation may be able to work out grid coordinates in their head with ease, but for most of us it's just too taxing. So you'll want a visual grid on hand as reference. It also helps to rough draw the icons on paper (physical or digital) first. For simple shapes, mapping the coordinates to code shouldn't take more than a minute.
 
 ## Quick Start
 
@@ -44,12 +44,12 @@ _package.json_. May need to be within `dependencies` in some cases.
 <!-- Diamond.svelte -->
 
 <script>
-	import { Grid, SVG, Polygon, Path, J, M, L } from 'p45'
+	import { P45Grid, SVG, Polygon, Path, J, M, L } from 'p45'
 
-	// FYI: Grid instances are immutable.
+	// FYI: P45Grid instances are immutable.
 	// You can share a single instance across
 	// your whole project.
-	const grid = new Grid(17) // 17x17 grid
+	const grid = new P45Grid(17) // 17x17 grid
 </script>
 
 <!-- 

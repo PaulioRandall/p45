@@ -1,11 +1,8 @@
-// Grids
+// Grid
 export { default as SpacedGrid } from './grid/SpacedGrid.js'
 export { default as P45Grid } from './grid/P45Grid.js'
 export { default as P45Util } from './grid/P45Util.js'
-
-// Util
-export * from './util/Parse.js'
-export * from './util/RegPoly.js'
+export { default as P45RegPoly } from './grid/P45RegPoly.js'
 
 // Components
 export { default as SVG } from './components/SVG.svelte'

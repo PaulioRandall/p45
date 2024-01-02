@@ -1,8 +1,8 @@
 import Victor from 'victor'
-import P45Grid from '../grid/P45Grid.js'
-import { toNumber } from './Parse.js'
+import P45Grid from './P45Grid.js'
+import P45Util from './P45Util.js'
 
-export const RegPoly = Object.freeze({
+const RegPoly = Object.freeze({
 	totalInternalAngle(n) {
 		return 180 * (n - 2)
 	},
@@ -25,7 +25,7 @@ export const RegPoly = Object.freeze({
 	},
 
 	offset(ref, n) {
-		switch (toNumber(ref, n)) {
+		switch (P45Util.parseNumber(ref, n)) {
 			case 3:
 				return { x: 0, y: P45Grid.UNIT * 1.5 }
 			case 5:
@@ -44,3 +44,5 @@ const makePoint = (i, angle, radius, origin, rotate) => {
 	v.add(origin)
 	return v.toObject()
 }
+
+export default RegPoly
