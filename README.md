@@ -4,11 +4,7 @@
 
 # P45
 
-Svelte library for programmatically crafting grid based SVGs.
-
-Throughout this README I've used example based axiomatic definitions. My hoped for outcome is to strike a nice balance between concise communication of concepts and the precision needed for effective use of the library. I do hope it does not confuse.
-
-<div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
 	<img src="/icons/clock.svg" width="50" height="50" />
 	<img src="/icons/parabola.svg" width="50" height="50" />
 	<img src="/icons/circle.svg" width="50" height="50" />
@@ -19,7 +15,11 @@ Throughout this README I've used example based axiomatic definitions. My hoped f
 	<img src="/icons/squared.svg" width="50" height="50" />
 </div>
 
-**Intentions**
+Svelte library for programmatically crafting grid based SVGs.
+
+Throughout this README I've used example based axiomatic definitions. My hoped for outcome is to strike a nice balance between concise communication of concepts and the precision needed for effective use of the library. I do hope it does not confuse.
+
+## Intentions
 
 Grid based diagramming aims to improve design speed, consistency, and experience by constraining where users can draw. **I like to think of it as trading-off freedom of expression for speed of expression.**
 
@@ -29,7 +29,7 @@ A little while back I built a rather rough prototype tool [(SVG Icon Maker)](htt
 
 I want to make drawing and diagramming quick and easy in scenarios where fine precision is not beneficial. As craftsmen we are inclined to precision; it's in our nature. But unlike painting fine art, meticulousness rarely pays off when drawing small web icons, especially regarding SVGs.
 
-**Trade-offs**
+## Trade-offs
 
 This implementation is rather simple and can easily be replicated by an experienced Svelte-JavaScript engineer in a day or two. I could have gone a lot further with crafting utility components and functions but it's much more economic to employ an inclusion-by-need rather than inclusion-by-foresight policy.
 
@@ -79,7 +79,7 @@ _package.json_. May need to be within `dependencies` in some cases.
 			grid.n(8, 15),
 		]} />
 	<!-- 
-		J, M, & L functions are nothing special.
+		M and L functions are nothing special.
 		They just convert grid coordinates in to
 		SVG Path commands.
 	-->
