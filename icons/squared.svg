@@ -10,4 +10,4 @@
 		font-size: 24px;
 	}
 </style>
-<text class="number" vector-effect="non-scaling-stroke" x="10" y="56">n</text><text class="power" vector-effect="non-scaling-stroke" x="42" y="28">2</text></svg>
+<text class="number" x="10" y="56">n</text><text class="power" x="42" y="28">2</text></svg>

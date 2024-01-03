@@ -15,6 +15,8 @@
 	<img src="/icons/squared.svg" width="50" height="50" />
 </div>
 
+<br/>
+
 Svelte library for programmatically crafting grid based SVGs.
 
 Throughout this README I've used example based axiomatic definitions. My hoped for outcome is to strike a nice balance between concise communication of concepts and the precision needed for effective use of the library. I do hope it does not confuse.
@@ -27,19 +29,21 @@ A little while back I built a rather rough prototype tool [(SVG Icon Maker)](htt
 
 > "Craftsmen engage themselves in complex tasks. The complexity of those tasks often gives a simplicity to their lives." - Edward de Bono (May he RIP)
 
-I want to make drawing and diagramming quick and easy in scenarios where fine precision is not beneficial. As craftsmen we are inclined to precision; it's in our nature. But unlike painting fine art, meticulousness rarely pays off when drawing small web icons, especially regarding SVGs.
+I want to make drawing and diagramming quick and easy in scenarios where fine precision is not beneficial. As craftsmen we are inclined to precision; it's in our nature. But unlike painting fine art, meticulousness rarely pays off when drawing small web icons, especially SVGs.
 
 ## Trade-offs
 
-This implementation is rather simple and can easily be replicated by an experienced Svelte-JavaScript engineer in a day or two. I could have gone a lot further with crafting utility components and functions but it's much more economic to employ an inclusion-by-need rather than inclusion-by-foresight policy.
+This implementation is rather simple and can easily be replicated by an experienced Svelte-JavaScript engineer. I could have gone a lot further with crafting utility components and functions but it's much more economic to employ an inclusion-by-need rather than inclusion-by-foresight policy.
 
-Those articulate in mental visualisation may be able to work out grid coordinates in their head with ease, but for most of us it's just too taxing. So you'll want a visual grid on hand as reference. It also helps to rough draw the icons on paper (physical or digital) first. For simple shapes, mapping the coordinates to code shouldn't take more than a minute.
+Those articulate in mental visualisation may be able to work out grid coordinates in their head with ease, but for most of us it's just too taxing. So you'll want a visual grid on hand as reference. It also helps to rough draw the icons on paper first (physical or digital). For simple shapes, mapping the coordinates to code shouldn't take more than a minute.
 
 ## Quick Start
 
 ### Dependency
 
 _package.json_. May need to be within `dependencies` in some cases.
+
+**Requires Svelte version 4.**
 
 ```json
 {
@@ -106,6 +110,9 @@ _package.json_. May need to be within `dependencies` in some cases.
 ```js
 import { P45Grid } from 'p45'
 
+// size is the width & height of the visible area:
+// - an odd integer so we always have a center node
+// - greater than 2 because anything smaller than _3x3_ has little use
 const g = new P45Grid(size)
 ```
 
@@ -113,18 +120,10 @@ const g = new P45Grid(size)
 
 The P45Grid is a simple JavaScript class with functions for generating nodes. Nodes are the points that make up a grid (or graph) as opposed to cells which are the square areas within a set of linked nodes.
 
-Constructing a P45Grid instance requires a:
-
-- **size** (width & height of the visible area):
-	- **an odd integer** so we always have a center node;
-	- **greater than 2** because anything smaller than _3x3_ has little use;
-
-To allow control points to be placed off canvas, there exists a _shadow_ grid with the same center that is three times bigger than the _visible_ grid. Only drawings within the given size (visible grid) will be rendered.
-
-### Properties
+To allow control points to be placed off canvas, there exists a _shadow_ grid with the same center but a size three times bigger than the _visible_ grid.  Outside of the shadow grid is 
 
 ```js
-// Note that this is mearly a user orientated
+// Note that this is mearly a somewhat axiomatic
 // representation of the algorithm and P45Grid
 // properties, not the real thing.
 
@@ -138,52 +137,52 @@ P45Grid.HALF === 2
 
 // idOf returns a unique ID for every combination of inputs which is designed
 // to be easily parsed.
-P45Grid.idOf(col, row, offX = 0, offY = 0, shadow = false)
+P45Grid.idOf(col, row, offX = 0, offY = 0)
 
-new P45Grid(size) === {
+new P45Grid(size) == {
 	UNIT: P45Grid.UNIT,
 	HALF: P45Grid.HALF,
 
 	// lastIdx is the last index of the shadow grid.
-	lastIdx: Number,
+	lastIdx: (size * 3) - 1,
 
 	// centerIdx is the central index of both visible and shadow grids.
-	centerIdx: Number,
+	centerIdx: (size * 3) / 2,
 
 	// The coordinate offset of the shadow grid from the visible grid.
 	// The visible grid starts at the top left with (0,0).
 	origin:	{
-		x: Number,
-		y: Number,
+		x: -size,
+		y: -size,
 	},
 
-	// centerXY holds the coordinates of the center node.
+	// centerXY holds the coordinates of the center node of both grids.
 	centerXY: {
-		x: Number,
-		y: Number,
+		x: (size - 1) / 2,
+		y: (size - 1) / 2,
 	},
 
 	// bounds holds the coordinate bounds of the shadow grid.
 	bounds: {
-		xMin: Number,
-		xMax: Number,
-		yMin: Number,
-		yMax: Number,
+		xMin: -size,
+		xMax: (size * 2) -1,
+		yMin: -size,
+		yMax: (size * 2) -1,
 	},
 
 	// boundsPx holds the pixel bounds of the shadow grid.
 	boundsPx: bounds: {
-		xMin: Number,
-		xMax: Number,
-		yMin: Number,
-		yMax: Number,
+		xMin: -size           * P45Grid.UNIT,
+		xMax: ((size * 2) -1) * P45Grid.UNIT,
+		yMin: -size           * P45Grid.UNIT,
+		yMax: ((size * 2) -1) * P45Grid.UNIT,
 	},
 
 	// len is the length of the visible grid.
-	len: Number,
+	len: size,
 
 	// lenPx is the pixel length of the visible grid.
-	lenPx: Number,
+	lenPx: (size - 1) * P45Grid.UNIT,
 
 	// centerNode is the node at the center of both shadow and visible grids.
 	//
@@ -220,7 +219,7 @@ new P45Grid(size) === {
 
 	// node returns a Node object containing information about the node.
 	//
-	// Critically, it provides an x and y pixel position for plotting SVG
+	// Notably, it provides an x and y pixel position for plotting SVG
 	// elements.
 	node(x, y, offX = 0, offY = 0),
 
@@ -248,6 +247,11 @@ visible_top__left == g.node(0, 0) == { x: 0, y: 0 }
 visible_top_right == g.node(8, 0) == { x: 32, y: 0 }
 visible_bot__left == g.node(0, 8) == { x: 0, y: 32 }
 visible_bot_right == g.node(8, 8) == { x: 32, y: 32 }
+
+shadow_top__left == g.node(-9, -9) == { x: -36, y: -36 }
+shadow_top_right == g.node(17, -9) == { x: 68, y: -36 }
+shadow_bot__left == g.node(-9, 17) == { x: -36, y: 68 }
+shadow_bot_right == g.node(17, 17) == { x: 68, y: 68 }
 ```
 
 #### `P45Grid.idOf`
@@ -334,13 +338,14 @@ To make using SVG commands and drawing common shapes easier, P45 provides a set 
 
 ### `<SVG>`
 
-The SVG component wraps `<svg>` applying the standard attributes, some default styling, and setting up the viewBox based on the provided grid.
-
-The SVG component also sets context for all declared properties. This means any slotted components have access to the grid via `getContext('grid')` and title via `getContext('title')`.
+The SVG component wraps `<svg>` applying the standard attributes, some default styling, and setting up the viewBox based on the provided grid. The SVG component also sets context for all declared properties.
 
 ```js
-export let grid              // = P45Grid for layout.
+export let grid              // = P45Grid
 export let title = undefined
+
+setContext('grid', grid)
+setContext('title', title)
 ```
 
 Boilerplate for a new SVG Svelte component:
@@ -361,9 +366,9 @@ Add some elements to create an icon:
 <img src="/icons/clock.svg" width="100" height="100" />
 
 ```svelte
-<script>
-	// Clock.svelte
+<!-- Clock.svelte -->
 
+<script>
 	import { P45Grid, SVG, Line, Circle } from 'p45'
 	const grid = new P45Grid(17)
 </script>
@@ -393,9 +398,9 @@ export let clockwise = false // AKA sweep-flag
 <img src="/icons/parabola.svg" width="100" height="100" />
 
 ```svelte
-<script>
-	// Parabola.svelte
+<!-- Parabola.svelte -->
 
+<script>
 	import { P45Grid, SVG, Arc } from 'p45'
 	const grid = new P45Grid(17)
 </script>
@@ -424,9 +429,9 @@ export let ref = '???'              // printed at the beginning of errors.
 <img src="/icons/circle.svg" width="100" height="100" />
 
 ```svelte
-<script>
-	// Circle.svelte
+<!-- Circle.svelte -->
 
+<script>
 	import { P45Grid, SVG, Circle } from 'p45'
 	const grid = new P45Grid(17)
 </script>
@@ -448,9 +453,9 @@ export let to   // { x: 0, y: 0 }
 <img src="/icons/diagonal.svg" width="100" height="100" />
 
 ```svelte
-<script>
-	// Diagonal.svelte 
+<!-- Diagonal.svelte -->
 
+<script>
 	import { P45Grid, SVG, Line } from 'p45'
 	const grid = new P45Grid(17)
 </script>
@@ -492,9 +497,9 @@ import {
 <img src="/icons/conical-flask.svg" width="100" height="100" />
 
 ```svelte
-<script>
-	// ConicalFlask.svelte
+<!-- ConicalFlask.svelte -->
 
+<script>
 	import { P45Grid, SVG, Path, M, L } from 'p45'
 	const grid = new P45Grid(17)
 </script>
@@ -523,9 +528,9 @@ export let points // = [{ x: 0, y: 0 }]
 <img src="/icons/diamond.svg" width="100" height="100" />
 
 ```svelte
-<script>
-	// Diamond.svelte
+<!-- Diamond.svelte -->
 
+<script>
 	import { P45Grid, SVG, Polygon } from 'p45'
 	const grid = new P45Grid(17)
 </script>
@@ -554,9 +559,9 @@ export let ref = '???'              // printed at the beginning of errors.
 <img src="/icons/hexagon.svg" width="100" height="100" />
 
 ```svelte
-<script>
-	// Hexagon.svelte
+<!-- Hexagon.svelte -->
 
+<script>
 	import { P45Grid, SVG, RegularPolygon } from 'p45'
 	const grid = new P45Grid(17)
 </script>
@@ -568,7 +573,7 @@ export let ref = '???'              // printed at the beginning of errors.
 
 ### `<Text>`
 
-Generates a `<text>` element at the given _origin_.
+Generates a `<text>` element at the given _origin_ and slotted content.
 
 ```js
 export let origin = grid.centerNode // = { x: 0, y: 0 }
@@ -577,9 +582,9 @@ export let origin = grid.centerNode // = { x: 0, y: 0 }
 <img src="/icons/squared.svg" width="100" height="100" />
 
 ```svelte
-<script>
-	// Squared.svelte
+<!-- Squared.svelte -->
 
+<script>
 	import { P45Grid, SVG, Text } from 'p45'
 	const grid = new P45Grid(17)
 </script>
@@ -596,8 +601,12 @@ export let origin = grid.centerNode // = { x: 0, y: 0 }
 			font-size: 24px;
 		}
 	</style>
-	<Text class="text number" origin={grid.n(2, 14, grid.HALF)}>n</Text>
-	<Text class="text power" origin={grid.n(10, 7, grid.HALF)}>2</Text>
+	<Text class="number" origin={grid.n(2, 14, grid.HALF)}>
+		n
+	</Text>
+	<Text class="power" origin={grid.n(10, 7, grid.HALF)}>
+		2
+	</Text>
 </SVG>
 
 ```
@@ -643,7 +652,34 @@ Boilerplate Svelte component:
 
 ## P45RegPoly
 
-> TODO
+P45RegPoly exposes functions useful for constructing or transforming a regular polygon. 
+
+```js
+import { P45RegPoly } from 'p45'
+```
+
+```js
+export default Object.freeze({
+	// totalInternalAngle calculates the total internal angle of a regular
+	// polygon with n sides.
+	totalInternalAngle(n),
+
+	// internalAngle calculates a single internal angle of a regular polyong with
+	// n sides.
+	internalAngle(n),
+
+	// points generates an array of points, in the form { x, y }, that represent
+	// a regular polygon.
+	points(
+		sides,                    // Number of sides
+		radius,                   // Radius to a vertex (not the apothem)
+		options = {
+			origin: { x: 0, y: 0 }, // Center point of the shape
+			rotate: 0,              // Clockwise rotation in degrees
+		}
+	),
+})
+```
 
 ## P45Util
 

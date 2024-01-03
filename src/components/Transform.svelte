@@ -2,10 +2,21 @@
 	import { getContext } from 'svelte'
 	import P45Util from '../grid/P45Util.js'
 
+	// offset from the top left.
+	// Default indicates no offset.
 	export let offset = { x: 0, y: 0 }
+
+	// scale from the center.
+	// Default indicates no scaling.
 	export let scale = { x: 1, y: 1 }
+
+	// rotate clockwise in degrees around the icon center.
 	export let rotate = 0
+
+	// flipX flips on the x-axis from the center line.
 	export let flipX = false
+
+	// flipY flips on the y-axis from the center line.
 	export let flipY = false
 
 	const grid = getContext('grid')
