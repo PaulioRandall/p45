@@ -5,29 +5,29 @@
 
 	const grid = getContext('grid')
 
-	export let o = grid.centerNode
-	export let r = 4
+	export let origin = grid.centerNode
+	export let radius = 4
 	export let ref = '???'
 
-	if (!grid.containsPx(o.x, o.y)) {
+	if (!grid.containsPx(origin.x, origin.y)) {
 		throw new Error(
-			`[${ref}:P45:Circle] Origin o out of bounds: x=${o.x}, y=${o.y}`
+			`[${ref}:P45:Circle] Origin origin out of bounds: x=${origin.x}, y=${origin.y}`
 		)
 	}
 
-	r = P45Util.parseNumber(r)
-	if (!P45Util.within(r, 1, 7)) {
+	radius = P45Util.parseNumber(radius)
+	if (!P45Util.within(radius, 1, 7)) {
 		throw new Error(
-			`[${ref}:P45:Circle] Radius modifier r out of bounds: 1 <= ${r} <= 7`
+			`[${ref}:P45:Circle] Radius modifier radius out of bounds: 1 <= ${radius} <= 7`
 		)
 	}
 
-	const rPx = Math.round(r * P45Grid.UNIT)
+	const rPx = Math.round(radius * P45Grid.UNIT)
 </script>
 
 <circle
 	{...$$restProps}
 	vector-effect="non-scaling-stroke"
-	cx={o.x}
-	cy={o.y}
+	cx={origin.x}
+	cy={origin.y}
 	r={rPx} />

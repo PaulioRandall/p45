@@ -1,8 +1,16 @@
 <script>
-	export let at = { x: 0, y: 0 }
+	import { getContext } from 'svelte'
+
+	const grid = getContext('grid')
+
+	export let origin = grid.center
 </script>
 
-<text {...$$restProps} x={at.x} y={at.y}>
+<text
+	{...$$restProps}
+	vector-effect="non-scaling-stroke"
+	x={origin.x}
+	y={origin.y}>
 	<slot />
 </text>
 

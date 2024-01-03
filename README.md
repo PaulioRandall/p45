@@ -379,34 +379,281 @@ The SVG component also sets context for all declared properties above. This mean
 
 ### `<Arc>`
 
-> TODO
+Arc uses the `<path>` element with the `A` command to draw an arc. It's intended for use why you just need an arc by itself rather than as a larger shape; use the `<Path>` component for those.
+
+Arcs are easy enough to do without this component but the property names provide good documentation.
+
+```js
+export let from              // = { x: 0, y: 0 }
+export let to                // = { x: 0, y: 0 }
+export let radius            // = { x: 0, y: 0 }
+export let rotate = 0        // in degrees
+export let large = false
+export let clockwise = false // AKA sweep-flag
+```
+
+> TODO: Icon of the parabola below
+
+```svelte
+<script>
+	// Parabola.svelte
+
+	import { P45Grid, SVG, Arc } from 'p45'
+	const grid = new P45Grid(17)
+</script>
+
+<SVG {grid}>
+	<Arc
+		from={grid.n(2, 3)}
+		to={grid.n(14, 3)}
+		radius={{
+			x: grid.HALF, //
+			y: grid.HALF + 1.5, //
+		}} />
+</SVG>
+```
 
 ### `<Circle>`
 
-> TODO
+Circles really don't need explanation. The origin is the center by default.
+
+The _ref_ parameter is a reference that's printed at the beginning of errors.
+
+```js
+export let origin = grid.centerNode // = { x: 0, y: 0 }
+export let radius = 4               // 1 <= radius <= 7
+export let ref = '???'
+```
+
+> TODO: Icon of the circle below
+
+```svelte
+<script>
+	// Circle.svelte
+
+	import { P45Grid, SVG, Circle } from 'p45'
+	const grid = new P45Grid(17)
+</script>
+
+<SVG {grid}>
+	<Circle radius="7" ref="My-Circle" />
+</SVG>
+```
 
 ### `<Line>`
 
-> TODO
+Needs no explanation. Draws a line _from_ a node _to_ another node.
+
+```js
+export let from // { x: 0, y: 0 }
+export let to   // { x: 0, y: 0 }
+```
+
+> TODO: Icon of the line below
+
+```svelte
+<script>
+	// Diagonal.svelte 
+
+	import { P45Grid, SVG, Line } from 'p45'
+	const grid = new P45Grid(17)
+</script>
+
+<SVG {grid}>
+	<Line from={grid.n(1, 15)} to={grid.n(15, 1)} />
+</SVG>
+```
 
 ### `<Path>`
 
-> TODO
+Path generates a `<path>` element. If _d_ is an array the contents will be joined together using a single space, otherwise _d_ is assumed to be string.
 
-> TODO: Doc the path functions
+```js
+export let d // = "" | [""]
+```
+
+To help craft the _d_ attribute a set of convenience functions maybe used:
+
+```js
+import {
+	CMD, // CMD(letter, ...{ x: 0, y: 0 })
+	M, // Move
+	Mr, // Move (relative)
+	L, // Line
+	Lr, // Line (relative)
+	C, // Bézier curve
+	Cr, // Bézier curve (relative)
+	S, // Several Bézier curves
+	Sr, // Several Bézier curves (relative)
+	Q, // Quadratic curve
+	Qr, // Quadratic curve (relative)
+	A, // Arc
+	Ar, // Arc (relative)
+	J, // Join: joins together a list of { x: 0, y: 0 } with a single space.
+	JL, // Join Lines: a series of L commands
+	JLr, // Join Lines (relative)
+} from 'p45'
+```
+
+> TODO: Icon of the path below
+
+```svelte
+<script>
+	// ConicalFlask.svelte
+
+	import { P45Grid, SVG, Path, M, L } from 'p45'
+	const grid = new P45Grid(17)
+</script>
+
+<SVG {grid}>
+	<Path
+		d={[
+			M(grid.n(6, 1, grid.HALF)), //
+			L(grid.n(6, 5, grid.HALF)), //
+			L(grid.n(3, 15)), //
+			L(grid.n(13, 15)), //
+			L(grid.n(9, 5, grid.HALF)), //
+			L(grid.n(9, 1, grid.HALF)) //
+		]} />
+</SVG>
+```
 
 ### `<Polygon>`
 
-> TODO
+Polygon produces a `<polygon>` element given an array of nodes or points.
+
+```js
+export let points // = [{ x: 0, y: 0 }]
+```
+
+> TODO: Icon of the polygon below
+
+```svelte
+<script>
+	// Diamond.svelte
+
+	import { P45Grid, SVG, Polygon } from 'p45'
+	const grid = new P45Grid(17)
+</script>
+
+<SVG {grid}>
+	<Polygon points={[
+		grid.n(1, 4),
+		grid.n(5, 1),
+		grid.n(11, 1),
+		grid.n(15, 4),
+		grid.n(8, 15),
+	]} />
+</SVG>
+```
 
 ### `<RegularPolygon>`
 
-> TODO
+RegularPolygon generates a regular polygon using the `<polygon>` element, with the given number of _sides_, and with a specified offset from the center.
+
+The _ref_ parameter is a reference that's printed at the beginning of errors.
+
+```js
+export let sides = 6
+export let ref = '???'
+export let offset = P45RegPoly.offset(ref, sides)
+```
+
+> TODO: Icon of the regular polygon below
+
+```svelte
+<script>
+	// Hexagon.svelte
+
+	import { P45Grid, SVG, RegularPolygon } from 'p45'
+	const grid = new P45Grid(17)
+</script>
+
+<SVG {grid}>
+	<RegularPolygon sides={6} />
+</SVG>
+```
 
 ### `<Text>`
 
+Generates a `<text>` element at the given _origin_.
+
+```js
+export let origin = grid.center
+```
+
+> TODO: Icon of the text below
+
+```svelte
+<script>
+	// Squared.svelte
+
+	import { P45Grid, SVG, Text } from 'p45'
+	const grid = new P45Grid(17)
+</script>
+
+<SVG {grid}>
+	<style>
+		.text {
+			stroke-width: 1;
+			fill: currentColor;
+		}
+
+		.number {
+			font-size: 56px;
+		}
+
+		.power {
+			font-size: 24px;
+		}
+	</style>
+	<Text class="text number" origin={grid.n(2, 14, grid.HALF)}>n</Text>
+	<Text class="text power" origin={grid.n(10, 7, grid.HALF)}>2</Text>
+</SVG>
+
+```
+
+## P45RegPoly
+
 > TODO
 
-## The Utilities
+## P45Util
 
-> TODO
+
+
+```js
+import { P45Util } from 'p45'
+```
+
+```js
+export default Object.freeze({
+	// parseNumber parses n into a number if it can, else it returns NaN.
+	//
+	// Unlike Number(n) no exception is thrown. NaN is always returned if
+	// parsing fails.
+	parseNumber(n),
+
+	// parseXY returns a result object containing a possible err string prop,
+	// an xy prop in the form { x, y } where both x and y are numbers, and a
+	// wasObject flag indicating the passed x value was an object containing the
+	// real x and y values.
+	//
+	// The input may either be two parsable numbers (x and y respectivily) or an
+	// object containing parsable x and y props.
+	parseXY(x, y),
+
+	// within returns true if the number n is contained within the bounds.
+	within(n, min, max),
+
+	// contains returns true if the node identified by x and y is contained
+	// within the bounds.
+	//
+	// bounds = {
+	//   xMin,
+	//   xMax,
+	//   yMin,
+	//   yMax,
+	// }
+	contains(bounds, x, y),
+})
+```

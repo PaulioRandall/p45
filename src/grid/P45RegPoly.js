@@ -12,7 +12,10 @@ const RegPoly = Object.freeze({
 	},
 
 	points(sides, radius, options = {}) {
-		const { origin = { x: 0, y: 0 }, rotate = 0 } = options
+		const {
+			origin = { x: 0, y: 0 }, //
+			rotate = 0, //
+		} = options
 
 		const angle = 360 / sides
 		const points = new Array(sides)

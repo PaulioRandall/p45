@@ -1,5 +1,8 @@
-const Util = Object.freeze({
+const P45Util = Object.freeze({
 	// parseNumber parses n into a number if it can, else it returns NaN.
+	//
+	// Unlike Number(n) no exception is thrown. NaN is always returned if
+	// parsing fails.
 	parseNumber(n) {
 		if (typeof n === 'number') {
 			return n
@@ -32,8 +35,8 @@ const Util = Object.freeze({
 			xy = { ...xy }
 		}
 
-		xy.x = Util.parseNumber(xy.x)
-		xy.y = Util.parseNumber(xy.y)
+		xy.x = P45Util.parseNumber(xy.x)
+		xy.y = P45Util.parseNumber(xy.y)
 
 		if (isNaN(xy.x)) {
 			return respond(null, `failed to parse x to a number: ${xy.x}`)
@@ -63,4 +66,4 @@ const Util = Object.freeze({
 	},
 })
 
-export default Util
+export default P45Util

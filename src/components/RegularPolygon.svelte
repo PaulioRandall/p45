@@ -7,13 +7,12 @@
 	import P45Grid from '../grid/P45Grid.js'
 	import P45Util from '../grid/P45Util.js'
 	import P45RegPoly from '../grid/P45RegPoly.js'
-
-	import { Polygon } from './Polygon.svelte'
+	import Polygon from './Polygon.svelte'
 
 	export let sides = 6
 	export let ref = '???'
 
-	sides = P45Util.parseNumber(6)
+	sides = P45Util.parseNumber(sides)
 	if (sides < 3) {
 		throw new Error(
 			`[${ref}:P45:RegularPolygon] sides prop too small: 3 <= ${sides} `
