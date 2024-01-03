@@ -4,7 +4,7 @@
 
 # P45
 
-<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+<div>
 	<img src="/icons/clock.svg" width="50" height="50" />
 	<img src="/icons/parabola.svg" width="50" height="50" />
 	<img src="/icons/circle.svg" width="50" height="50" />
@@ -20,6 +20,8 @@
 Svelte library for programmatically crafting grid based SVGs.
 
 Throughout this README I've used example based axiomatic definitions. My hoped for outcome is to strike a nice balance between concise communication of concepts and the precision needed for effective use of the library. I do hope it does not confuse.
+
+**Requires Svelte version 4.**
 
 ## Intentions
 
@@ -42,8 +44,6 @@ Those articulate in mental visualisation may be able to work out grid coordinate
 ### Dependency
 
 _package.json_. May need to be within `dependencies` in some cases.
-
-**Requires Svelte version 4.**
 
 ```json
 {
@@ -74,28 +74,26 @@ _package.json_. May need to be within `dependencies` in some cases.
 -->
 <SVG {grid}>
 	<!-- grid.n is shorthand for grid.node -->
-	<Polygon
-		points={[
-			grid.n(1, 4),
-			grid.n(5, 1),
-			grid.n(11, 1),
-			grid.n(15, 4),
-			grid.n(8, 15),
-		]} />
+	<Polygon points={[
+		grid.n(1, 4),
+		grid.n(5, 1),
+		grid.n(11, 1),
+		grid.n(15, 4),
+		grid.n(8, 15),
+	]} />
 	<!-- 
 		M and L functions are nothing special.
 		They just convert grid coordinates in to
 		SVG Path commands.
 	-->
-	<Path
-		d={[
-			M(grid.n(7, 1)),
-			L(grid.n(7, 2)),
-			L(grid.n(3, 15)),
-			L(grid.n(13, 15)),
-			L(grid.n(9, 2)),
-			L(grid.n(9, 1))
-		]} />
+	<Path d={[
+		M(grid.n(7, 1)),
+		L(grid.n(7, 2)),
+		L(grid.n(3, 15)),
+		L(grid.n(13, 15)),
+		L(grid.n(9, 2)),
+		L(grid.n(9, 1))
+	]} />
 	<!-- 
 		You can slot raw SVG elements in too or build
 		your own Svelte components which have access
@@ -338,8 +336,6 @@ To make using SVG commands and drawing common shapes easier, P45 provides a set 
 
 ### `<SVG>`
 
-The SVG component wraps `<svg>` applying the standard attributes, some default styling, and setting up the viewBox based on the provided grid. The SVG component also sets context for all declared properties.
-
 ```js
 export let grid              // = P45Grid
 export let title = undefined
@@ -347,6 +343,8 @@ export let title = undefined
 setContext('grid', grid)
 setContext('title', title)
 ```
+
+The SVG component wraps `<svg>` applying the standard attributes, some default styling, and setting up the viewBox based on the provided grid. The SVG component also sets context for all declared properties.
 
 Boilerplate for a new SVG Svelte component:
 
@@ -382,10 +380,6 @@ Add some elements to create an icon:
 
 ### `<Arc>`
 
-Arc uses the `<path>` element with the `A` command to draw an arc. It's intended for use when you only need an arc by itself rather than as a larger shape; use the `<Path>` component for anything more complex.
-
-Arcs are easy enough to do without this component but the property names provide good documentation.
-
 ```js
 export let from              // = { x: 0, y: 0 }
 export let to                // = { x: 0, y: 0 }
@@ -394,6 +388,10 @@ export let rotate = 0        // in degrees
 export let large = false
 export let clockwise = false // AKA sweep-flag
 ```
+
+Arc uses the `<path>` element with the `A` command to draw an arc. It's intended for use when you only need an arc by itself rather than as a larger shape; use the `<Path>` component for anything more complex.
+
+Arcs are easy enough to do without this component but the property names provide good documentation.
 
 <img src="/icons/parabola.svg" width="100" height="100" />
 
@@ -418,13 +416,13 @@ export let clockwise = false // AKA sweep-flag
 
 ### `<Circle>`
 
-Circles really don't need explanation:
-
 ```js
 export let origin = grid.centerNode // = { x: 0, y: 0 }
 export let radius = 4               // 1 <= radius <= 7
 export let ref = '???'              // printed at the beginning of errors.
 ```
+
+Circles really don't need explanation:
 
 <img src="/icons/circle.svg" width="100" height="100" />
 
@@ -443,12 +441,12 @@ export let ref = '???'              // printed at the beginning of errors.
 
 ### `<Line>`
 
-Needs no explanation. Draws a line _from_ a node _to_ another node.
-
 ```js
 export let from // { x: 0, y: 0 }
 export let to   // { x: 0, y: 0 }
 ```
+
+Needs no explanation. Draws a line _from_ a node _to_ another node.
 
 <img src="/icons/diagonal.svg" width="100" height="100" />
 
@@ -467,11 +465,11 @@ export let to   // { x: 0, y: 0 }
 
 ### `<Path>`
 
-Path generates a `<path>` element. If _d_ is an array the contents will be joined together using a single space, otherwise _d_ is assumed to be a string.
-
 ```js
 export let d // = "" | [""]
 ```
+
+Path generates a `<path>` element. If _d_ is an array the contents will be joined together using a single space, otherwise _d_ is assumed to be a string.
 
 To help craft the _d_ attribute a set of convenience functions maybe used:
 
@@ -519,11 +517,11 @@ import {
 
 ### `<Polygon>`
 
-Polygon produces a `<polygon>` element given an array of nodes or points.
-
 ```js
 export let points // = [{ x: 0, y: 0 }]
 ```
+
+Polygon produces a `<polygon>` element given an array of nodes or points.
 
 <img src="/icons/diamond.svg" width="100" height="100" />
 
@@ -548,13 +546,13 @@ export let points // = [{ x: 0, y: 0 }]
 
 ### `<RegularPolygon>`
 
-RegularPolygon generates a regular polygon using the `<polygon>` element, at the given origin, and with the given number of _sides_:
-
 ```js
 export let origin = grid.centerNode // = { x: 0, y: 0 }
 export let sides = 6
 export let ref = '???'              // printed at the beginning of errors.
 ```
+
+RegularPolygon generates a regular polygon using the `<polygon>` element, at the given origin, and with the given number of _sides_:
 
 <img src="/icons/hexagon.svg" width="100" height="100" />
 
@@ -573,11 +571,11 @@ export let ref = '???'              // printed at the beginning of errors.
 
 ### `<Text>`
 
-Generates a `<text>` element at the given _origin_ and slotted content.
-
 ```js
 export let origin = grid.centerNode // = { x: 0, y: 0 }
 ```
+
+Generates a `<text>` element at the given _origin_ and slotted content.
 
 <img src="/icons/squared.svg" width="100" height="100" />
 
@@ -613,8 +611,6 @@ export let origin = grid.centerNode // = { x: 0, y: 0 }
 
 ### `<Transform>`
 
-The Transform component encapsulates slotted components with a `<g>` element and applies user transformations to it. All properties are optional:
-
 ```js
 // offset from the top left.
 // Default indicates no offset.
@@ -634,6 +630,8 @@ export let flipX  = false
 export let flipY  = false
 ```
 
+The Transform component encapsulates slotted components with a `<g>` element and applies user transformations to it. All properties are optional:
+
 Boilerplate Svelte component:
 
 ```svelte
@@ -652,11 +650,11 @@ Boilerplate Svelte component:
 
 ## P45RegPoly
 
-P45RegPoly exposes functions useful for constructing or transforming a regular polygon. 
-
 ```js
 import { P45RegPoly } from 'p45'
 ```
+
+P45RegPoly exposes functions useful for constructing or transforming a regular polygon.
 
 ```js
 export default Object.freeze({
@@ -671,11 +669,13 @@ export default Object.freeze({
 	// points generates an array of points, in the form { x, y }, that represent
 	// a regular polygon.
 	points(
-		sides,                    // Number of sides
-		radius,                   // Radius to a vertex (not the apothem)
+		sides,  // Number of sides
+		radius, // Radius to a vertex (not the apothem)
 		options = {
-			origin: { x: 0, y: 0 }, // Center point of the shape
-			rotate: 0,              // Clockwise rotation in degrees
+			// Center point of the shape
+			origin: { x: 0, y: 0 },
+			// Clockwise rotation in degrees
+			rotate: 0,
 		}
 	),
 })
@@ -683,11 +683,11 @@ export default Object.freeze({
 
 ## P45Util
 
-P45Util exposes some utility functions used internally but may be of use to you.
-
 ```js
 import { P45Util } from 'p45'
 ```
+
+P45Util exposes some utility functions used internally but may be of use to you.
 
 ```js
 export default Object.freeze({
