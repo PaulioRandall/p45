@@ -275,7 +275,6 @@ id.split('_') == [
 Visible nodes can be constructed by calling the `node` and `n` functions on a P45Grid instance. `n` being an alias of `node`. A new object is returned containing node properties in the form:
 
 ```js
-// Note that this is mearly a user orientated representation.
 grid.node(x, y, offX, offY) == {
 	id: P45Grid.idOf(x, y, offX, offY),
 	coords: {
@@ -337,7 +336,7 @@ To make using SVG commands and drawing common shapes easier, P45 provides a set 
 ### `<SVG>`
 
 ```js
-export let grid              // = P45Grid
+export let grid // = P45Grid
 export let title = undefined
 
 setContext('grid', grid)
@@ -351,7 +350,7 @@ Boilerplate for a new SVG Svelte component:
 ```svelte
 <script>
 	import { P45Grid, SVG } from 'p45'
-	const grid = new P45Grid(3)
+	const grid = new P45Grid(3) // 3x3 grid
 </script>
 
 <SVG {grid}>
@@ -422,8 +421,6 @@ export let radius = 4               // 1 <= radius <= 7
 export let ref = '???'              // printed at the beginning of errors.
 ```
 
-Circles really don't need explanation:
-
 <img src="/icons/circle.svg" width="100" height="100" />
 
 ```svelte
@@ -445,8 +442,6 @@ Circles really don't need explanation:
 export let from // { x: 0, y: 0 }
 export let to   // { x: 0, y: 0 }
 ```
-
-Needs no explanation. Draws a line _from_ a node _to_ another node.
 
 <img src="/icons/diagonal.svg" width="100" height="100" />
 
@@ -503,15 +498,14 @@ import {
 </script>
 
 <SVG {grid}>
-	<Path
-		d={[
-			M(grid.n(6, 1, grid.HALF)), //
-			L(grid.n(6, 5, grid.HALF)), //
-			L(grid.n(3, 15)), //
-			L(grid.n(13, 15)), //
-			L(grid.n(9, 5, grid.HALF)), //
-			L(grid.n(9, 1, grid.HALF)) //
-		]} />
+	<Path	d={[
+		M(grid.n(6, 1, grid.HALF)), //
+		L(grid.n(6, 5, grid.HALF)), //
+		L(grid.n(3, 15)), //
+		L(grid.n(13, 15)), //
+		L(grid.n(9, 5, grid.HALF)), //
+		L(grid.n(9, 1, grid.HALF)) //
+	]} />
 </SVG>
 ```
 
