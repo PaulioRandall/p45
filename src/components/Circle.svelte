@@ -22,7 +22,7 @@
 		)
 	}
 
-	const rPx = Math.round(radius * P45Grid.UNIT)
+	const rPx = radius * P45Grid.UNIT
 </script>
 
 <circle

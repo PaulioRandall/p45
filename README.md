@@ -114,7 +114,7 @@ import { P45Grid } from 'p45'
 const g = new P45Grid(size)
 ```
 
-> TODO: Diagram of grid with annotated cell and annotated node as a visual reference for the text below.
+<img src="/icons/grid.svg" width="600" height="600" />
 
 The P45Grid is a simple JavaScript class with functions for generating nodes. Nodes are the points that make up a grid (or graph) as opposed to cells which are the square areas within a set of linked nodes.
 
