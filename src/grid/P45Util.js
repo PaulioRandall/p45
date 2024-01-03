@@ -56,7 +56,7 @@ const P45Util = Object.freeze({
 
 	// contains returns true if the node identified by x and y is contained
 	// within the bounds.
-	contains(bounds, x, y) {
+	contains(x, y, bounds) {
 		return (
 			x >= bounds.xMin && //
 			x <= bounds.xMax && //

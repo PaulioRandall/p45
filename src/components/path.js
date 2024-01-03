@@ -25,9 +25,6 @@ export const Ar = (r, to, options = {}) => _A('a', r, to, options)
 
 export const J = (...cmds) => cmds.join(' ')
 
-export const JL = (...ps) => J(...ps.map((p) => L(p)))
-export const JLr = (...ps) => J(...ps.map((p) => Lr(p)))
-
 const _A = (letter, r, to, options = {}) => {
 	const {
 		rotate = 0, //
@@ -62,6 +59,4 @@ export default Object.freeze({
 	A, //
 	Ar, //
 	J, //
-	JL, //
-	JLr, //
 })

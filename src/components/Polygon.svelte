@@ -10,4 +10,4 @@
 	const _points = points.map(pointsToStrings).join(' ')
 </script>
 
-<polygon {...$$restProps} vector-effect="non-scaling-stroke" points={_points} />
+<polygon vector-effect="non-scaling-stroke" {...$$restProps} points={_points} />

@@ -1,4 +1,4 @@
-import SpacedGrid from './SpacedGrid.js'
+import P45SpacedGrid from './P45SpacedGrid.js'
 
 export default class P45Grid {
 	static get UNIT() {
@@ -19,7 +19,7 @@ export default class P45Grid {
 	}
 
 	constructor(size = 17) {
-		this._sg = new SpacedGrid(
+		this._sg = new P45SpacedGrid(
 			size * 3, //
 			P45Grid.UNIT, //
 			{

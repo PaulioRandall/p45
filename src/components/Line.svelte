@@ -4,8 +4,8 @@
 </script>
 
 <line
-	{...$$restProps}
 	vector-effect="non-scaling-stroke"
+	{...$$restProps}
 	x1={from.x}
 	y1={from.y}
 	x2={to.x}

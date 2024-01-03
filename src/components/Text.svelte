@@ -7,8 +7,8 @@
 </script>
 
 <text
-	{...$$restProps}
 	vector-effect="non-scaling-stroke"
+	{...$$restProps}
 	x={origin.x}
 	y={origin.y}>
 	<slot />

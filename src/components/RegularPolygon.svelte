@@ -9,6 +9,9 @@
 	import P45RegPoly from '../grid/P45RegPoly.js'
 	import Polygon from './Polygon.svelte'
 
+	const grid = getContext('grid')
+
+	export let origin = grid.centerNode
 	export let sides = 6
 	export let ref = '???'
 
@@ -19,12 +22,9 @@
 		)
 	}
 
-	export let offset = P45RegPoly.offset(ref, sides)
-
-	const grid = getContext('grid')
 	const len = grid.centerNode.x - P45Grid.UNIT
 	const points = P45RegPoly.points(sides, len, {
-		origin: grid.centerNode,
+		origin: origin,
 		rotate: 180,
 	})
 </script>

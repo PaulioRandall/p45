@@ -495,8 +495,6 @@ import {
 	A, // Arc
 	Ar, // Arc (relative)
 	J, // Join: joins together a list of { x: 0, y: 0 } with a single space.
-	JL, // Join Lines: a series of L commands
-	JLr, // Join Lines (relative)
 } from 'p45'
 ```
 
@@ -618,13 +616,50 @@ export let origin = grid.center
 
 ```
 
+### `<Transform>`
+
+The Transform component encapsulated slotted components with a `<g>` element and applies specified transformations to it. All properties are optional:
+
+```js
+// offset from the top left.
+// Default indicates no offset.
+export let offset = { x: 0, y: 0 }
+
+// scale from the center.
+// Default indicates no scaling.
+export let scale  = { x: 1, y: 1 } 
+
+// rotate clockwise in degrees around the icon center.
+export let rotate = 0
+
+// flipX flips on the x-axis from the center line.
+export let flipX  = false
+
+// flipY flips on the y-axis from the center line.
+export let flipY  = false
+```
+
+Boilerplate Svelte component:
+
+```svelte
+<script>
+	import { P45Grid, SVG, Transform } from 'p45'
+
+	const grid = new P45Grid(3)
+</script>
+
+<SVG {grid}>
+	<Transform {...}>
+		<!-- SVG elements -->
+	</Transform>
+</SVG>
+```
+
 ## P45RegPoly
 
 > TODO
 
 ## P45Util
-
-
 
 ```js
 import { P45Util } from 'p45'
@@ -659,6 +694,6 @@ export default Object.freeze({
 	//   yMin,
 	//   yMax,
 	// }
-	contains(bounds, x, y),
+	contains(x, y, bounds),
 })
 ```

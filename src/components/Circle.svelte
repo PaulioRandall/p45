@@ -16,9 +16,9 @@
 	}
 
 	radius = P45Util.parseNumber(radius)
-	if (!P45Util.within(radius, 1, 7)) {
+	if (!P45Util.within(radius, 0.01, 7)) {
 		throw new Error(
-			`[${ref}:P45:Circle] Radius modifier radius out of bounds: 1 <= ${radius} <= 7`
+			`[${ref}:P45:Circle] Radius modifier radius out of bounds: 0.01 <= ${radius} <= 7`
 		)
 	}
 
@@ -26,8 +26,8 @@
 </script>
 
 <circle
-	{...$$restProps}
 	vector-effect="non-scaling-stroke"
+	{...$$restProps}
 	cx={origin.x}
 	cy={origin.y}
 	r={rPx} />

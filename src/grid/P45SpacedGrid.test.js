@@ -1,64 +1,64 @@
-import SpacedGrid from './SpacedGrid.js'
+import P45SpacedGrid from './P45SpacedGrid.js'
 
 const XY = (x, y) => ({ x, y })
 
-describe('SpacedGrid.js', () => {
-	test('SpacedGrid.checkSize', () => {
+describe('P45SpacedGrid.js', () => {
+	test('P45SpacedGrid.checkSize', () => {
 		let err
 
-		err = SpacedGrid.checkSize(3)
+		err = P45SpacedGrid.checkSize(3)
 		expect(err).toEqual(null)
 
-		err = SpacedGrid.checkSize(999)
+		err = P45SpacedGrid.checkSize(999)
 		expect(err).toEqual(null)
 
-		err = SpacedGrid.checkSize(2)
+		err = P45SpacedGrid.checkSize(2)
 		expect(err).not.toEqual(null)
 
-		err = SpacedGrid.checkSize(100)
+		err = P45SpacedGrid.checkSize(100)
 		expect(err).not.toEqual(null)
 	})
 
-	test('SpacedGrid.checkSpacing', () => {
+	test('P45SpacedGrid.checkSpacing', () => {
 		let err
 
-		err = SpacedGrid.checkSpacing(2)
+		err = P45SpacedGrid.checkSpacing(2)
 		expect(err).toEqual(null)
 
-		err = SpacedGrid.checkSpacing(200)
+		err = P45SpacedGrid.checkSpacing(200)
 		expect(err).toEqual(null)
 
-		err = SpacedGrid.checkSpacing(1)
+		err = P45SpacedGrid.checkSpacing(1)
 		expect(err).not.toEqual(null)
 
-		err = SpacedGrid.checkSpacing(3)
+		err = P45SpacedGrid.checkSpacing(3)
 		expect(err).not.toEqual(null)
 	})
 
-	test('SpacedGrid.checkOrigin', () => {
+	test('P45SpacedGrid.checkOrigin', () => {
 		let err
 
-		err = SpacedGrid.checkOrigin({ x: 0, y: 0 })
+		err = P45SpacedGrid.checkOrigin({ x: 0, y: 0 })
 		expect(err).toEqual(null)
 
-		err = SpacedGrid.checkOrigin({ x: 100, y: -100 })
+		err = P45SpacedGrid.checkOrigin({ x: 100, y: -100 })
 		expect(err).toEqual(null)
 
-		err = SpacedGrid.checkOrigin({ x: '100', y: '100' })
+		err = P45SpacedGrid.checkOrigin({ x: '100', y: '100' })
 		expect(err).toEqual(null)
 
-		err = SpacedGrid.checkOrigin({ x: 0 })
+		err = P45SpacedGrid.checkOrigin({ x: 0 })
 		expect(err).not.toEqual(null)
 
-		err = SpacedGrid.checkOrigin(100)
+		err = P45SpacedGrid.checkOrigin(100)
 		expect(err).not.toEqual(null)
 
-		err = SpacedGrid.checkOrigin({ x: 'abc', y: 0 })
+		err = P45SpacedGrid.checkOrigin({ x: 'abc', y: 0 })
 		expect(err).not.toEqual(null)
 	})
 
-	describe('new SpacedGrid(<(0,0) origin>)', () => {
-		const g = new SpacedGrid(5, 2, { x: 0, y: 0 })
+	describe('new P45SpacedGrid(<(0,0) origin>)', () => {
+		const g = new P45SpacedGrid(5, 2, { x: 0, y: 0 })
 
 		describe('THEN check property', () => {
 			test('grid.lastIdx', () => {
@@ -98,8 +98,8 @@ describe('SpacedGrid.js', () => {
 		})
 	})
 
-	describe('new SpacedGrid(<negative origin>)', () => {
-		const g = new SpacedGrid(5, 2, { x: -2, y: -2 })
+	describe('new P45SpacedGrid(<negative origin>)', () => {
+		const g = new P45SpacedGrid(5, 2, { x: -2, y: -2 })
 
 		describe('THEN check property', () => {
 			test('grid.lastIdx', () => {
@@ -139,8 +139,8 @@ describe('SpacedGrid.js', () => {
 		})
 	})
 
-	describe('new SpacedGrid(<positive origin>)', () => {
-		const g = new SpacedGrid(5, 2, { x: 2, y: 2 })
+	describe('new P45SpacedGrid(<positive origin>)', () => {
+		const g = new P45SpacedGrid(5, 2, { x: 2, y: 2 })
 
 		describe('THEN check property', () => {
 			test('grid.lastIdx', () => {
@@ -181,7 +181,7 @@ describe('SpacedGrid.js', () => {
 	})
 
 	describe('WHEN grid.node called', () => {
-		const g = new SpacedGrid(5, 2, { x: -2, y: -2 })
+		const g = new P45SpacedGrid(5, 2, { x: -2, y: -2 })
 
 		test('GIVEN x and y of 0 RETURNS expected node', () => {
 			const n = g.node(0, 0)

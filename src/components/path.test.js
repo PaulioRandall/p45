@@ -1,4 +1,4 @@
-import { CMD, A, JL } from './path.js'
+import { CMD, A } from './path.js'
 
 const twoByTwo = { x: 2, y: 2 }
 const fourByFour = { x: 4, y: 4 }
@@ -21,10 +21,5 @@ describe('path.js', () => {
 			clockwise: true, //
 		})
 		expect(act).toEqual('A 2 2 90 1 1 4 4')
-	})
-
-	test('JL', () => {
-		const act = JL(twoByTwo, fourByFour, twoByTwo, fourByFour)
-		expect(act).toEqual('L 2 2 L 4 4 L 2 2 L 4 4')
 	})
 })

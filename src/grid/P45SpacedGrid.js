@@ -1,28 +1,28 @@
 import P45Util from './P45Util.js'
 
-// SpacedGrid represents a grid with a fixed size, spacing (pixel distance
+// P45SpacedGrid represents a grid with a fixed size, spacing (pixel distance
 // between nodes), and origin offset.
 //
 // You can also view a grid as a square graph of nodes as the grid does not
 // busy itself with cells.
 //
 // Grids are usually built with an origin in the top left, bottom left, or
-// center. SpacedGrids have their origin in the top left but can be offset such
-// that the passed coordinates are translated internally rather than the user
-// having to translate the inputs and outputs.
+// center. P45SpacedGrids have their origin in the top left but can be offset
+// such that the passed coordinates are translated internally rather than the
+// user having to translate the inputs and outputs.
 //
-// This makes SpacedGrids a nice tool for embedding in larger grids. Think of a
-// relatively placed set of vectors that can are translated together.
+// This makes P45SpacedGrids a nice tool for embedding in larger grids. Think
+// of a relatively placed set of vectors that can are translated together.
 //
-// SpacedGrid instances are immutable.
-export default class SpacedGrid {
+// P45SpacedGrid instances are immutable.
+export default class P45SpacedGrid {
 	// checkArgs returns a string error message if any argument cannot be used
-	// to construct a SpacedGrid.
+	// to construct a P45SpacedGrid.
 	static checkArgs(size, spacing, origin) {
 		return (
-			SpacedGrid.checkSize(size) || //
-			SpacedGrid.checkSpacing(spacing) || //
-			SpacedGrid.checkOrigin(origin)
+			P45SpacedGrid.checkSize(size) || //
+			P45SpacedGrid.checkSpacing(spacing) || //
+			P45SpacedGrid.checkOrigin(origin)
 		)
 	}
 
@@ -41,7 +41,7 @@ export default class SpacedGrid {
 	}
 
 	// checkSpacing returns a string error message if the spacing argument cannot
-	// be used to construct a SpacedGrid.
+	// be used to construct a P45SpacedGrid.
 	static checkSpacing(spacing) {
 		if (spacing % 2 !== 0) {
 			return `Requires even numbered grid spacing`
@@ -75,9 +75,9 @@ export default class SpacedGrid {
 	}
 
 	constructor(size, spacing, origin = { x: 0, y: 0 }) {
-		const e = SpacedGrid.checkArgs(size, spacing, origin)
+		const e = P45SpacedGrid.checkArgs(size, spacing, origin)
 		if (e !== null) {
-			throw new Error(`[P45:SpacedGrid:constructor] ${e}`)
+			throw new Error(`[P45:P45SpacedGrid:constructor] ${e}`)
 		}
 
 		this.lastIdx = size - 1
@@ -120,13 +120,13 @@ export default class SpacedGrid {
 	// contains returns true if the node identified by x and y is contained
 	// within the grid.
 	contains(x, y) {
-		return P45Util.contains(this.bounds, x, y)
+		return P45Util.contains(x, y, this.bounds)
 	}
 
 	// contains returns true if the pixel coordinate is contained within the
 	// grid.
 	containsPx(x = 0, y = 0) {
-		return P45Util.contains(this.boundsPx, x, y)
+		return P45Util.contains(x, y, this.boundsPx)
 	}
 
 	// node returns a node object containing properties relevant to the node
@@ -136,18 +136,18 @@ export default class SpacedGrid {
 	node(x = 0, y = 0, offX = 0, offY = 0) {
 		let { xy, err, wasObject } = P45Util.parseXY(x, y)
 		if (err !== null) {
-			throw new Error(`[P45:SpacedGrid:node] ${err}`)
+			throw new Error(`[P45:P45SpacedGrid:node] ${err}`)
 		}
 
 		if (!this.contains(xy.x, xy.y)) {
 			throw new Error(
-				`[P45:SpacedGrid:node] out of bounds: ${JSON.stringify(xy)}`
+				`[P45:P45SpacedGrid:node] out of bounds: ${JSON.stringify(xy)}`
 			)
 		}
 
 		let off = wasObject ? P45Util.parseXY(y, offX) : P45Util.parseXY(offX, offY)
 		if (off.err !== null) {
-			throw new Error(`[P45:SpacedGrid:node] ${off}`)
+			throw new Error(`[P45:P45SpacedGrid:node] ${off}`)
 		}
 
 		off = off.xy
