@@ -341,7 +341,7 @@ Boilerplate for a new SVG Svelte component:
 
 Add some elements to create an icon:
 
-<img src="/icons/clock.svg" width="200" height="200" />
+<img src="/icons/clock.svg" width="100" height="100" />
 
 ```svelte
 <script>
@@ -397,7 +397,7 @@ export let large = false
 export let clockwise = false // AKA sweep-flag
 ```
 
-<img src="/icons/parabola.svg" width="200" height="200" />
+<img src="/icons/parabola.svg" width="100" height="100" />
 
 ```svelte
 <script>
@@ -430,7 +430,7 @@ export let radius = 4               // 1 <= radius <= 7
 export let ref = '???'
 ```
 
-<img src="/icons/circle.svg" width="200" height="200" />
+<img src="/icons/circle.svg" width="100" height="100" />
 
 ```svelte
 <script>
@@ -454,7 +454,7 @@ export let from // { x: 0, y: 0 }
 export let to   // { x: 0, y: 0 }
 ```
 
-<img src="/icons/diagonal.svg" width="200" height="200" />
+<img src="/icons/diagonal.svg" width="100" height="100" />
 
 ```svelte
 <script>
@@ -500,7 +500,7 @@ import {
 } from 'p45'
 ```
 
-<img src="/icons/conical-flask.svg" width="200" height="200" />
+<img src="/icons/conical-flask.svg" width="100" height="100" />
 
 ```svelte
 <script>
@@ -531,7 +531,7 @@ Polygon produces a `<polygon>` element given an array of nodes or points.
 export let points // = [{ x: 0, y: 0 }]
 ```
 
-<img src="/icons/diamond.svg" width="200" height="200" />
+<img src="/icons/diamond.svg" width="100" height="100" />
 
 ```svelte
 <script>
@@ -564,7 +564,7 @@ export let offset = P45RegPoly.offset(ref, sides)
 export let ref = '???'
 ```
 
-<img src="/icons/hexagon.svg" width="200" height="200" />
+<img src="/icons/hexagon.svg" width="100" height="100" />
 
 ```svelte
 <script>
@@ -587,7 +587,7 @@ Generates a `<text>` element at the given _origin_.
 export let origin = grid.center
 ```
 
-<img src="/icons/squared.svg" width="200" height="200" />
+<img src="/icons/squared.svg" width="100" height="100" />
 
 ```svelte
 <script>
