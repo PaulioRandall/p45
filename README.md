@@ -44,7 +44,7 @@ _package.json_. May need to be within `dependencies` in some cases.
 <!-- Diamond.svelte -->
 
 <script>
-	import { P45Grid, SVG, Polygon, Path, J, M, L } from 'p45'
+	import { P45Grid, SVG, Polygon, Path, M, L } from 'p45'
 
 	// FYI: P45Grid instances are immutable.
 	// You can share a single instance across
@@ -57,7 +57,7 @@ _package.json_. May need to be within `dependencies` in some cases.
 	won't know how to setup your viewBox or
 	map grid points from your components.
 -->
-<svg {grid}>
+<SVG {grid}>
 	<!-- grid.n is shorthand for grid.node -->
 	<Polygon
 		points={[
@@ -73,21 +73,21 @@ _package.json_. May need to be within `dependencies` in some cases.
 		SVG Path commands.
 	-->
 	<Path
-		d={J(
+		d={[
 			M(grid.n(7, 1)),
 			L(grid.n(7, 2)),
 			L(grid.n(3, 15)),
 			L(grid.n(13, 15)),
 			L(grid.n(9, 2)),
 			L(grid.n(9, 1))
-		)} />
+		]} />
 	<!-- 
 		You can slot raw SVG elements in too or build
 		your own Svelte components which have access
 		to the grid and other properties via Svelte's
 		getContext function.
 	-->
-</svg>
+</SVG>
 ```
 
 ## The P45Grid
@@ -95,7 +95,7 @@ _package.json_. May need to be within `dependencies` in some cases.
 ```js
 import { P45Grid } from 'p45'
 
-const g = new P45Grid(SIZE)
+const g = new P45Grid(size)
 ```
 
 > TODO: Diagram of grid with annotated cell and annotated node as a visual reference for the text below.
@@ -119,8 +119,14 @@ To allow control points to be placed off canvas, there exists a _shadow_ grid wi
 
 import { P45Grid } from 'p45'
 
+// UNIT is the spacing between nodes.
 P45Grid.UNIT === 4
+
+// HALF is half a UNIT.
 P45Grid.HALF === 2
+
+// idOf returns a unique ID for every combination of inputs which is designed
+// to be easily parsed.
 P45Grid.idOf(col, row, offX = 0, offY = 0, shadow = false)
 
 new P45Grid(size) === {
@@ -138,13 +144,13 @@ new P45Grid(size) === {
 	origin:	{
 		x: Number,
 		y: Number,
-	}
+	},
 
 	// centerXY holds the coordinates of the center node.
 	centerXY: {
 		x: Number,
 		y: Number,
-	}
+	},
 
 	// bounds holds the coordinate bounds of the shadow grid.
 	bounds: {
@@ -152,7 +158,7 @@ new P45Grid(size) === {
 		xMax: Number,
 		yMin: Number,
 		yMax: Number,
-	}
+	},
 
 	// boundsPx holds the pixel bounds of the shadow grid.
 	boundsPx: bounds: {
@@ -160,7 +166,7 @@ new P45Grid(size) === {
 		xMax: Number,
 		yMin: Number,
 		yMax: Number,
-	}
+	},
 
 	// len is the length of the visible grid.
 	len: Number,
@@ -239,15 +245,15 @@ Returns a unique ID for every combination of inputs which is designed to be easi
 
 ```js
 // Numbers are always signed and padded with zeros.
-const id = P45Grid.idOf(2, 4, 5, -5) == 'COL_+002_+005_ROW_+004_-005'
+const id = P45Grid.idOf(2, -4, -5, 5) == 'COL_+002_-005_ROW_-004_+005'
 
 id.split('_') == [
 	0: 'COL',
 	1: '+002' == 2  == // column number,
-	2: '+005' == 5  == // column offset in grid pixels,
+	2: '-005' == -5 == // column offset in grid pixels,
 	3: 'ROW',
-	4: '+005' == 2  == // row number,
-	5: '-005' == -5 == // row offset in grid pixels,
+	4: '-004' == -4 == // row number,
+	5: '+005' == 5  == // row offset in grid pixels,
 ]
 ```
 
@@ -256,8 +262,7 @@ id.split('_') == [
 Visible nodes can be constructed by calling the `node` and `n` functions on a P45Grid instance. `n` being an alias of `node`. A new object is returned containing node properties in the form:
 
 ```js
-// Note that this is mearly a user orientated
-// representation of the algorithm and output.
+// Note that this is mearly a user orientated representation.
 grid.node(x, y, offX, offY) == {
 	id: P45Grid.idOf(x, y, offX, offY),
 	coords: {
@@ -330,7 +335,7 @@ Boilerplate for a new SVG Svelte component:
 </script>
 
 <SVG {grid}>
-	<!-- SVG Commands -->
+	<!-- SVG elements -->
 </SVG>
 ```
 
@@ -356,30 +361,30 @@ Add some elements to create an icon:
 It accepts the following properties. They are all optional except for `grid`:
 
 ```js
-	// grid is the P45Grid for layout.
-	export let grid
+// grid is the P45Grid for layout.
+export let grid
 
-	// offset from the top left.
-	export let offset = { x: 0, y: 0 }
+// offset from the top left.
+export let offset = { x: 0, y: 0 }
 
-	// rotate clockwise in degrees around the icon center. 
-	export let rotate = 0
+// rotate clockwise in degrees around the icon center. 
+export let rotate = 0
 
-	// flipX axis.
-	export let flipX = false
+// flipX axis.
+export let flipX = false
 
-	// flipY axis.
-	export let flipY = false
+// flipY axis.
+export let flipY = false
 
-	// title attribute of the SVG.
-	export let title = undefined
+// title attribute of the SVG.
+export let title = undefined
 ```
 
 The SVG component also sets context for all declared properties above. This means any slotted components have access to the grid via `getContext('grid')`.
 
 ### `<Arc>`
 
-Arc uses the `<path>` element with the `A` command to draw an arc. It's intended for use why you just need an arc by itself rather than as a larger shape; use the `<Path>` component for those.
+Arc uses the `<path>` element with the `A` command to draw an arc. It's intended for use when you only need an arc by itself rather than as a larger shape; use the `<Path>` component for anything more complex.
 
 Arcs are easy enough to do without this component but the property names provide good documentation.
 
@@ -392,7 +397,7 @@ export let large = false
 export let clockwise = false // AKA sweep-flag
 ```
 
-> TODO: Icon of the parabola below
+<img src="/icons/parabola.svg" width="200" height="200" />
 
 ```svelte
 <script>
@@ -417,11 +422,11 @@ export let clockwise = false // AKA sweep-flag
 
 Circles really don't need explanation. The origin is the center by default.
 
-The _ref_ parameter is a reference that's printed at the beginning of errors.
-
 ```js
 export let origin = grid.centerNode // = { x: 0, y: 0 }
 export let radius = 4               // 1 <= radius <= 7
+
+// ref (reference) is printed at the beginning of errors.
 export let ref = '???'
 ```
 
@@ -551,12 +556,12 @@ export let points // = [{ x: 0, y: 0 }]
 
 RegularPolygon generates a regular polygon using the `<polygon>` element, with the given number of _sides_, and with a specified offset from the center.
 
-The _ref_ parameter is a reference that's printed at the beginning of errors.
-
 ```js
 export let sides = 6
-export let ref = '???'
 export let offset = P45RegPoly.offset(ref, sides)
+
+// ref (reference) is printed at the beginning of errors.
+export let ref = '???'
 ```
 
 > TODO: Icon of the regular polygon below
