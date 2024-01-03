@@ -8,6 +8,15 @@ Svelte library for programmatically crafting grid based SVGs.
 
 Throughout this README I've used example based axiomatic definitions. My hoped for outcome is to strike a nice balance between concise communication of concepts and the precision needed for effective use of the library. I do hope it does not confuse.
 
+<img src="/icons/clock.svg" width="50" height="50" />
+<img src="/icons/parabola.svg" width="50" height="50" />
+<img src="/icons/circle.svg" width="50" height="50" />
+<img src="/icons/diagonal.svg" width="50" height="50" />
+<img src="/icons/conical-flask.svg" width="50" height="50" />
+<img src="/icons/diamond.svg" width="50" height="50" />
+<img src="/icons/hexagon.svg" width="50" height="50" />
+<img src="/icons/squared.svg" width="50" height="50" />
+
 **Intentions**
 
 Grid based diagramming aims to improve design speed, consistency, and experience by constraining where users can draw. **I like to think of it as trading-off freedom of expression for speed of expression.**
@@ -325,12 +334,18 @@ To make using SVG commands and drawing common shapes easier, P45 provides a set 
 
 The SVG component wraps `<svg>` applying the standard attributes, some default styling, and setting up the viewBox based on the provided grid.
 
+The SVG component also sets context for all declared properties. This means any slotted components have access to the grid via `getContext('grid')` and title via `getContext('title')`.
+
+```js
+export let grid              // = P45Grid for layout.
+export let title = undefined
+```
+
 Boilerplate for a new SVG Svelte component:
 
 ```svelte
 <script>
 	import { P45Grid, SVG } from 'p45'
-
 	const grid = new P45Grid(3)
 </script>
 
@@ -352,35 +367,11 @@ Add some elements to create an icon:
 </script>
 
 <SVG {grid} stroke-linecap="round">
-	<Circle o={grid.center} r="7" />
+	<Circle r="7" />
 	<Line from={grid.center} to={grid.n(5, 5)} />
 	<Line from={grid.center} to={grid.n(12, 4)} />
 </SVG>
 ```
-
-It accepts the following properties. They are all optional except for `grid`:
-
-```js
-// grid is the P45Grid for layout.
-export let grid
-
-// offset from the top left.
-export let offset = { x: 0, y: 0 }
-
-// rotate clockwise in degrees around the icon center. 
-export let rotate = 0
-
-// flipX axis.
-export let flipX = false
-
-// flipY axis.
-export let flipY = false
-
-// title attribute of the SVG.
-export let title = undefined
-```
-
-The SVG component also sets context for all declared properties above. This means any slotted components have access to the grid via `getContext('grid')`.
 
 ### `<Arc>`
 
@@ -420,14 +411,12 @@ export let clockwise = false // AKA sweep-flag
 
 ### `<Circle>`
 
-Circles really don't need explanation. The origin is the center by default.
+Circles really don't need explanation:
 
 ```js
 export let origin = grid.centerNode // = { x: 0, y: 0 }
 export let radius = 4               // 1 <= radius <= 7
-
-// ref (reference) is printed at the beginning of errors.
-export let ref = '???'
+export let ref = '???'              // printed at the beginning of errors.
 ```
 
 <img src="/icons/circle.svg" width="100" height="100" />
@@ -471,7 +460,7 @@ export let to   // { x: 0, y: 0 }
 
 ### `<Path>`
 
-Path generates a `<path>` element. If _d_ is an array the contents will be joined together using a single space, otherwise _d_ is assumed to be string.
+Path generates a `<path>` element. If _d_ is an array the contents will be joined together using a single space, otherwise _d_ is assumed to be a string.
 
 ```js
 export let d // = "" | [""]
@@ -482,19 +471,19 @@ To help craft the _d_ attribute a set of convenience functions maybe used:
 ```js
 import {
 	CMD, // CMD(letter, ...{ x: 0, y: 0 })
-	M, // Move
-	Mr, // Move (relative)
-	L, // Line
-	Lr, // Line (relative)
-	C, // Bézier curve
-	Cr, // Bézier curve (relative)
-	S, // Several Bézier curves
-	Sr, // Several Bézier curves (relative)
-	Q, // Quadratic curve
-	Qr, // Quadratic curve (relative)
-	A, // Arc
-	Ar, // Arc (relative)
-	J, // Join: joins together a list of { x: 0, y: 0 } with a single space.
+	M,   // Move
+	Mr,  // Move (relative)
+	L,   // Line
+	Lr,  // Line (relative)
+	C,   // Bézier curve
+	Cr,  // Bézier curve (relative)
+	S,   // Several Bézier curves
+	Sr,  // Several Bézier curves (relative)
+	Q,   // Quadratic curve
+	Qr,  // Quadratic curve (relative)
+	A,   // Arc
+	Ar,  // Arc (relative)
+	J,   // Join: joins together a list of { x: 0, y: 0 } with a single space.
 } from 'p45'
 ```
 
@@ -552,14 +541,12 @@ export let points // = [{ x: 0, y: 0 }]
 
 ### `<RegularPolygon>`
 
-RegularPolygon generates a regular polygon using the `<polygon>` element, with the given number of _sides_, and with a specified offset from the center.
+RegularPolygon generates a regular polygon using the `<polygon>` element, at the given origin, and with the given number of _sides_:
 
 ```js
+export let origin = grid.centerNode // = { x: 0, y: 0 }
 export let sides = 6
-export let offset = P45RegPoly.offset(ref, sides)
-
-// ref (reference) is printed at the beginning of errors.
-export let ref = '???'
+export let ref = '???'              // printed at the beginning of errors.
 ```
 
 <img src="/icons/hexagon.svg" width="100" height="100" />
@@ -582,7 +569,7 @@ export let ref = '???'
 Generates a `<text>` element at the given _origin_.
 
 ```js
-export let origin = grid.center
+export let origin = grid.centerNode // = { x: 0, y: 0 }
 ```
 
 <img src="/icons/squared.svg" width="100" height="100" />
@@ -595,18 +582,15 @@ export let origin = grid.center
 	const grid = new P45Grid(17)
 </script>
 
-<SVG {grid}>
+<SVG {grid} fill="grey">
 	<style>
-		.text {
-			stroke-width: 1;
-			fill: currentColor;
-		}
-
 		.number {
+			stroke-width: 1;
 			font-size: 56px;
 		}
 
 		.power {
+			stroke-width: 1;
 			font-size: 24px;
 		}
 	</style>
@@ -618,7 +602,7 @@ export let origin = grid.center
 
 ### `<Transform>`
 
-The Transform component encapsulated slotted components with a `<g>` element and applies specified transformations to it. All properties are optional:
+The Transform component encapsulates slotted components with a `<g>` element and applies user transformations to it. All properties are optional:
 
 ```js
 // offset from the top left.
@@ -661,6 +645,8 @@ Boilerplate Svelte component:
 
 ## P45Util
 
+P45Util exposes some utility functions used internally but may be of use to you.
+
 ```js
 import { P45Util } from 'p45'
 ```
@@ -685,8 +671,7 @@ export default Object.freeze({
 	// within returns true if the number n is contained within the bounds.
 	within(n, min, max),
 
-	// contains returns true if the node identified by x and y is contained
-	// within the bounds.
+	// contains returns true if the x and y are contained within the bounds.
 	//
 	// bounds = {
 	//   xMin,
