@@ -8,14 +8,16 @@ Svelte library for programmatically crafting grid based SVGs.
 
 Throughout this README I've used example based axiomatic definitions. My hoped for outcome is to strike a nice balance between concise communication of concepts and the precision needed for effective use of the library. I do hope it does not confuse.
 
-<img src="/icons/clock.svg" width="50" height="50" />
-<img src="/icons/parabola.svg" width="50" height="50" />
-<img src="/icons/circle.svg" width="50" height="50" />
-<img src="/icons/diagonal.svg" width="50" height="50" />
-<img src="/icons/conical-flask.svg" width="50" height="50" />
-<img src="/icons/diamond.svg" width="50" height="50" />
-<img src="/icons/hexagon.svg" width="50" height="50" />
-<img src="/icons/squared.svg" width="50" height="50" />
+<div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+	<img src="/icons/clock.svg" width="50" height="50" />
+	<img src="/icons/parabola.svg" width="50" height="50" />
+	<img src="/icons/circle.svg" width="50" height="50" />
+	<img src="/icons/diagonal.svg" width="50" height="50" />
+	<img src="/icons/conical-flask.svg" width="50" height="50" />
+	<img src="/icons/diamond.svg" width="50" height="50" />
+	<img src="/icons/hexagon.svg" width="50" height="50" />
+	<img src="/icons/squared.svg" width="50" height="50" />
+</div>
 
 **Intentions**
 
