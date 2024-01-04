@@ -26,13 +26,13 @@ Throughout this README I've used example based axiomatic definitions. My hoped f
 
 ## Intentions
 
-Grid based diagramming aims to improve design speed, consistency, and experience by constraining where users can draw. **I like to think of it as trading-off freedom of expression for speed of expression.**
-
-A little while back I built a rough prototype [SVG Icon Maker](https://skepticalgoose.com/treasury/prototype-svg-maker) on the theme of grid based diagramming because I find existing tools too fiddly and crafting SVGs by hand too tedious. This library is another, more refined, experiment.
-
 > "Craftsmen engage themselves in complex tasks. The complexity of those tasks often gives a simplicity to their lives." - Edward de Bono
 
 I want to make drawing and diagramming quick and easy in scenarios where fine precision is not beneficial. As craftsmen we are inclined to precision; it's in our nature. But unlike painting fine art, meticulousness rarely pays off when drawing small web icons, especially SVGs.
+
+Grid based diagramming aims to improve design speed, consistency, and experience by constraining where users to a grid. **I like to think of it as trading-off freedom of expression for speed of expression.**
+
+A little while back I built a rough prototype [SVG Icon Maker](https://skepticalgoose.com/treasury/prototype-svg-maker) on the theme of grid based diagramming because I find existing tools too fiddly and crafting SVGs by hand too tedious. This library is another, more refined, experiment.
 
 ## Trade-offs
 
@@ -108,7 +108,7 @@ _package.json_. May need to be within `dependencies` in some scenarios.
 
 The P45Grid is a simple JavaScript class with functions for generating nodes. Nodes are the points that make up a grid (or graph) as opposed to cells which are the square areas within a set of linked nodes.
 
-They just need a _size_ for the width & height of the visible area. It must be an odd integer, so we always have a center node, and greater than 2, because anything smaller than _3x3_ has little use.
+They require a _size_ for the width and height of the visible area. It must be an odd integer, so we always have a center node, and greater than 2, because anything smaller than _3x3_ is of little use.
 
 ```js
 import { P45Grid } from 'p45'
@@ -139,32 +139,34 @@ new P45Grid(size) == {
 	UNIT: P45Grid.UNIT,
 	HALF: P45Grid.HALF,
 
-	// lastIdx is the last index of the shadow grid.
+	// lastIdx is the last index in the grid.
 	lastIdx: size - 1,
 
-	// centerIdx is the central index of both visible and shadow grids.
+	// centerIdx is the center index of both x and y planes.
 	centerIdx: (size - 1) / 2,
 
-	// centerXY holds the coordinates of the center node of both grids.
+	// centerXY holds the coordinates of the center node.
 	centerXY: {
 		x: (size - 1) / 2,
 		y: (size - 1) / 2,
 	},
 
-	// bounds holds the coordinate bounds of the shadow grid.
+	// bounds holds the min and max coordinate of the visible grid.
+	//
+	// Note that coordinates outside the visible grid are still valid.
 	bounds: {
-		xMin: -size,
-		xMax: (size * 2) -1,
-		yMin: -size,
-		yMax: (size * 2) -1,
+		xMin: 0,
+		xMax: size - 1,
+		yMin: 0,
+		yMax: size - 1,
 	},
 
-	// boundsPx holds the pixel bounds of the shadow grid.
+	// boundsPx holds the pixel bounds of the grid.
 	boundsPx: bounds: {
-		xMin: -size           * P45Grid.UNIT,
-		xMax: ((size * 2) -1) * P45Grid.UNIT,
-		yMin: -size           * P45Grid.UNIT,
-		yMax: ((size * 2) -1) * P45Grid.UNIT,
+		xMin: 0,
+		xMax: (size - 1) * P45Grid.UNIT,
+		yMin: 0,
+		yMax: (size - 1) * P45Grid.UNIT,
 	},
 
 	// len is the length of the visible grid.
@@ -173,10 +175,11 @@ new P45Grid(size) == {
 	// lenPx is the pixel length of the visible grid.
 	lenPx: (size - 1) * P45Grid.UNIT,
 
-	// center is the node at the center of both shadow and visible grids.
+	// center is the node at the center of the grid.
 	//
-	// Invoking the node function with center coordinates will not result in
-	// this object being returned but the contents will be identical.
+	// Invoking the node function with center coordinates
+	// will not result in this object being returned but
+	// the contents will be identical.
 	center: {
 		id,        // Unique ID of the node that includes offset
 		coords: {  // Grid coordinates of the node on the visible grid.
@@ -195,18 +198,17 @@ new P45Grid(size) == {
 	// idOf is a proxy for P45Grid.idOf.
 	idOf(col, row, offX = 0, offY = 0),
 
-	// contains returns true if the passed coordinates are contained within the
-	// shadow grid.
+	// contains returns true if the passed coordinates
+	// are contained within the bounds.
 	contains(x = 0, y = 0),
 
-	// containsPx returns true if the passed pixel positions are contained
-	// within the shadow grid.
+	// containsPx returns true if the passed pixel
+	// positions are contained within the pixel bounds.
 	containsPx(x = 0, y = 0),
 
-	// node returns a Node object containing information about the node.
-	//
-	// Notably, it provides an x and y pixel position for plotting SVG
-	// elements.
+	// node returns a Node object containing information
+	// about the node. Notably, it provides an x and y
+	// pixel position for plotting the SVG elements.
 	node(x, y, offX = 0, offY = 0),
 
 	// n is short hand alias for the node function.
@@ -222,22 +224,17 @@ The distance between each node is fixed as _4_ and defined by `P45Grid.UNIT`. Al
 import { P45Grid } from 'p45'
 
 P45Grid.UNIT === g.UNIT === 4
-P45Grid.HALF === g.HALF === 2
+P45Grid.HALF === g.HALF === P45Grid.UNIT / 2
 
 const g = new P45Grid(9)
 
 g.len === 9
-g.lenPx === P45Grid.UNIT * (9 - 1)
+g.lenPx === (9 - 1) * P45Grid.UNIT
 
-visible_top__left == g.node(0, 0) == { x: 0, y: 0 }
-visible_top_right == g.node(8, 0) == { x: 32, y: 0 }
-visible_bot__left == g.node(0, 8) == { x: 0, y: 32 }
-visible_bot_right == g.node(8, 8) == { x: 32, y: 32 }
-
-shadow_top__left == g.node(-9, -9) == { x: -36, y: -36 }
-shadow_top_right == g.node(17, -9) == { x: 68, y: -36 }
-shadow_bot__left == g.node(-9, 17) == { x: -36, y: 68 }
-shadow_bot_right == g.node(17, 17) == { x: 68, y: 68 }
+top__left == g.node(0, 0) == { x: 0,  y: 0  }
+top_right == g.node(8, 0) == { x: 32, y: 0  }
+bot__left == g.node(0, 8) == { x: 0,  y: 32 }
+bot_right == g.node(8, 8) == { x: 32, y: 32 }
 ```
 
 #### `P45Grid.idOf`
@@ -246,7 +243,9 @@ Returns a unique ID for every combination of inputs which is designed to be easi
 
 ```js
 // Numbers are always signed and padded with zeros.
-const id = P45Grid.idOf(2, -4, -5, 5) == 'COL_+002_-005_ROW_-004_+005'
+const id = P45Grid.idOf(2, -4, -5, 5)
+
+id == 'COL_+002_-005_ROW_-004_+005'
 
 id.split('_') == [
 	0: 'COL',
@@ -262,7 +261,7 @@ id.split('_') == [
 
 Visible nodes can be constructed by calling the `node` and `n` functions on a P45Grid instance. `n` being an alias of `node`.
 
-There is no constraint on coordinates when creating nodes. This allows `<path>` control points to be placed off canvas.
+There is no constraint on coordinates when creating nodes. This allows `<path>` control points to be placed off canvas or for partial shapes to be drawn. This allows for greater flexibility but may require `overflow: hidden` on a container as off-grid drawings are visible by default.
 
 A new object is returned in the form:
 
@@ -323,11 +322,13 @@ bot_right == g.node(8, 8) == {
 
 ## The Components
 
-To make using SVG commands and drawing common shapes easier, P45 provides a set Svelte components that accept nodes as props. Only the _SVG_ component is needed, the others are more for convenience.
+To ease the use of SVG commands and drawing common shapes, P45 provides a set Svelte components that accept nodes as props. Only the _SVG_ component is needed, the others are more for convenience.
 
 ### `<SVG>`
 
-The SVG component wraps the `<svg>` element applying the standard attributes, some default styling, and setting up the viewBox based on the grid. The SVG component also sets context for all declared properties.
+SVG wraps the `<svg>` element applying the standard attributes, some default styling, and setting up the viewBox based on the grid.
+
+SVG is immutable. This means your can create a single instance and share it. Furthermore, the SVG component also sets context for the _grid_ and _title_ properties so you don't need to pass a grid instance into your own SVG sub-components.
 
 ```js
 export let grid // = P45Grid
@@ -371,9 +372,9 @@ Add some elements to create an icon:
 
 ### `<Arc>`
 
-Arc uses the `<path>` element with the `A` command to draw an arc. It's intended for use when you only need an arc by itself rather than as a larger shape; use the `<Path>` component for anything more complex.
+Arc uses the `<path>` element with the `A` command to draw an arc. It's intended for use when you only need an arc by itself rather than as a larger shape. Use the `<Path>` component for anything more complex.
 
-Arcs are easy enough to do without this component but the property names provide good documentation.
+Arcs are easy enough to do without this component but I find the property names much more readable.
 
 ```js
 export let from              // = { x: 0, y: 0 }
@@ -532,7 +533,7 @@ export let points // = [{ x: 0, y: 0 }]
 
 ### `<RegularPolygon>`
 
-RegularPolygon generates a regular polygon using the `<polygon>` element, at the given origin, and with the given number of _sides_:
+RegularPolygon generates a regular polygon using the `<polygon>` element, at the given origin, with the given _radius_, and the given number of _sides_:
 
 ```js
 export let origin = grid.center  // = { x: 0, y: 0 }
@@ -558,7 +559,7 @@ export let ref = '???'           // printed at the beginning of errors.
 
 ### `<Text>`
 
-Generates a `<text>` element at the given _origin_ and slotted content.
+Generates a `<text>` element at the given _origin_ and text as slotted content.
 
 ```js
 export let origin = grid.center // = { x: 0, y: 0 }
@@ -674,7 +675,7 @@ export default Object.freeze({
 import { P45Util } from 'p45'
 ```
 
-P45Util exposes some utility functions used internally but may be of use to you.
+P45Util exposes some utility functions used internally that may also be of use to you:
 
 ```js
 export default Object.freeze({
@@ -695,6 +696,10 @@ export default Object.freeze({
 	// The input may either be two parsable numbers (x and y respectivily) or an
 	// object containing parsable x and y props.
 	parseXY(x, y),
+
+	// checkXY returns a string error message if the xy object argument does not
+	// satisfy the { x: Number, y: Number }. Else returns null.
+	checkXY(xy, ref = 'xy'),
 
 	// within returns true if the number n is contained within the bounds.
 	within(n, min, max),
