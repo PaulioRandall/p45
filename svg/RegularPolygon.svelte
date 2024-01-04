@@ -16,24 +16,27 @@
 	export let sides = 6
 	export let ref = '???'
 
-	sides = P45Util.parseNumber(sides)
-	if (sides < 3) {
+	const s = P45Util.parseNumber(sides)
+	if (s < 3) {
+		console.warn(`[${ref}:P45:RegularPolygon] Needs 3 or more sides`)
+	}
+
+	const r = P45Util.parseNumber(radius)
+	if (isNaN(r)) {
 		console.warn(
-			`[${ref}:P45:RegularPolygon] sides prop too small, want 3 <= ${sides} `
+			`[${ref}:P45:RegularPolygon] Your radius is not a parsable number`
 		)
 	}
 
-	radius = P45Util.parseNumber(radius)
-	if (radius <= 0) {
-		console.warn(
-			`[${ref}:P45:RegularPolygon] radius prop too small, want 0 > ${sides} `
-		)
-	}
-
-	const points = P45RegPoly.points(sides, radius, {
-		origin: origin,
-		rotate: 180,
-	})
+	const points = P45RegPoly.points(
+		Math.round(s), //
+		r, //
+		{
+			//
+			origin: origin, //
+			rotate: 180, //
+		} //
+	)
 </script>
 
 <Polygon {...$$restProps} {points} />

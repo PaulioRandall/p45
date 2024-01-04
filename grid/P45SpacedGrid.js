@@ -139,12 +139,6 @@ export default class P45SpacedGrid {
 			throw new Error(`[P45:P45SpacedGrid:node] ${err}`)
 		}
 
-		if (!this.contains(xy.x, xy.y)) {
-			throw new Error(
-				`[P45:P45SpacedGrid:node] out of bounds: ${JSON.stringify(xy)}`
-			)
-		}
-
 		let off = wasObject ? P45Util.parseXY(y, offX) : P45Util.parseXY(offX, offY)
 		if (off.err !== null) {
 			throw new Error(`[P45:P45SpacedGrid:node] ${off}`)

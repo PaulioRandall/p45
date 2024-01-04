@@ -62,12 +62,6 @@ describe('P45Grid.js', () => {
 			const f = () => g.node('moo', 0)
 			expect(f).toThrow(Error)
 		})
-
-		test('throws error if given coords out of bounds', () => {
-			const g = new P45Grid(3)
-			const f = () => g.node(99, 99)
-			expect(f).toThrow(Error)
-		})
 	})
 
 	describe('P45Grid.shadowNode(x, y)', () => {

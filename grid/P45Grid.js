@@ -20,12 +20,8 @@ export default class P45Grid {
 
 	constructor(size = 17) {
 		this._sg = new P45SpacedGrid(
-			size * 3, //
-			P45Grid.UNIT, //
-			{
-				x: -size, //
-				y: -size, //
-			}
+			size, //
+			P45Grid.UNIT //
 		)
 
 		this.UNIT = P45Grid.UNIT
@@ -33,7 +29,6 @@ export default class P45Grid {
 
 		this.lastIdx = this._sg.lastIdx
 		this.centerIdx = this._sg.centerIdx
-		this.origin = this._sg.origin
 		this.centerXY = this._sg.centerXY
 		this.bounds = this._sg.bounds
 		this.boundsPx = this._sg.boundsPx

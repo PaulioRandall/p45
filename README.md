@@ -28,23 +28,23 @@ Throughout this README I've used example based axiomatic definitions. My hoped f
 
 Grid based diagramming aims to improve design speed, consistency, and experience by constraining where users can draw. **I like to think of it as trading-off freedom of expression for speed of expression.**
 
-A little while back I built a rather rough prototype tool [(SVG Icon Maker)](https://skepticalgoose.com/treasury/prototype-svg-maker) for crafting SVG icons on the theme of grid based diagramming because I find existing tools too fiddly and crafting SVGs by hand too tedious. This library is another, more refined, experiment.
+A little while back I built a rough prototype [SVG Icon Maker](https://skepticalgoose.com/treasury/prototype-svg-maker) on the theme of grid based diagramming because I find existing tools too fiddly and crafting SVGs by hand too tedious. This library is another, more refined, experiment.
 
-> "Craftsmen engage themselves in complex tasks. The complexity of those tasks often gives a simplicity to their lives." - Edward de Bono (May he RIP)
+> "Craftsmen engage themselves in complex tasks. The complexity of those tasks often gives a simplicity to their lives." - Edward de Bono
 
 I want to make drawing and diagramming quick and easy in scenarios where fine precision is not beneficial. As craftsmen we are inclined to precision; it's in our nature. But unlike painting fine art, meticulousness rarely pays off when drawing small web icons, especially SVGs.
 
 ## Trade-offs
 
-This implementation is rather simple and can easily be replicated by an experienced Svelte-JavaScript engineer. I could have gone a lot further with crafting utility components and functions but it's much more economic to employ an inclusion-by-need rather than inclusion-by-foresight policy.
+This implementation is rather simple and easily replicated. I could have gone a lot further with crafting utility components and functions but it's much more economic to employ an inclusion-by-need rather than inclusion-by-foresight policy.
 
-Those articulate in mental visualisation may be able to work out grid coordinates in their head with ease, but for most of us it's just too taxing. So you'll want a visual grid on hand as reference. It also helps to rough draw the icons on paper first (physical or digital). For simple shapes, mapping the coordinates to code shouldn't take more than a minute.
+Those articulate in mental visualisation may be able to effortlessly work out grid coordinates in their head, but most of us will want a visual grid on hand as reference. For non-trivial icons, it helps to do draw them out on paper first. Mapping the coordinates to code will be the quickest and easiest part.
 
 ## Quick Start
 
 ### Dependency
 
-_package.json_. May need to be within `dependencies` in some cases.
+_package.json_. May need to be within `dependencies` in some scenarios.
 
 ```json
 {
@@ -62,16 +62,16 @@ _package.json_. May need to be within `dependencies` in some cases.
 <script>
 	import { P45Grid, SVG, Polygon, Path, M, L } from 'p45'
 
-	// FYI: P45Grid instances are immutable.
+	// P45Grid instances are immutable.
 	// You can share a single instance across
 	// your whole project.
 	const grid = new P45Grid(17) // 17x17 grid
 </script>
 
 <!-- 
-	Make sure to set the grid property or <SVG>
+	Make sure to set the grid prop or <SVG>
 	won't know how to setup your viewBox or
-	map grid points from your components.
+	map grid points.
 -->
 <SVG {grid}>
 	<!-- grid.n is shorthand for grid.node -->
@@ -84,7 +84,7 @@ _package.json_. May need to be within `dependencies` in some cases.
 	]} />
 	<!-- 
 		M and L functions are nothing special.
-		They just convert grid coordinates in to
+		They just convert grid coordinates into
 		SVG Path commands.
 	-->
 	<Path d={[
@@ -98,7 +98,7 @@ _package.json_. May need to be within `dependencies` in some cases.
 	<!-- 
 		You can slot raw SVG elements in too or build
 		your own Svelte components which have access
-		to the grid and other properties via Svelte's
+		to the grid and title props via Svelte's
 		getContext function.
 	-->
 </SVG>
@@ -106,25 +106,22 @@ _package.json_. May need to be within `dependencies` in some cases.
 
 ## The P45Grid
 
+The P45Grid is a simple JavaScript class with functions for generating nodes. Nodes are the points that make up a grid (or graph) as opposed to cells which are the square areas within a set of linked nodes.
+
+They just need a _size_ for the width & height of the visible area. It must be an odd integer, so we always have a center node, and greater than 2, because anything smaller than _3x3_ has little use.
+
 ```js
 import { P45Grid } from 'p45'
 
-// size is the width & height of the visible area:
-// - an odd integer so we always have a center node
-// - greater than 2 because anything smaller than _3x3_ has little use
 const g = new P45Grid(size)
 ```
 
 <img src="/icons/grid.svg" width="600" height="600" />
 
-The P45Grid is a simple JavaScript class with functions for generating nodes. Nodes are the points that make up a grid (or graph) as opposed to cells which are the square areas within a set of linked nodes.
-
-To allow control points to be placed off canvas, there exists a _shadow_ grid with the same center but a size three times bigger than the _visible_ grid.  Outside of the shadow grid is 
-
 ```js
-// Note that this is mearly a somewhat axiomatic
-// representation of the algorithm and P45Grid
-// properties, not the real thing.
+// Note that this is an axiomatic representation
+// of the algorithm and P45Grid properties, not
+// the real thing.
 
 import { P45Grid } from 'p45'
 
@@ -136,24 +133,17 @@ P45Grid.HALF === 2
 
 // idOf returns a unique ID for every combination of inputs which is designed
 // to be easily parsed.
-P45Grid.idOf(col, row, offX = 0, offY = 0)
+P45Grid.idOf(x, y, offX = 0, offY = 0)
 
 new P45Grid(size) == {
 	UNIT: P45Grid.UNIT,
 	HALF: P45Grid.HALF,
 
 	// lastIdx is the last index of the shadow grid.
-	lastIdx: (size * 3) - 1,
+	lastIdx: size - 1,
 
 	// centerIdx is the central index of both visible and shadow grids.
-	centerIdx: (size * 3) / 2,
-
-	// The coordinate offset of the shadow grid from the visible grid.
-	// The visible grid starts at the top left with (0,0).
-	origin:	{
-		x: -size,
-		y: -size,
-	},
+	centerIdx: (size - 1) / 2,
 
 	// centerXY holds the coordinates of the center node of both grids.
 	centerXY: {
@@ -270,7 +260,11 @@ id.split('_') == [
 
 #### `P45Grid.node` & `P45Grid.n`
 
-Visible nodes can be constructed by calling the `node` and `n` functions on a P45Grid instance. `n` being an alias of `node`. A new object is returned containing node properties in the form:
+Visible nodes can be constructed by calling the `node` and `n` functions on a P45Grid instance. `n` being an alias of `node`.
+
+There is no constraint on coordinates when creating nodes. This allows `<path>` control points to be placed off canvas.
+
+A new object is returned in the form:
 
 ```js
 grid.node(x, y, offX, offY) == {

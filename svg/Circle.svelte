@@ -7,22 +7,8 @@
 
 	export let origin = grid.center
 	export let radius = 4
-	export let ref = '???'
 
-	if (!grid.containsPx(origin.x, origin.y)) {
-		console.warn(
-			`[${ref}:P45:Circle] Origin origin out of bounds: x=${origin.x}, y=${origin.y}`
-		)
-	}
-
-	radius = P45Util.parseNumber(radius)
-	if (!P45Util.within(radius, 0.01, 7)) {
-		console.warn(
-			`[${ref}:P45:Circle] Radius modifier radius out of bounds: 0.01 <= ${radius} <= 7`
-		)
-	}
-
-	const rPx = radius * P45Grid.UNIT
+	const r = P45Util.parseNumber(radius) * P45Grid.UNIT
 </script>
 
 <circle
@@ -30,4 +16,4 @@
 	{...$$restProps}
 	cx={origin.x}
 	cy={origin.y}
-	r={rPx} />
+	{r} />

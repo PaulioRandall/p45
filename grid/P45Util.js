@@ -45,14 +45,34 @@ const P45Util = Object.freeze({
 		xy.y = P45Util.parseNumber(xy.y)
 
 		if (isNaN(xy.x)) {
-			return respond(null, `failed to parse x to a number: ${xy.x}`)
+			return respond(xy, `failed to parse x to a number: ${xy.x}`)
 		}
 
 		if (isNaN(xy.x)) {
-			return respond(null, `failed to parse y to a number: ${xy.y}`)
+			return respond(xy, `failed to parse y to a number: ${xy.y}`)
 		}
 
 		return respond(xy, null)
+	},
+
+	// checkXY returns a string error message if the xy object argument does not
+	// satisfy the { x: Number, y: Number }. Else returns null.
+	checkXY(xy, ref = 'xy') {
+		if (!xy || typeof xy !== 'object') {
+			return `must be an object`
+		}
+
+		const x = P45Util.parseNumber(xy.x)
+		if (isNaN(x)) {
+			return `${ref}.x must be a number or parsable number`
+		}
+
+		const y = P45Util.parseNumber(xy.y)
+		if (isNaN(y)) {
+			return `${ref}.y must be a number or parsable number`
+		}
+
+		return null
 	},
 
 	// within returns true if the number n is contained within the bounds.
