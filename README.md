@@ -537,7 +537,7 @@ RegularPolygon generates a regular polygon using the `<polygon>` element, at the
 
 ```js
 export let origin = grid.center  // = { x: 0, y: 0 }
-export let radius = grid.len / 2
+export let radius = grid.center.x - grid.UNIT
 export let sides = 6
 export let ref = '???'           // printed at the beginning of errors.
 ```

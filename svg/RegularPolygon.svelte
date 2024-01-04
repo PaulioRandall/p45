@@ -12,7 +12,7 @@
 	const grid = getContext('grid')
 
 	export let origin = grid.center
-	export let radius = grid.len / 2
+	export let radius = grid.center.x - grid.UNIT
 	export let sides = 6
 	export let ref = '???'
 

@@ -33,7 +33,7 @@ export default class P45Grid {
 		this.bounds = this._sg.bounds
 		this.boundsPx = this._sg.boundsPx
 
-		this.len = size
+		this.len = this._sg.len
 		this.lenPx = (this.len - 1) * P45Grid.UNIT
 
 		this.center = this.node(this.centerXY)
