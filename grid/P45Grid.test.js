@@ -115,7 +115,7 @@ describe('P45Grid.js', () => {
 		test('is center node', () => {
 			const g = new P45Grid(5)
 
-			expect(g.centerNode).toMatchObject({
+			expect(g.center).toMatchObject({
 				id: 'COL_+002_+000_ROW_+002_+000',
 				coords: XY(2, 2),
 				off: XY(0, 0),

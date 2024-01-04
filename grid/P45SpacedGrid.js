@@ -110,7 +110,7 @@ export default class P45SpacedGrid {
 		})
 
 		this.spacing = spacing
-		this.centerNode = Object.freeze(
+		this.center = Object.freeze(
 			this.node(this.centerXY.x, this.centerXY.y) //
 		)
 

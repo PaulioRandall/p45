@@ -11,22 +11,29 @@
 
 	const grid = getContext('grid')
 
-	export let origin = grid.centerNode
+	export let origin = grid.center
+	export let radius = grid.len / 2
 	export let sides = 6
 	export let ref = '???'
 
 	sides = P45Util.parseNumber(sides)
 	if (sides < 3) {
 		throw new Error(
-			`[${ref}:P45:RegularPolygon] sides prop too small: 3 <= ${sides} `
+			`[${ref}:P45:RegularPolygon] sides prop too small, want 3 <= ${sides} `
 		)
 	}
 
-	const len = grid.centerNode.x - P45Grid.UNIT
-	const points = P45RegPoly.points(sides, len, {
+	radius = P45Util.parseNumber(radius)
+	if (radius <= 0) {
+		throw new Error(
+			`[${ref}:P45:RegularPolygon] radius prop too small, want 0 > ${sides} `
+		)
+	}
+
+	const points = P45RegPoly.points(sides, radius, {
 		origin: origin,
 		rotate: 180,
 	})
 </script>
 
-<Polygon {points} {...$$restProps} />
+<Polygon {...$$restProps} {points} />

@@ -5,6 +5,7 @@
 # P45
 
 <div>
+	<img src="/icons/smiley.svg" width="50" height="50" />
 	<img src="/icons/clock.svg" width="50" height="50" />
 	<img src="/icons/parabola.svg" width="50" height="50" />
 	<img src="/icons/circle.svg" width="50" height="50" />
@@ -182,11 +183,11 @@ new P45Grid(size) == {
 	// lenPx is the pixel length of the visible grid.
 	lenPx: (size - 1) * P45Grid.UNIT,
 
-	// centerNode is the node at the center of both shadow and visible grids.
+	// center is the node at the center of both shadow and visible grids.
 	//
 	// Invoking the node function with center coordinates will not result in
 	// this object being returned but the contents will be identical.
-	centerNode: {
+	center: {
 		id,        // Unique ID of the node that includes offset
 		coords: {  // Grid coordinates of the node on the visible grid.
 			x,
@@ -200,9 +201,6 @@ new P45Grid(size) == {
 		y,         // SVG Y pixel position.
 		grid,      // Reference to the P45Grid that generated the node.
 	},
-
-	// center is an alias for centerNode.
-	center: { /* see centerNode */ },
 
 	// idOf is a proxy for P45Grid.idOf.
 	idOf(col, row, offX = 0, offY = 0),
@@ -335,6 +333,8 @@ To make using SVG commands and drawing common shapes easier, P45 provides a set 
 
 ### `<SVG>`
 
+The SVG component wraps the `<svg>` element applying the standard attributes, some default styling, and setting up the viewBox based on the grid. The SVG component also sets context for all declared properties.
+
 ```js
 export let grid // = P45Grid
 export let title = undefined
@@ -342,8 +342,6 @@ export let title = undefined
 setContext('grid', grid)
 setContext('title', title)
 ```
-
-The SVG component wraps `<svg>` applying the standard attributes, some default styling, and setting up the viewBox based on the provided grid. The SVG component also sets context for all declared properties.
 
 Boilerplate for a new SVG Svelte component:
 
@@ -379,6 +377,10 @@ Add some elements to create an icon:
 
 ### `<Arc>`
 
+Arc uses the `<path>` element with the `A` command to draw an arc. It's intended for use when you only need an arc by itself rather than as a larger shape; use the `<Path>` component for anything more complex.
+
+Arcs are easy enough to do without this component but the property names provide good documentation.
+
 ```js
 export let from              // = { x: 0, y: 0 }
 export let to                // = { x: 0, y: 0 }
@@ -387,10 +389,6 @@ export let rotate = 0        // in degrees
 export let large = false
 export let clockwise = false // AKA sweep-flag
 ```
-
-Arc uses the `<path>` element with the `A` command to draw an arc. It's intended for use when you only need an arc by itself rather than as a larger shape; use the `<Path>` component for anything more complex.
-
-Arcs are easy enough to do without this component but the property names provide good documentation.
 
 <img src="/icons/parabola.svg" width="100" height="100" />
 
@@ -416,7 +414,7 @@ Arcs are easy enough to do without this component but the property names provide
 ### `<Circle>`
 
 ```js
-export let origin = grid.centerNode // = { x: 0, y: 0 }
+export let origin = grid.center // = { x: 0, y: 0 }
 export let radius = 4               // 1 <= radius <= 7
 export let ref = '???'              // printed at the beginning of errors.
 ```
@@ -460,11 +458,11 @@ export let to   // { x: 0, y: 0 }
 
 ### `<Path>`
 
+Path generates a `<path>` element. If _d_ is an array the contents will be joined together using a single space, otherwise _d_ is assumed to be a string.
+
 ```js
 export let d // = "" | [""]
 ```
-
-Path generates a `<path>` element. If _d_ is an array the contents will be joined together using a single space, otherwise _d_ is assumed to be a string.
 
 To help craft the _d_ attribute a set of convenience functions maybe used:
 
@@ -511,11 +509,11 @@ import {
 
 ### `<Polygon>`
 
+Polygon produces a `<polygon>` element given an array of nodes or points.
+
 ```js
 export let points // = [{ x: 0, y: 0 }]
 ```
-
-Polygon produces a `<polygon>` element given an array of nodes or points.
 
 <img src="/icons/diamond.svg" width="100" height="100" />
 
@@ -540,13 +538,14 @@ Polygon produces a `<polygon>` element given an array of nodes or points.
 
 ### `<RegularPolygon>`
 
-```js
-export let origin = grid.centerNode // = { x: 0, y: 0 }
-export let sides = 6
-export let ref = '???'              // printed at the beginning of errors.
-```
-
 RegularPolygon generates a regular polygon using the `<polygon>` element, at the given origin, and with the given number of _sides_:
+
+```js
+export let origin = grid.center  // = { x: 0, y: 0 }
+export let radius = grid.len / 2
+export let sides = 6
+export let ref = '???'           // printed at the beginning of errors.
+```
 
 <img src="/icons/hexagon.svg" width="100" height="100" />
 
@@ -565,11 +564,11 @@ RegularPolygon generates a regular polygon using the `<polygon>` element, at the
 
 ### `<Text>`
 
-```js
-export let origin = grid.centerNode // = { x: 0, y: 0 }
-```
-
 Generates a `<text>` element at the given _origin_ and slotted content.
+
+```js
+export let origin = grid.center // = { x: 0, y: 0 }
+```
 
 <img src="/icons/squared.svg" width="100" height="100" />
 
@@ -685,6 +684,9 @@ P45Util exposes some utility functions used internally but may be of use to you.
 
 ```js
 export default Object.freeze({
+	// roundTo rounds n to dp number of decimal places.
+	roundTo(n, dp = 3),
+
 	// parseNumber parses n into a number if it can, else it returns NaN.
 	//
 	// Unlike Number(n) no exception is thrown. NaN is always returned if

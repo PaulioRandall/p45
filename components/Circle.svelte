@@ -5,7 +5,7 @@
 
 	const grid = getContext('grid')
 
-	export let origin = grid.centerNode
+	export let origin = grid.center
 	export let radius = 4
 	export let ref = '???'
 

@@ -1,4 +1,10 @@
 const P45Util = Object.freeze({
+	// roundTo rounds n to dp number of decimal places.
+	roundTo(n, dp = 3) {
+		const mod = Math.pow(10, dp)
+		return Math.round(n * mod) / mod
+	},
+
 	// parseNumber parses n into a number if it can, else it returns NaN.
 	//
 	// Unlike Number(n) no exception is thrown. NaN is always returned if

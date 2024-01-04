@@ -20,7 +20,7 @@
 	export let flipY = false
 
 	const grid = getContext('grid')
-	const center = grid.centerNode
+	const center = grid.center
 
 	const orNum = (n, defaultN = 0) => {
 		n = P45Util.parseNumber(n)

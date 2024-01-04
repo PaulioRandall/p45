@@ -41,8 +41,7 @@ export default class P45Grid {
 		this.len = size
 		this.lenPx = (this.len - 1) * P45Grid.UNIT
 
-		this.centerNode = this.node(this.centerXY)
-		this.center = this.centerNode
+		this.center = this.node(this.centerXY)
 
 		Object.freeze(this)
 	}

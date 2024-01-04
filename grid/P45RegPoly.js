@@ -1,5 +1,4 @@
 import Victor from 'victor'
-import P45Grid from './P45Grid.js'
 import P45Util from './P45Util.js'
 
 const RegPoly = Object.freeze({
@@ -53,7 +52,12 @@ const makePoint = (i, angle, radius, origin, rotate) => {
 	const v = new Victor(0, radius)
 	v.rotateDeg(angle * i - rotate)
 	v.add(origin)
-	return v.toObject()
+
+	const p = v.toObject()
+	p.x = P45Util.roundTo(p.x)
+	p.y = P45Util.roundTo(p.y)
+
+	return p
 }
 
 export default RegPoly
