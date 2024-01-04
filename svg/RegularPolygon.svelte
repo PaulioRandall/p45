@@ -15,7 +15,7 @@
 	export let sides = 6
 
 	$: points = P45RegPoly.points(
-		parseInt, //
+		parseInt(sides), //
 		P45Util.parseNumber(radius), //
 		{
 			origin: origin, //
