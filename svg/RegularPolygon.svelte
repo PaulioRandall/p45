@@ -18,14 +18,14 @@
 
 	sides = P45Util.parseNumber(sides)
 	if (sides < 3) {
-		throw new Error(
+		console.warn(
 			`[${ref}:P45:RegularPolygon] sides prop too small, want 3 <= ${sides} `
 		)
 	}
 
 	radius = P45Util.parseNumber(radius)
 	if (radius <= 0) {
-		throw new Error(
+		console.warn(
 			`[${ref}:P45:RegularPolygon] radius prop too small, want 0 > ${sides} `
 		)
 	}

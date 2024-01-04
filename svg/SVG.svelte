@@ -5,7 +5,7 @@
 	export let title = undefined
 
 	if (!grid) {
-		throw new Error("[P45:SVG] Dude, where's my grid property value?!")
+		throw new Error("[P45:SVG] Dude, where's my grid prop?!")
 	}
 
 	setContext('grid', grid)

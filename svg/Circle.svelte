@@ -10,14 +10,14 @@
 	export let ref = '???'
 
 	if (!grid.containsPx(origin.x, origin.y)) {
-		throw new Error(
+		console.warn(
 			`[${ref}:P45:Circle] Origin origin out of bounds: x=${origin.x}, y=${origin.y}`
 		)
 	}
 
 	radius = P45Util.parseNumber(radius)
 	if (!P45Util.within(radius, 0.01, 7)) {
-		throw new Error(
+		console.warn(
 			`[${ref}:P45:Circle] Radius modifier radius out of bounds: 0.01 <= ${radius} <= 7`
 		)
 	}
