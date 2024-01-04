@@ -411,7 +411,6 @@ export let clockwise = false // AKA sweep-flag
 ```js
 export let origin = grid.center // = { x: 0, y: 0 }
 export let radius = 4               // 1 <= radius <= 7
-export let ref = '???'              // printed at the beginning of errors.
 ```
 
 <img src="/icons/circle.svg" width="100" height="100" />
@@ -425,7 +424,7 @@ export let ref = '???'              // printed at the beginning of errors.
 </script>
 
 <SVG {grid}>
-	<Circle radius="7" ref="My-Circle" />
+	<Circle radius="7" />
 </SVG>
 ```
 
@@ -539,7 +538,6 @@ RegularPolygon generates a regular polygon using the `<polygon>` element, at the
 export let origin = grid.center  // = { x: 0, y: 0 }
 export let radius = grid.center.x - grid.UNIT
 export let sides = 6
-export let ref = '???'           // printed at the beginning of errors.
 ```
 
 <img src="/icons/hexagon.svg" width="100" height="100" />

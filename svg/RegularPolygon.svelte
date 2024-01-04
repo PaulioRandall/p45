@@ -13,7 +13,6 @@
 	export let origin = grid.center
 	export let radius = grid.center.x - grid.UNIT
 	export let sides = 6
-	export let ref = '???'
 
 	$: points = P45RegPoly.points(
 		parseInt, //
