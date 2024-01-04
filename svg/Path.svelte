@@ -3,7 +3,7 @@
 
 	export let d // = "" | [""]
 
-	if (Array.isArray(d)) {
+	$: if (Array.isArray(d)) {
 		d = d.join(' ')
 	}
 </script>

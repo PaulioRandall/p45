@@ -8,7 +8,7 @@
 	export let origin = grid.center
 	export let radius = 4
 
-	const r = P45Util.parseNumber(radius) * P45Grid.UNIT
+	$: r = P45Util.parseNumber(radius) * P45Grid.UNIT
 </script>
 
 <circle
