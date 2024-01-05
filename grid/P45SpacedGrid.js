@@ -151,7 +151,6 @@ export default class P45SpacedGrid {
 			off,
 			x: xy.x * this.spacing + off.x,
 			y: xy.y * this.spacing + off.y,
-			grid: this,
 		}
 	}
 

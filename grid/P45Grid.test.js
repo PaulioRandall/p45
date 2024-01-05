@@ -13,7 +13,6 @@ describe('P45Grid.js', () => {
 				coords: XY(0, 0),
 				off: XY(0, 0),
 				...XY(0, 0),
-				grid: g,
 			})
 		})
 
@@ -26,7 +25,6 @@ describe('P45Grid.js', () => {
 				coords: XY(2, 2),
 				off: XY(0, 0),
 				...XY(8, 8), // 2 * UNIT
-				grid: g,
 			})
 		})
 
@@ -39,7 +37,6 @@ describe('P45Grid.js', () => {
 				coords: XY(1, 1),
 				off: XY(0, 0),
 				...XY(4, 4), // 1 * UNIT
-				grid: g,
 			})
 		})
 
@@ -53,7 +50,6 @@ describe('P45Grid.js', () => {
 				off: XY(-4, 4),
 				x: 8, // 3 * UNIT -4
 				y: 16, // 3 * UNIT +4
-				grid: g,
 			})
 		})
 
@@ -74,7 +70,6 @@ describe('P45Grid.js', () => {
 				coords: XY(-3, -3),
 				off: XY(0, 0),
 				...XY(-12, -12), // -3 * UNIT
-				grid: g,
 			})
 		})
 
@@ -87,7 +82,6 @@ describe('P45Grid.js', () => {
 				coords: XY(5, 5),
 				off: XY(0, 0),
 				...XY(20, 20), // 5 * UNIT
-				grid: g,
 			})
 		})
 
@@ -100,7 +94,6 @@ describe('P45Grid.js', () => {
 				coords: XY(2, 2),
 				off: XY(0, 0),
 				...XY(8, 8), // 2 * UNIT
-				grid: g,
 			})
 		})
 	})
@@ -114,7 +107,6 @@ describe('P45Grid.js', () => {
 				coords: XY(2, 2),
 				off: XY(0, 0),
 				...XY(8, 8), // 2 * UNIT
-				grid: g,
 			})
 		})
 	})

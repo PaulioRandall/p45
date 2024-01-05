@@ -57,7 +57,6 @@ export default class P45Grid {
 		const n = this._sg.node(x, y, offX, offY)
 
 		n.id = P45Grid.idOf(n.coords.x, n.coords.y, n.off.x, n.off.y)
-		n.grid = this
 
 		return n
 	}

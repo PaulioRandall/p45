@@ -96,6 +96,34 @@ const P45Util = Object.freeze({
 			y <= bounds.yMax
 		)
 	},
+
+	nodeGenerator(grid) {
+		const nodes = {}
+
+		for (let i = 0; i < grid.len; i++) {
+			for (let j = 0; j < grid.len; j++) {
+				const name = this._indexToAlpha(i) + j
+				nodes[name] = grid.n(i, j)
+			}
+		}
+
+		return nodes
+	},
+
+	_indexToAlpha(i) {
+		const n = Math.floor(i / 26)
+
+		if (n === 0) {
+			return this._numberToAlpha(i)
+		}
+
+		return this._indexToAlpha(n - 1) + this._numberToAlpha(i % 26)
+	},
+
+	_numberToAlpha(n) {
+		const ASCII_CAPITAL_LETTER_OFFSET = 65
+		return String.fromCharCode(n + ASCII_CAPITAL_LETTER_OFFSET)
+	},
 })
 
 export default P45Util
