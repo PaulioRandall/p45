@@ -11,9 +11,4 @@
 	$: r = P45Util.parseNumber(radius) * P45Grid.UNIT
 </script>
 
-<circle
-	vector-effect="non-scaling-stroke"
-	{...$$restProps}
-	cx={origin.x}
-	cy={origin.y}
-	{r} />
+<circle {...$$restProps} cx={origin.x} cy={origin.y} {r} />

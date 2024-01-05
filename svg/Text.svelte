@@ -6,11 +6,7 @@
 	export let origin = grid.center
 </script>
 
-<text
-	vector-effect="non-scaling-stroke"
-	{...$$restProps}
-	x={origin.x}
-	y={origin.y}>
+<text {...$$restProps} x={origin.x} y={origin.y}>
 	<slot />
 </text>
 

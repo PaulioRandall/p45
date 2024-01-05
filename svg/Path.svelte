@@ -8,4 +8,4 @@
 	}
 </script>
 
-<path vector-effect="non-scaling-stroke" {...$$restProps} {d} />
+<path {...$$restProps} {d} />

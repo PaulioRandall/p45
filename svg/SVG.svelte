@@ -19,7 +19,7 @@
 	preserveAspectRatio="xMidYMid"
 	fill="transparent"
 	stroke="grey"
-	stroke-width="3"
+	stroke-width="1"
 	{...$$restProps}>
 	{#if title}
 		<title>{title}</title>

@@ -4,7 +4,7 @@
 	"description": "Svelte library for programmatically crafting grid based SVGs.",
 	"type": "module",
 	"license": "MIT",
-	"version": "0.4.1",
+	"version": "0.5.0",
 	"keywords": [
 		"svg",
 		"design",
