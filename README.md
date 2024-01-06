@@ -711,5 +711,24 @@ export default Object.freeze({
 	//   yMax,
 	// }
 	contains(x, y, bounds),
+
+	// nodeGenerator generates all the nodes in the passed grid.
+	//
+	// If you're only creating a handful of simple icons then this is
+	// unnecessary. But for a large set of icons referencing named fields on an
+	// object, e.g. 'nodes.H8', might be more readable and writable.
+	//
+	// This utilty should only be used with smallish grids as the number of nodes
+	// grows very quickly with size: O(n²), e.g. 5x5 => 25 but 10x10 => 100. This
+	// is why the grid.node function creates new nodes rather than picking from
+	// a prebuilt set.
+	nodeGenerator(grid),
+
+	// indexToAlpha converts the index i into its alphabetic counterpart.
+	//
+	// If i is greater than 25 a new significant letter is introduced,
+	// e.g 0=A, 25=Z, 26=AA, 27=AB. It's essentially a traditional base 26
+	// numbering system using English capital letters as symbols.
+	indexToAlpha(i),
 })
 ```
