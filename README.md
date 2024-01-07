@@ -30,7 +30,7 @@ Throughout this README I've used example based axiomatic definitions. My hoped f
 
 I want to make drawing and diagramming quick and easy in scenarios where fine precision is not beneficial. As craftsmen we are inclined to precision; it's in our nature. But unlike painting fine art, meticulousness rarely pays off when drawing small web icons, especially SVGs.
 
-Grid based diagramming aims to improve design speed, consistency, and experience by constraining where users to a grid. **I like to think of it as trading-off freedom of expression for speed of expression.**
+Grid based diagramming aims to improve design speed, consistency, and experience by constraining users to a grid. **I like to think of it as trading-off freedom of expression for speed of expression.**
 
 A little while back I built a rough prototype [SVG Icon Maker](https://skepticalgoose.com/treasury/prototype-svg-maker) on the theme of grid based diagramming because I find existing tools too fiddly and crafting SVGs by hand too tedious. This library is another, more refined, experiment.
 
@@ -38,7 +38,7 @@ A little while back I built a rough prototype [SVG Icon Maker](https://skeptical
 
 This implementation is rather simple and easily replicated. I could have gone a lot further with crafting utility components and functions but it's much more economic to employ an inclusion-by-need rather than inclusion-by-foresight policy.
 
-Those articulate in mental visualisation may be able to effortlessly work out grid coordinates in their head, but most of us will want a visual grid on hand as reference. For non-trivial icons, it helps to do draw them out on paper first. Mapping the coordinates to code will be the quickest and easiest part.
+Those skilled in mental visualisation may be able to effortlessly work out grid coordinates in their head, but the rest of us will benefit from a reference grid. For non-trivial icons, it helps to quickly draw them out freeform on paper first. Mapping the coordinates to code is probably the quickest and easiest part.
 
 ## Quick Start
 
@@ -70,7 +70,7 @@ _package.json_. May need to be within `dependencies` in some scenarios.
 
 <!-- 
 	Make sure to set the grid prop or <SVG>
-	won't know how to setup your viewBox or
+	won't know how to setup your viewBox and
 	map grid points.
 -->
 <SVG {grid}>
@@ -106,9 +106,11 @@ _package.json_. May need to be within `dependencies` in some scenarios.
 
 ## The P45Grid
 
-The P45Grid is a simple JavaScript class with functions for generating nodes. Nodes are the points that make up a grid (or graph) as opposed to cells which are the square areas within a set of linked nodes.
+P45Grid is a simple JavaScript class with functions for generating nodes. Nodes are objects representing the canvas and control points that make up a grid (square node graph).
 
-They require a _size_ for the width and height of the visible area. It must be an odd integer, so we always have a center node, and greater than 2, because anything smaller than _3x3_ is of little use.
+The only parameter is _size_ which determines number of horizontal and vertical nodes in the visible area. It must be an odd integer, so we always have a center node, and greater than 2, because anything smaller than _3x3_ is of little use.
+
+I like _9x9_, _13x13_, and _17x17_ grids because they create grids with 8, 12, and 16 cells respectively (got to satisfy those orderliness cravings somehow).
 
 ```js
 import { P45Grid } from 'p45'
@@ -116,13 +118,13 @@ import { P45Grid } from 'p45'
 const g = new P45Grid(size)
 ```
 
+The following is an annotated _9x9_ grid for reference:
+
 <img src="/icons/grid.svg" width="600" height="600" />
 
-```js
-// Note that this is an axiomatic representation
-// of the algorithm and P45Grid properties, not
-// the real thing.
+And this is an attempt at an axiomatic representation on the P45Grid class members and functions. Remember it's not the real thing, just a form of specification and documentation that JavaScript programmers should hopefully understand:
 
+```js
 import { P45Grid } from 'p45'
 
 // UNIT is the spacing between nodes.
@@ -136,8 +138,8 @@ P45Grid.HALF === 2
 P45Grid.idOf(x, y, offX = 0, offY = 0)
 
 new P45Grid(size) == {
-	UNIT: P45Grid.UNIT,
-	HALF: P45Grid.HALF,
+	UNIT: P45Grid.UNIT === 4,
+	HALF: P45Grid.HALF === 2,
 
 	// lastIdx is the last index in the grid.
 	lastIdx: size - 1,
@@ -181,18 +183,21 @@ new P45Grid(size) == {
 	// will not result in this object being returned but
 	// the contents will be identical.
 	center: {
-		id,        // Unique ID of the node that includes offset
-		coords: {  // Grid coordinates of the node on the visible grid.
-			x,
-			y,
+		// Unique ID of the node including offset
+		id: P45Grid.idOf(x, y, offX, offY),
+		// Coordinates of the node on the visible 
+		coords: {
+			x: x,
+			y: y,
 		},
-		off: {     // Offset in pixels.
-			x,
-			y,
+		// Offset in pixels
+		off: {
+			x: offX,
+			y: offY,
 		},
-		x,         // SVG X pixel position.
-		y,         // SVG Y pixel position.
-		grid,      // Reference to the P45Grid that generated the node.
+		// View box pixel positions
+		x: x * P45Grid.UNIT + offX,
+		y: y * P45Grid.UNIT + offY,
 	},
 
 	// idOf is a proxy for P45Grid.idOf.
@@ -216,7 +221,7 @@ new P45Grid(size) == {
 }
 ```
 
-#### `P45Grid.UNIT` & `P45Grid.HALF`
+#### Extra: `P45Grid.UNIT` & `P45Grid.HALF`
 
 The distance between each node is fixed as _4_ and defined by `P45Grid.UNIT`. All calculations are performed from this such that:
 
@@ -237,9 +242,9 @@ bot__left == g.node(0, 8) == { x: 0,  y: 32 }
 bot_right == g.node(8, 8) == { x: 32, y: 32 }
 ```
 
-#### `P45Grid.idOf`
+#### Extra: `P45Grid.idOf`
 
-Returns a unique ID for every combination of inputs which is designed to be easily parsed. Defining the format as an axiomatic example:
+Returns a unique ID for every combination of input. The result is designed to be easily parsed. Defining the format as an axiomatic example:
 
 ```js
 // Numbers are always signed and padded with zeros.
@@ -257,28 +262,31 @@ id.split('_') == [
 ]
 ```
 
-#### `P45Grid.node` & `P45Grid.n`
+#### Extra: `P45Grid.node` & `P45Grid.n`
 
 Visible nodes can be constructed by calling the `node` and `n` functions on a P45Grid instance. `n` being an alias of `node`.
 
-There is no constraint on coordinates when creating nodes. This allows `<path>` control points to be placed off canvas or for partial shapes to be drawn. This allows for greater flexibility but may require `overflow: hidden` on a container as off-grid drawings are visible by default.
+There is no constraint on coordinates when creating nodes. This allows `<path>` control points to be placed off canvas or to draw shapes that are only partial on grid. This allows for greater flexibility but may require `overflow: hidden` on a container as off-grid drawings are visible by default.
 
-A new object is returned in the form:
+A new node object is returned in the form:
 
-```js
+```js     
 grid.node(x, y, offX, offY) == {
+	// Unique ID of the node including offset
 	id: P45Grid.idOf(x, y, offX, offY),
+	// Coordinates of the node on the visible 
 	coords: {
 		x: x,
 		y: y,
 	},
+	// Offset in pixels
 	off: {
 		x: offX,
 		y: offY,
 	},
+	// View box pixel positions
 	x: x * P45Grid.UNIT + offX,
 	y: y * P45Grid.UNIT + offY,
-	grid: grid,
 }
 ```
 
@@ -291,51 +299,43 @@ const g = new P45Grid(9)
 
 top__left == g.node(0, 0) == {
 	id: `COL_+000_+000_ROW_+000_+000`,
-	coords: {
-		x: 0,
-		y: 0,
-	},
-	off: {
-		x: 0,
-		y: 0,
-	},
-	x: 0,
-	y: 0,
-	grid: g,
+	coords: { x: 0, y: 0 },
+	off:    { x: 0, y: 0 },
+	x: 0,   // Grid.UNIT * 0
+	y: 0,   // Grid.UNIT * 0
 }
 
 bot_right == g.node(8, 8) == {
 	id: `COL_+008_+000_ROW_+008_+000`,
-	coords: {
-		x: 8,
-		y: 8,
-	},
-	off: {
-		x: 0,
-		y: 0,
-	},
-	x: 32, // Grid.UNIT * x
-	y: 32, // Grid.UNIT * y
-	grid: g,
+	coords: { x: 8, y: 8 },
+	off:    { x: 0, y: 0 },
+	x: 32,  // Grid.UNIT * 8
+	y: 32,  // Grid.UNIT * 8
 }
 ```
 
-## The Components
+## Svelte Components
 
 To ease the use of SVG commands and drawing common shapes, P45 provides a set Svelte components that accept nodes as props. Only the _SVG_ component is needed, the others are more for convenience.
 
+To document component interfaces I've copied and cleaned the code for exported properties. It was the easiest solution available and I'm sure you Svelte programmers will understand it. I've also included context setting to document generic slotted component interface.
+
 ### `<SVG>`
 
-SVG wraps the `<svg>` element applying the standard attributes, some default styling, and setting up the viewBox based on the grid.
+SVG wraps the `<svg>` element applying the standard attributes, some default styling, and setting up the viewBox using the grid length.
 
-SVG is immutable. This means your can create a single instance and share it. Furthermore, the SVG component also sets context for the _grid_ and _title_ properties so you don't need to pass a grid instance into your own SVG sub-components.
+SVG is immutable. This means your can create a single instance and share it. Furthermore, the SVG component also sets context for the _grid_, _title_, and _description_ properties so you don't need to pass a grid instance into your own SVG sub components.
+
+_title_ and _description_ are optional and can alternatively be passed as slotted content using `<title>` and `<description>` respectively.
 
 ```js
 export let grid // = P45Grid
 export let title = undefined
+export let description = undefined
 
 setContext('grid', grid)
 setContext('title', title)
+setContext('description', description)
 ```
 
 Boilerplate for a new SVG Svelte component:
@@ -343,7 +343,7 @@ Boilerplate for a new SVG Svelte component:
 ```svelte
 <script>
 	import { P45Grid, SVG } from 'p45'
-	const grid = new P45Grid(3) // 3x3 grid
+	const grid = new P45Grid(17) // 17x17 grid
 </script>
 
 <SVG {grid}>
@@ -370,11 +370,13 @@ Add some elements to create an icon:
 </SVG>
 ```
 
+---
+
 ### `<Arc>`
 
-Arc uses the `<path>` element with the `A` command to draw an arc. It's intended for use when you only need an arc by itself rather than as a larger shape. Use the `<Path>` component for anything more complex.
+Arc uses the `<path>` element with the `M` and `A` commands to draw an arc. It's intended for when you only need an arc by itself rather than as a larger shape. Use the `<Path>` component for anything more complex.
 
-Arcs are easy enough to do without this component but I find the property names much more readable.
+Arcs are easy enough to do without this component but it translates the _from_ and _to_ props for you. I also find the property names add readable.
 
 ```js
 export let from              // = { x: 0, y: 0 }
@@ -406,11 +408,13 @@ export let clockwise = false // AKA sweep-flag
 </SVG>
 ```
 
+---
+
 ### `<Circle>`
 
 ```js
 export let origin = grid.center // = { x: 0, y: 0 }
-export let radius = 4               // 1 <= radius <= 7
+export let radius = 4           // 1 <= radius <= 7
 ```
 
 <img src="/icons/circle.svg" width="100" height="100" />
@@ -427,6 +431,8 @@ export let radius = 4               // 1 <= radius <= 7
 	<Circle radius="7" />
 </SVG>
 ```
+
+---
 
 ### `<Line>`
 
@@ -449,6 +455,8 @@ export let to   // { x: 0, y: 0 }
 	<Line from={grid.n(1, 15)} to={grid.n(15, 1)} />
 </SVG>
 ```
+
+---
 
 ### `<Path>`
 
@@ -501,6 +509,8 @@ import {
 </SVG>
 ```
 
+---
+
 ### `<Polygon>`
 
 Polygon produces a `<polygon>` element given an array of nodes or points.
@@ -530,6 +540,8 @@ export let points // = [{ x: 0, y: 0 }]
 </SVG>
 ```
 
+---
+
 ### `<RegularPolygon>`
 
 RegularPolygon generates a regular polygon using the `<polygon>` element, at the given origin, with the given _radius_, and the given number of _sides_:
@@ -554,6 +566,8 @@ export let sides = 6
 	<RegularPolygon sides={6} />
 </SVG>
 ```
+
+---
 
 ### `<Text>`
 
@@ -595,7 +609,13 @@ export let origin = grid.center // = { x: 0, y: 0 }
 
 ```
 
+---
+
 ### `<Transform>`
+
+The Transform component encapsulates slotted components with a `<g>` element and applies user transformations to it.
+
+All properties are optional:
 
 ```js
 // offset from the top left.
@@ -615,8 +635,6 @@ export let flipX  = false
 // flipY flips on the y-axis from the center line.
 export let flipY  = false
 ```
-
-The Transform component encapsulates slotted components with a `<g>` element and applies user transformations to it. All properties are optional:
 
 Boilerplate Svelte component:
 
