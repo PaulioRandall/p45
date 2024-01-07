@@ -36,15 +36,15 @@ Throughout this README I've used example based axiomatic definitions. My hoped f
 	- [Extra: `P45Grid.idOf`](#extra-p45grididof)
 	- [Extra: `P45Grid.node` & `P45Grid.n`](#extra-p45gridnode--p45gridn)
 - [Svelte Components](#svelte-components)
-	- [`<SVG>`](#svg)
-	- [`<Arc>`](#arc)
-	- [`<Circle>`](#circle)
-	- [`<Line>`](#line)
-	- [`<Path>`](#path)
-	- [`<Polygon>`](#polygon)
-	- [`<RegularPolygon>`](#regularpolygon)
-	- [`<Text>`](#text)
-	- [`<Transform>`](#transform)
+	- [&lt;SVG&gt;](#svg)
+	- [&lt;Arc&gt;](#arc)
+	- [&lt;Circle&gt;](#circle)
+	- [&lt;Line&gt;](#line)
+	- [&lt;Path&gt;](#path)
+	- [&lt;Polygon&gt;](#polygon)
+	- [&lt;RegularPolygon&gt;](#regularpolygon)
+	- [&lt;Text&gt;](#text)
+	- [&lt;Transform&gt;](#transform)
 - [P45RegPoly](#p45regpoly)
 - [P45Util](#p45util)
 
@@ -344,7 +344,11 @@ To ease the use of SVG commands and drawing common shapes, P45 provides a set Sv
 
 To document component interfaces I've copied and cleaned the code for exported properties. It was the easiest solution available and I'm sure you Svelte programmers will understand it. I've also included context setting to document generic slotted component interface.
 
-### `<SVG>`
+### &lt;SVG&gt;
+
+```js
+import { SVG } from 'p45'
+```
 
 SVG wraps the `<svg>` element applying the standard attributes, some default styling, and setting up the viewBox using the grid length.
 
@@ -396,7 +400,11 @@ Add some elements to create an icon:
 
 ---
 
-### `<Arc>`
+### &lt;Arc&gt;
+
+```js
+import { Arc } from 'p45'
+```
 
 Arc uses the `<path>` element with the `M` and `A` commands to draw an arc. It's intended for when you only need an arc by itself rather than as a larger shape. Use the `<Path>` component for anything more complex.
 
@@ -434,7 +442,11 @@ export let clockwise = false // AKA sweep-flag
 
 ---
 
-### `<Circle>`
+### &lt;Circle&gt;
+
+```js
+import { Circle } from 'p45'
+```
 
 ```js
 export let origin = grid.center // = { x: 0, y: 0 }
@@ -458,7 +470,11 @@ export let radius = 4           // 1 <= radius <= 7
 
 ---
 
-### `<Line>`
+### &lt;Line&gt;
+
+```js
+import { Line } from 'p45'
+```
 
 ```js
 export let from // { x: 0, y: 0 }
@@ -482,7 +498,11 @@ export let to   // { x: 0, y: 0 }
 
 ---
 
-### `<Path>`
+### &lt;Path&gt;
+
+```js
+import { Path } from 'p45'
+```
 
 Path generates a `<path>` element. If _d_ is an array the contents will be joined together using a single space, otherwise _d_ is assumed to be a string.
 
@@ -535,7 +555,11 @@ import {
 
 ---
 
-### `<Polygon>`
+### &lt;Polygon&gt;
+
+```js
+import { Polygon } from 'p45'
+```
 
 Polygon produces a `<polygon>` element given an array of nodes or points.
 
@@ -566,7 +590,11 @@ export let points // = [{ x: 0, y: 0 }]
 
 ---
 
-### `<RegularPolygon>`
+### &lt;RegularPolygon&gt;
+
+```js
+import { RegularPolygon } from 'p45'
+```
 
 RegularPolygon generates a regular polygon using the `<polygon>` element, at the given origin, with the given _radius_, and the given number of _sides_:
 
@@ -593,7 +621,11 @@ export let sides = 6
 
 ---
 
-### `<Text>`
+### &lt;Text&gt;
+
+```js
+import { Text } from 'p45'
+```
 
 Generates a `<text>` element at the given _origin_ and text as slotted content.
 
@@ -635,7 +667,11 @@ export let origin = grid.center // = { x: 0, y: 0 }
 
 ---
 
-### `<Transform>`
+### &lt;Transform&gt;
+
+```js
+import { Transform } from 'p45'
+```
 
 The Transform component encapsulates slotted components with a `<g>` element and applies user transformations to it.
 
