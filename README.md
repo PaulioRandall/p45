@@ -32,9 +32,9 @@ Throughout this README I've used example based axiomatic definitions. My hoped f
 	- [Dependency](#dependency)
 	- [Svelte Component](#svelte-component)
 - [P45Grid](#p45grid)
-	- [P45Grid.UNIT & P45Grid.HALF](#p45gridunit--p45gridhalf)
-	- [P45Grid.idOf](#p45grididof)
-	- [P45Grid.node & P45Grid.n](#p45gridnode--p45gridn)
+	- [.UNIT & .HALF](#unit--half)
+	- [.idOf](#idof)
+	- [.node & .n](#node--n)
 - [Svelte Components](#svelte-components)
 	- [&lt;SVG&gt;](#svg)
 	- [&lt;Arc&gt;](#arc)
@@ -142,7 +142,7 @@ import { P45Grid } from 'p45'
 const g = new P45Grid(size)
 ```
 
-The following is an annotated _9x9_ grid for reference. And yes, I crafted using P45, copied outer HTML, and finished by cleanin up classes etc:
+The following is an annotated _9x9_ grid for reference. And yes, I crafted using P45, copied outer HTML, and finished by cleaning up classes etc:
 
 <img src="/icons/grid.svg" width="600" height="600" />
 
@@ -245,7 +245,7 @@ new P45Grid(size) == {
 }
 ```
 
-### P45Grid.UNIT & P45Grid.HALF
+### .UNIT & .HALF
 
 The distance between each node is fixed as _4_ and defined by `P45Grid.UNIT`. All calculations are performed from this such that:
 
@@ -266,7 +266,7 @@ bot__left == g.node(0, 8) == { x: 0,  y: 32 }
 bot_right == g.node(8, 8) == { x: 32, y: 32 }
 ```
 
-### P45Grid.idOf
+### .idOf
 
 Returns a unique ID for every combination of input. The result is designed to be easily parsed. Defining the format as an axiomatic example:
 
@@ -286,7 +286,7 @@ id.split('_') == [
 ]
 ```
 
-### P45Grid.node & P45Grid.n
+### .node & .n
 
 Visible nodes can be constructed by calling the `node` and `n` functions on a P45Grid instance. `n` being an alias of `node`.
 

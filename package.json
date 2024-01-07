@@ -4,7 +4,7 @@
 	"description": "Svelte library for programmatically crafting grid based SVGs.",
 	"type": "module",
 	"license": "MIT",
-	"version": "0.6.0",
+	"version": "0.7.0",
 	"keywords": [
 		"svg",
 		"design",
@@ -42,11 +42,13 @@
 		"debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
 		"commit": "npm run fmt && npm run test && cat ./scripts/ready-to-ship.txt"
 	},
+	"dependencies": {
+		"victor": "1.1.0"
+	},
 	"devDependencies": {
 		"jest": "^29.7.0",
 		"prettier": "^3.0.0",
-		"prettier-plugin-svelte": "^3.0.0",
-		"victor": "^1.1.0"
+		"prettier-plugin-svelte": "^3.0.0"
 	},
 	"peerDependencies": {
 		"svelte": "4.x"
