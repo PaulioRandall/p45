@@ -31,7 +31,7 @@ Throughout this README I've used example based axiomatic definitions. My hoped f
 - [Quick Start](#quick-start)
 	- [Dependency](#dependency)
 	- [Svelte Component](#svelte-component)
-- [The P45Grid](#the-p45grid)
+- [P45Grid](#p45grid)
 	- [P45Grid.UNIT & P45Grid.HALF](#p45gridunit--p45gridhalf)
 	- [P45Grid.idOf](#p45grididof)
 	- [P45Grid.node & P45Grid.n](#p45gridnode--p45gridn)
@@ -128,7 +128,7 @@ _package.json_. May need to be within `dependencies` in some scenarios.
 </SVG>
 ```
 
-## The P45Grid
+## P45Grid
 
 P45Grid is a simple JavaScript class with functions for generating nodes. Nodes are objects representing the canvas and control points that make up a grid (square node graph).
 
