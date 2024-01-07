@@ -118,7 +118,7 @@ import { P45Grid } from 'p45'
 const g = new P45Grid(size)
 ```
 
-The following is an annotated _9x9_ grid for reference:
+The following is an annotated _9x9_ grid for reference. And yes, I crafted using P45, copied outer HTML, and finished by cleanin up classes etc:
 
 <img src="/icons/grid.svg" width="600" height="600" />
 
