@@ -24,6 +24,30 @@ Throughout this README I've used example based axiomatic definitions. My hoped f
 
 **Requires Svelte version 4.**
 
+## Explore
+
+- [Intentions](#intentions)
+- [Trade-offs](#trade-offs)
+- [Quick Start](#quick-start)
+	- [Dependency](#dependency)
+	- [Svelte Component](#svelte-component)
+- [The P45Grid](#the-p45grid)
+	- [Extra: `P45Grid.UNIT` & `P45Grid.HALF`](#extra-p45gridunit--p45gridhalf)
+	- [Extra: `P45Grid.idOf`](#extra-p45grididof)
+	- [Extra: `P45Grid.node` & `P45Grid.n`](#extra-p45gridnode--p45gridn)
+- [Svelte Components](#svelte-components)
+	- [`<SVG>`](#svg)
+	- [`<Arc>`](#arc)
+	- [`<Circle>`](#circle)
+	- [`<Line>`](#line)
+	- [`<Path>`](#path)
+	- [`<Polygon>`](#polygon)
+	- [`<RegularPolygon>`](#regularpolygon)
+	- [`<Text>`](#text)
+	- [`<Transform>`](#transform)
+- [P45RegPoly](#p45regpoly)
+- [P45Util](#p45util)
+
 ## Intentions
 
 > "Craftsmen engage themselves in complex tasks. The complexity of those tasks often gives a simplicity to their lives." - Edward de Bono
@@ -221,7 +245,7 @@ new P45Grid(size) == {
 }
 ```
 
-#### Extra: `P45Grid.UNIT` & `P45Grid.HALF`
+### Extra: `P45Grid.UNIT` & `P45Grid.HALF`
 
 The distance between each node is fixed as _4_ and defined by `P45Grid.UNIT`. All calculations are performed from this such that:
 
@@ -242,7 +266,7 @@ bot__left == g.node(0, 8) == { x: 0,  y: 32 }
 bot_right == g.node(8, 8) == { x: 32, y: 32 }
 ```
 
-#### Extra: `P45Grid.idOf`
+### Extra: `P45Grid.idOf`
 
 Returns a unique ID for every combination of input. The result is designed to be easily parsed. Defining the format as an axiomatic example:
 
@@ -262,7 +286,7 @@ id.split('_') == [
 ]
 ```
 
-#### Extra: `P45Grid.node` & `P45Grid.n`
+### Extra: `P45Grid.node` & `P45Grid.n`
 
 Visible nodes can be constructed by calling the `node` and `n` functions on a P45Grid instance. `n` being an alias of `node`.
 
