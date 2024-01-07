@@ -32,9 +32,9 @@ Throughout this README I've used example based axiomatic definitions. My hoped f
 	- [Dependency](#dependency)
 	- [Svelte Component](#svelte-component)
 - [The P45Grid](#the-p45grid)
-	- [Extra: `P45Grid.UNIT` & `P45Grid.HALF`](#extra-p45gridunit--p45gridhalf)
-	- [Extra: `P45Grid.idOf`](#extra-p45grididof)
-	- [Extra: `P45Grid.node` & `P45Grid.n`](#extra-p45gridnode--p45gridn)
+	- [P45Grid.UNIT & P45Grid.HALF](#p45gridunit--p45gridhalf)
+	- [P45Grid.idOf](#p45grididof)
+	- [P45Grid.node & P45Grid.n](#p45gridnode--p45gridn)
 - [Svelte Components](#svelte-components)
 	- [&lt;SVG&gt;](#svg)
 	- [&lt;Arc&gt;](#arc)
@@ -245,7 +245,7 @@ new P45Grid(size) == {
 }
 ```
 
-### Extra: `P45Grid.UNIT` & `P45Grid.HALF`
+### P45Grid.UNIT & P45Grid.HALF
 
 The distance between each node is fixed as _4_ and defined by `P45Grid.UNIT`. All calculations are performed from this such that:
 
@@ -266,7 +266,7 @@ bot__left == g.node(0, 8) == { x: 0,  y: 32 }
 bot_right == g.node(8, 8) == { x: 32, y: 32 }
 ```
 
-### Extra: `P45Grid.idOf`
+### P45Grid.idOf
 
 Returns a unique ID for every combination of input. The result is designed to be easily parsed. Defining the format as an axiomatic example:
 
@@ -286,7 +286,7 @@ id.split('_') == [
 ]
 ```
 
-### Extra: `P45Grid.node` & `P45Grid.n`
+### P45Grid.node & P45Grid.n
 
 Visible nodes can be constructed by calling the `node` and `n` functions on a P45Grid instance. `n` being an alias of `node`.
 
