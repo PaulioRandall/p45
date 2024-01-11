@@ -1,7 +1,7 @@
 import Victor from 'victor'
 import P45Util from './P45Util.js'
 
-const RegPoly = Object.freeze({
+const P45RegPoly = Object.freeze({
 	// totalInternalAngle calculates the total internal angle of a regular
 	// polygon with n sides.
 	totalInternalAngle(n) {
@@ -60,4 +60,4 @@ const makePoint = (i, angle, radius, origin, rotate) => {
 	return p
 }
 
-export default RegPoly
+export default P45RegPoly

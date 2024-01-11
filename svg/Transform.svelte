@@ -3,12 +3,16 @@
 	import P45Util from '../grid/P45Util.js'
 
 	// offset from the top left.
-	// Default indicates no offset.
+	// Default indicate no offset.
 	export let offset = { x: 0, y: 0 }
 
 	// scale from the center.
-	// Default indicates no scaling.
+	// Default indicate no scaling.
 	export let scale = { x: 1, y: 1 }
+
+	// skew in degrees.
+	// Default indicate no skewing.
+	export let skew = { x: 0, y: 0 }
 
 	// rotate clockwise in degrees around the icon center.
 	export let rotate = 0
@@ -34,6 +38,7 @@
 		`scale(${x} ${y})`,
 		makeTranslate(-center.x, -center.y), //
 	]
+	const makeSkew = (axis, deg) => `skew${axis}(${deg})`
 	const makeFlip = (x, y) => {
 		x = x ? -1 : 1
 		y = y ? -1 : 1
@@ -42,6 +47,15 @@
 
 	const makeTransform = () => {
 		const transform = []
+
+		const skewX = orNum(skew.x, 0)
+		const skewY = orNum(skew.y, 0)
+		if (skewX !== 0) {
+			transform.push(makeSkew('X', skewX))
+		}
+		if (skewY !== 0) {
+			transform.push(makeSkew('Y', skewY))
+		}
 
 		if (flipX || flipY) {
 			transform.push(...makeFlip(flipX, flipY))
