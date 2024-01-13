@@ -673,27 +673,35 @@ export let origin = grid.center // = { x: 0, y: 0 }
 import { Transform } from 'p45'
 ```
 
-The Transform component encapsulates slotted components with a `<g>` element and applies user transformations to it.
+The Transform component encapsulates slotted content with a `<g>` element and applies user transformations.
 
-All properties are optional:
+Transform is designed for speed-of-expression, that is, it's designed for the 90% of cases where you want to do one or two quick commands, i.e. flip, scale, skew, rotate, or offset. Bear in mind the rotation is performed last.
+
+It can't perform every possible ordered set of transformations because the order of operations is fixed and most commands use the center of the grid as the origin. This is just another one of those trade-offs I've made in favour of speed-of-expression. 
+
+All properties are optional and X or Y postfix values have priority over XY:
 
 ```js
-// offset from the top left.
-// Default indicates no offset.
-export let offset = { x: 0, y: 0 }
+	export let offsetX = 0
+	export let offsetY = 0
+	export let offsetXY = 0
 
-// scale from the center.
-// Default indicates no scaling.
-export let scale  = { x: 1, y: 1 } 
+	export let scaleX = 1
+	export let scaleY = 1
+	export let scaleXY = 1
 
-// rotate clockwise in degrees around the icon center.
-export let rotate = 0
+	export let skewX = 0
+	export let skewY = 0
+	export let skewXY = 0
 
-// flipX flips on the x-axis from the center line.
-export let flipX  = false
+	export let flipX = false
+	export let flipY = false
+	export let flipXY = false
 
-// flipY flips on the y-axis from the center line.
-export let flipY  = false
+	// CW = Clockwise
+	// CCW = Counter Clockwise
+	export let rotateCW = 0
+	export let rotateCCW = 0
 ```
 
 Boilerplate Svelte component:

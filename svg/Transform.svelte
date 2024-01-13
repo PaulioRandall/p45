@@ -2,86 +2,140 @@
 	import { getContext } from 'svelte'
 	import P45Util from '../grid/P45Util.js'
 
-	// offset from the top left.
-	// Default indicate no offset.
-	export let offset = { x: 0, y: 0 }
+	// Transform component encapsulates slotted
+	// content with a `<g>` element and applies
+	// user transformations.
+	//
+	// Transform is designed for speed-of-expression,
+	// that is, it's designed for the 90% of cases
+	// where you want to do one or two quick commands,
+	// i.e. flip, scale, skew, rotate, or offset.
+	//
+	// It can't perform every possible ordered set of
+	// transformations because the order of operations
+	// is fixed and most commands use the center of
+	// the grid as the origin. This is just another
+	// one of those trade-offs I've made in favour of
+	// speed-of-expression.
 
-	// scale from the center.
-	// Default indicate no scaling.
-	export let scale = { x: 1, y: 1 }
+	export let offsetX = null
+	export let offsetY = null
+	export let offsetXY = null
 
-	// skew in degrees.
-	// Default indicate no skewing.
-	export let skew = { x: 0, y: 0 }
+	export let scaleX = null
+	export let scaleY = null
+	export let scaleXY = null
 
-	// rotate clockwise in degrees around the icon center.
-	export let rotate = 0
+	export let skewX = null
+	export let skewY = null
+	export let skewXY = null
 
-	// flipX flips on the x-axis from the center line.
 	export let flipX = false
-
-	// flipY flips on the y-axis from the center line.
 	export let flipY = false
+	export let flipXY = false
+
+	export let rotateCW = null
+	export let rotateCCW = null
 
 	const grid = getContext('grid')
 	const center = grid.center
 
 	const orNum = (n, defaultN = 0) => {
 		n = P45Util.parseNumber(n)
-		return n ? n : defaultN
+		return isNaN(n) ? defaultN : n
 	}
 
-	const makeTranslate = (x, y) => `translate(${x} ${y})`
-	const makeRotate = (deg) => `rotate(${deg} ${center.x} ${center.y})`
-	const makeScale = (x, y) => [
-		makeTranslate(center.x, center.y), //
-		`scale(${x} ${y})`,
-		makeTranslate(-center.x, -center.y), //
-	]
-	const makeSkew = (axis, deg) => `skew${axis}(${deg})`
-	const makeFlip = (x, y) => {
-		x = x ? -1 : 1
-		y = y ? -1 : 1
-		return makeScale(x, y)
+	const toXY = (x, y, xy, defaultX, defaultY) => {
+		x = orNum(x, xy)
+		y = orNum(y, xy)
+		x = orNum(x, defaultX)
+		y = orNum(y, defaultY)
+
+		if (x === defaultX && y === defaultY) {
+			return null
+		}
+
+		return { x, y }
 	}
 
-	const makeTransform = () => {
-		const transform = []
+	const generateMatrix = () => {
+		// If only we could use SVGTransformList
+		// and generate a matrix :(
+		const list = []
 
-		const skewX = orNum(skew.x, 0)
-		const skewY = orNum(skew.y, 0)
-		if (skewX !== 0) {
-			transform.push(makeSkew('X', skewX))
-		}
-		if (skewY !== 0) {
-			transform.push(makeSkew('Y', skewY))
-		}
+		const offset = toXY(offsetX, offsetY, offsetXY, 0, 0)
+		const scale = toXY(scaleX, scaleY, scaleXY, 1, 1)
+		const skew = toXY(skewX, skewY, skewXY, 0, 0)
 
-		if (flipX || flipY) {
-			transform.push(...makeFlip(flipX, flipY))
-		}
+		const applySkew = (x, y) => {
+			if (x) {
+				list.push(`skewX(${x})`)
+			}
 
-		const r = orNum(rotate, 0)
-		if (r !== 0) {
-			transform.push(makeRotate(r))
+			if (y) {
+				list.push(`skewY(${y})`)
+			}
 		}
 
-		const offX = orNum(offset.x, 0)
-		const offY = orNum(offset.y, 0)
-		if (offX !== 0 || offY !== 0) {
-			transform.push(makeTranslate(offX, offY))
+		const applyOffset = (x, y) => {
+			list.push(`translate(${x}, ${y})`)
 		}
 
-		const scaleX = orNum(scale.x, 1)
-		const scaleY = orNum(scale.y, 1)
-		if (scaleX !== 1 || scaleY !== 1) {
-			transform.push(...makeScale(scaleX, scaleY))
+		const applyScale = (x, y) => {
+			list.push(`scale(${x}, ${y})`)
 		}
 
-		return transform.join(' ')
+		const applyRotate = (deg) => {
+			list.push(`rotate(${deg}, ${center.x}, ${center.y})`)
+		}
+
+		applyOffset(center.x, center.y)
+
+		if (flipX || flipY || flipXY) {
+			applyScale(
+				flipX || flipXY ? -1 : 1, //
+				flipY || flipXY ? -1 : 1 //
+			)
+		}
+
+		if (scale) {
+			applyScale(scale.x, scale.y)
+		}
+
+		if (skew) {
+			applySkew(skew.x, skew.y)
+		}
+
+		applyOffset(-center.x, -center.y)
+
+		if (rotateCW) {
+			applyRotate(rotateCW)
+		} else if (rotateCCW) {
+			applyRotate(-rotateCCW)
+		}
+
+		if (offset) {
+			applyOffset(offset.x, offset.y)
+		}
+
+		return list.join(' ')
 	}
 
-	$: transform = makeTransform(offset, scale, rotate, flipX, flipY)
+	$: transform = generateMatrix(
+		offsetX,
+		offsetY,
+		offsetXY,
+		scaleX,
+		scaleY,
+		scaleXY,
+		skewX,
+		skewY,
+		skewXY,
+		rotateCW,
+		rotateCCW,
+		flipX,
+		flipY
+	)
 </script>
 
 <g {transform}>
