@@ -5,6 +5,7 @@
 # P45
 
 <div>
+	<img src="/logo.svg" width="50" height="50" />
 	<img src="/icons/smiley.svg" width="50" height="50" />
 	<img src="/icons/clock.svg" width="50" height="50" />
 	<img src="/icons/parabola.svg" width="50" height="50" />
