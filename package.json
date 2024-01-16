@@ -46,9 +46,9 @@
 		"victor": "1.1.0"
 	},
 	"devDependencies": {
-		"jest": "^29.7.0",
-		"prettier": "^3.0.0",
-		"prettier-plugin-svelte": "^3.0.0"
+		"jest": "29.7.0",
+		"prettier": "3.2.2",
+		"prettier-plugin-svelte": "3.1.2"
 	},
 	"peerDependencies": {
 		"svelte": "4.x"
