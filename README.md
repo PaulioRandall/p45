@@ -683,26 +683,26 @@ It can't perform every possible ordered set of transformations because the order
 All properties are optional and X or Y postfix values have priority over XY:
 
 ```js
-	export let offsetX = 0
-	export let offsetY = 0
-	export let offsetXY = 0
+export let offsetX = 0
+export let offsetY = 0
+export let offsetXY = 0
 
-	export let scaleX = 1
-	export let scaleY = 1
-	export let scaleXY = 1
+export let scaleX = 1
+export let scaleY = 1
+export let scaleXY = 1
 
-	export let skewX = 0
-	export let skewY = 0
-	export let skewXY = 0
+export let skewX = 0
+export let skewY = 0
+export let skewXY = 0
 
-	export let flipX = false
-	export let flipY = false
-	export let flipXY = false
+export let flipX = false
+export let flipY = false
+export let flipXY = false
 
-	// CW = Clockwise
-	// CCW = Counter Clockwise
-	export let rotateCW = 0
-	export let rotateCCW = 0
+// CW = Clockwise
+// CCW = Counter Clockwise
+export let rotateCW = 0
+export let rotateCCW = 0
 ```
 
 Boilerplate Svelte component:
