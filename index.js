@@ -8,6 +8,7 @@ export { default as P45RegPoly } from './grid/P45RegPoly.js'
 export { default as SVG } from './svg/SVG.svelte'
 
 export { default as Line } from './svg/Line.svelte'
+export { default as Rect } from './svg/Rect.svelte'
 export { default as Circle } from './svg/Circle.svelte'
 export { default as Text } from './svg/Text.svelte'
 

@@ -8,5 +8,4 @@
 	x={topLeft.x}
 	y={topLeft.y}
 	width={botRight.x - topLeft.x}
-	height={botRight.y - topLeft.y}
-	on:* />
+	height={botRight.y - topLeft.y} />

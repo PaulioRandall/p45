@@ -41,6 +41,7 @@ Throughout this README I've used example based axiomatic definitions. My hoped f
 	- [&lt;Arc&gt;](#arc)
 	- [&lt;Circle&gt;](#circle)
 	- [&lt;Line&gt;](#line)
+	- [&lt;Rect&gt;](#rect)
 	- [&lt;Path&gt;](#path)
 	- [&lt;Polygon&gt;](#polygon)
 	- [&lt;RegularPolygon&gt;](#regularpolygon)
@@ -494,6 +495,34 @@ export let to   // { x: 0, y: 0 }
 
 <SVG {grid}>
 	<Line from={grid.n(1, 15)} to={grid.n(15, 1)} />
+</SVG>
+```
+
+---
+
+### &lt;Rect&gt;
+
+```js
+import { Rect } from 'p45'
+```
+
+```js
+export let topLeft // { x: 0, y: 0 }
+export let botRight // { x: 0, y: 0 }
+```
+
+<img src="/icons/square.svg" width="100" height="100" />
+
+```svelte
+<!-- Square.svelte -->
+
+<script>
+	import { P45Grid, SVG, Rect } from 'p45'
+	const grid = new P45Grid(17)
+</script>
+
+<SVG {grid}>
+	<Rect topLeft={grid.n(3, 3)} botRight={grid.n(13, 13)} />
 </SVG>
 ```
 
