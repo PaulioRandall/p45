@@ -5,6 +5,14 @@
 	"type": "module",
 	"license": "MIT",
 	"version": "0.9.0",
+	"engines": {
+		"node": ">=18",
+		"npm": ">=10"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/PaulioRandall/p45.git"
+	},
 	"keywords": [
 		"svg",
 		"design",
@@ -28,27 +36,19 @@
 		"**/*.js",
 		"**/*.svelte"
 	],
-	"engines": {
-		"node": ">=18",
-		"npm": ">=9.8"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/PaulioRandall/p45.git"
-	},
 	"scripts": {
 		"fmt": "prettier --plugin prettier-plugin-svelte --log-level warn --write .",
 		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests",
 		"debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
 		"commit": "npm run fmt && npm run test && cat ./scripts/ready-to-ship.txt"
 	},
-	"dependencies": {
-		"victor": "1.1.0"
-	},
 	"devDependencies": {
 		"jest": "29.7.0",
-		"prettier": "3.2.4",
-		"prettier-plugin-svelte": "3.1.2"
+		"prettier": "3.2.5",
+		"prettier-plugin-svelte": "3.2.2"
+	},
+	"dependencies": {
+		"victor": "^1.1.0"
 	},
 	"peerDependencies": {
 		"svelte": "4.x"
