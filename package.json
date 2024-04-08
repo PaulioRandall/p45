@@ -4,10 +4,9 @@
 	"description": "Svelte library for programmatically crafting grid based SVGs.",
 	"type": "module",
 	"license": "MIT",
-	"version": "0.10.0",
+	"version": "0.10.1",
 	"engines": {
-		"node": ">=18",
-		"npm": ">=10"
+		"node": ">=18"
 	},
 	"repository": {
 		"type": "git",
