@@ -53,34 +53,6 @@ export default class P45Grid {
 		return this._sg.containsPx(x, y)
 	}
 
-	nodeOf(xy) {
-		const match = /^([a-zA-Z]+)([0-9]+)$/.match(xy)
-
-		if (match === null) {
-			throw new Error('[P45:Grid] Invalid coords')
-		}
-
-		const x = translateCoord(match[1])
-		const y = match[2]
-
-		this.node(x, y)
-	}
-
-	translateCoord(s) {
-		const base26 = Array(s.length)
-
-		for (let i = 0; i < s.length; i++) {
-			base26[i] = s.charCodeAt(0) - 65
-		}
-
-		for (let i = result.length - 1; i > 0; i--) {
-			const mod = Math.pow(26, i)
-			base26[i] = base26[i] * mod
-		}
-
-		return base26.reduce((acc, v) => acc + v, 0)
-	}
-
 	node(x, y, offX = 0, offY = 0) {
 		const n = this._sg.node(x, y, offX, offY)
 
