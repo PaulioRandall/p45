@@ -1,0 +1,12 @@
+*,
+::before,
+::after {
+	box-sizing: border-box;
+	border: 0 solid transparent;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}

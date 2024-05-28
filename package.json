@@ -4,7 +4,7 @@
 	"description": "Svelte library for programmatically crafting grid based SVGs.",
 	"type": "module",
 	"license": "MIT",
-	"version": "0.10.1",
+	"version": "0.11.0",
 	"engines": {
 		"node": ">=18"
 	},
@@ -14,37 +14,38 @@
 	},
 	"keywords": [
 		"svg",
-		"design",
-		"grid",
 		"icon",
+		"grid",
 		"svelte",
 		"plunder"
 	],
 	"exports": {
 		"./package.json": "./package.json",
 		".": {
-			"svelte": "./index.js"
-		},
-		"./grid/*": "./grid/*.js",
-		"./svg/*": [
-			"./svg/*.svelte",
-			"./svg/*.js"
-		]
+			"svelte": "./dist/index.js"
+		}
 	},
 	"files": [
-		"**/*.js",
-		"**/*.svelte"
+		"dist"
 	],
 	"scripts": {
 		"fmt": "prettier --plugin prettier-plugin-svelte --log-level warn --write .",
+		"build": "vite build",
 		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests",
-		"debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
-		"commit": "npm run fmt && npm run test && cat ./scripts/ready-to-ship.txt"
+		"package": "svelte-package -t false",
+		"dev": "npm run fmt && vite dev --port 3000",
+		"docs": "p24 -g \"dist/*.svelte\"",
+		"commit": "npm run fmt && npm run test && npm run build && npm run package && npm run docs && cat ./scripts/ready-to-ship.txt"
 	},
 	"devDependencies": {
+		"@sveltejs/adapter-auto": "3.2.1",
+		"@sveltejs/kit": "2.5.10",
+		"@sveltejs/package": "2.3.1",
 		"jest": "29.7.0",
+		"p24": "0.18.0",
 		"prettier": "3.2.5",
-		"prettier-plugin-svelte": "3.2.2"
+		"prettier-plugin-svelte": "3.2.3",
+		"vite": "5.2.11"
 	},
 	"dependencies": {
 		"victor": "^1.1.0"

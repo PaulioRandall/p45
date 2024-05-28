@@ -31,18 +31,4 @@ Do whatever as long as you adhere to the permissive MIT license found within.
 
 ## Components
 
-### `<Circle>`
-
-> No documentation.
-
-```svelte
-<Circle />
-```
-
-### `<SVG>`
-
-> No documentation.
-
-```svelte
-<SVG />
-```
+{{PLACEHOLDER}}
