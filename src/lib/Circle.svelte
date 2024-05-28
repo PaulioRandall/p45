@@ -10,6 +10,7 @@
 	export let radius = r
 
 	const coords = g.parse(origin)
+	console.log(coords)
 </script>
 
-<circle cx={coords.x} cy={coords.y} r={radius} />
+<circle cx={coords.x} cy={coords.y} r={radius} {...$$restProps} />
