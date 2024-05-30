@@ -1,7 +1,9 @@
 <script>
 	import Grid from '$lib/Grid'
 	import SVG from '$lib/SVG.svelte'
+
 	import Circle from '$lib/Circle.svelte'
+	import Line from '$lib/Line.svelte'
 
 	const grid = new Grid(16)
 </script>
@@ -15,7 +17,8 @@
 		</div>
 		<div class="container">
 			<SVG {grid}>
-				<Circle origin="I8" radius="4" fill="red" />
+				<Line from="I3" to="I13" stroke="limegreen" />
+				<Line from="D8" to="N8" stroke="red" />
 			</SVG>
 		</div>
 	</section>

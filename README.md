@@ -39,6 +39,14 @@ Do whatever as long as you adhere to the permissive MIT license found within.
 <Circle />
 ```
 
+### `<Line>`
+
+> No documentation.
+
+```svelte
+<Line />
+```
+
 ### `<SVG>`
 
 > No documentation.
