@@ -26,6 +26,13 @@ export default class Grid {
 		}
 	}
 
+	parseCSV(nodes) {
+		return nodes //
+			.split(',')
+			.map((n) => n.trim())
+			.map((n) => this.parse(n))
+	}
+
 	splitNode(node) {
 		return /^([A-Z]+)([0-9]+)$/.exec(node.trim())
 	}

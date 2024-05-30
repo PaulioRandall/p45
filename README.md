@@ -31,6 +31,8 @@ Do whatever as long as you adhere to the permissive MIT license found within.
 
 ### `<Circle>`
 
+The **Circle** component creates a circle from a center origin and radius.
+
 ```svelte
 <script>
 	// Alias for origin.
@@ -57,49 +59,62 @@ Do whatever as long as you adhere to the permissive MIT license found within.
 
 ### `<Icon>`
 
+The **Icon** component is a container for slotted shapes that form an
+Icon.
+
+It's represented by an svg element sized by the passed grid. This means
+raw svg child elements maybe slotted in too.
+
 ```svelte
 <script>
 	// Alias for grid.
 	export let g
 
 	// An instance of the Grid class.
-	export let grid
+	export let grid = getContext('p45-grid')
+
+	// The icon's title applied using the SVG title tag.
+	export let title = ""
+
+	// Description of the icon applied using the SVG description tag.
+	export let description = ""
+
+	// Grid used to size the icon and parse nodes.
+	setContext('p45-grid', ...)
 </script>
 ```
 
 ```svelte
 <Icon
   g
-  grid />
+  grid={getContext('p45-grid')}
+  title=""
+  description="" />
 ```
 
 ### `<Line>`
 
+The **Line** component creates a simple straight line from two points.
+
 ```svelte
 <script>
-	// Alias for from.
-	export let f
+	// Alias for points.
+	export let p
 
-	// The starting point.
-	export let from = "B1"
-
-	// Alias for from.
-	export let t
-
-	// The starting point.
-	export let to = "H7"
+	// Start and end points separated by a comma.
+	export let points = "B1,H7"
 </script>
 ```
 
 ```svelte
 <Line
-  f
-  from="B1"
-  t
-  to="H7" />
+  p
+  points="B1,H7" />
 ```
 
 ### `<Polygon>`
+
+The **Polygon** component creates a polygon from a set of points.
 
 ```svelte
 <script>

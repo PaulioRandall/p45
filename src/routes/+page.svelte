@@ -13,8 +13,8 @@
 			<Line />
 		</TestIcon>
 		<TestIcon>
-			<Line from="M5" to="M19" />
-			<Line from="F12" to="T12" stroke="grey" />
+			<Line points="M5,M19" />
+			<Line points="F12,T12" stroke="grey" />
 		</TestIcon>
 	</IconSet>
 
@@ -32,7 +32,7 @@
 			<Polygon />
 		</TestIcon>
 		<TestIcon>
-			<Polygon points="M2, V7, V17, M22, D17, D7" />
+			<Polygon points="M4, T8, T16, M20, F16, F8" />
 		</TestIcon>
 	</IconSet>
 </main>

@@ -1,6 +1,10 @@
 <script>
 	import { getContext } from 'svelte'
 
+	/*p24.description:
+		The **Circle** component creates a circle from a center origin and radius.
+	*/
+
 	const g = getContext('p45-grid')
 
 	//p24.p.let.o: Alias for origin.

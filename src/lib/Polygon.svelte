@@ -1,6 +1,10 @@
 <script>
 	import { getContext } from 'svelte'
 
+	/*p24.description:
+		The **Polygon** component creates a polygon from a set of points.
+	*/
+
 	const g = getContext('p45-grid')
 
 	//p24.p.let.p: Alias for points.
@@ -9,10 +13,8 @@
 	export let p = 'B1, H1, H7, B7'
 	export let points = p
 
-	const svgPoints = points //
-		.split(',')
-		.map((n) => n.trim())
-		.map((n) => g.parse(n))
+	const svgPoints = g //
+		.parseCSV(points)
 		.map(({ x, y }) => `${x},${y}`)
 </script>
 
