@@ -19,9 +19,7 @@
 
 <br/>
 
-Svelte library for programmatically crafting grid based SVGs.
-
-Throughout this README I've used example based axiomatic definitions. My hoped for outcome is to strike a nice balance between concise communication of concepts and the precision needed for effective use of the library. I do hope it does not confuse.
+Svelte library for programmatically crafting grid based SVG icons.
 
 **Requires Svelte version 4.**
 
@@ -99,4 +97,22 @@ Do whatever as long as you adhere to the permissive MIT license found within.
   from="B1"
   t
   to="H7" />
+```
+
+### `<Polygon>`
+
+```svelte
+<script>
+	// Alias for points.
+	export let p
+
+	// Comma separated list of nodes.
+	export let points = "B1, H1, H7, B7"
+</script>
+```
+
+```svelte
+<Polygon
+  p
+  points="B1, H1, H7, B7" />
 ```

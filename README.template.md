@@ -19,9 +19,7 @@
 
 <br/>
 
-Svelte library for programmatically crafting grid based SVGs.
-
-Throughout this README I've used example based axiomatic definitions. My hoped for outcome is to strike a nice balance between concise communication of concepts and the precision needed for effective use of the library. I do hope it does not confuse.
+Svelte library for programmatically crafting grid based SVG icons.
 
 **Requires Svelte version 4.**
 

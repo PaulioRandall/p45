@@ -3,7 +3,7 @@
 
 	//p24.p.let.g: Alias for grid.
 	//p24.p.let.grid: An instance of the Grid class.
-	export let g
+	export let g = undefined
 	export let grid = g
 
 	setContext('p45-grid', grid)
