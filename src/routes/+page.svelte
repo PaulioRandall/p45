@@ -1,27 +1,30 @@
 <script>
-	import Grid from '$lib/Grid'
-	import SVG from '$lib/SVG.svelte'
+	import IconSet from './IconSet.svelte'
+	import TestIcon from './TestIcon.svelte'
 
 	import Circle from '$lib/Circle.svelte'
 	import Line from '$lib/Line.svelte'
-
-	const grid = new Grid(16)
 </script>
 
 <main>
-	<section class="icon-grid">
-		<div class="container">
-			<SVG {grid}>
-				<Circle o="I8" r="4" fill="red" />
-			</SVG>
-		</div>
-		<div class="container">
-			<SVG {grid}>
-				<Line from="I3" to="I13" stroke="limegreen" />
-				<Line from="D8" to="N8" stroke="red" />
-			</SVG>
-		</div>
-	</section>
+	<IconSet title="Line">
+		<TestIcon>
+			<Line />
+		</TestIcon>
+		<TestIcon>
+			<Line from="M5" to="M19" />
+			<Line from="F12" to="T12" stroke="grey" />
+		</TestIcon>
+	</IconSet>
+
+	<IconSet title="Circle">
+		<TestIcon>
+			<Circle />
+		</TestIcon>
+		<TestIcon>
+			<Circle o="M12" r="6" />
+		</TestIcon>
+	</IconSet>
 </main>
 
 <style>
@@ -29,17 +32,9 @@
 		width: 100dvw;
 		min-height: 100dvh;
 		padding: 2rem;
-	}
 
-	.icon-grid {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-	}
-
-	.container {
-		width: 192px;
-		height: 192px;
-		border: 2px solid lightblue;
+		flex-direction: column;
+		gap: 2rem;
 	}
 </style>

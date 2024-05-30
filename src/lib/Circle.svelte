@@ -3,13 +3,19 @@
 
 	const g = getContext('p45-grid')
 
-	export let o = 'A0'
+	//p24.p.let.o: Alias for origin.
+	//p24.p.let.origin: Center point of the circle.
+	//p24.d.p.let.origin: "E4"
+	export let o = 'E4'
 	export let origin = o
 
-	export let r = g.size / 2
+	//p24.p.let.r: Alias for radius.
+	//p24.p.let.radius: Circle radius.
+	//p24.d.p.let.radius: 3
+	export let r = 3
 	export let radius = r
 
-	const coords = g.parse(origin)
+	const cxy = g.parse(origin)
 </script>
 
-<circle {...$$restProps} cx={coords.x} cy={coords.y} r={radius} />
+<circle {...$$restProps} cx={cxy.x} cy={cxy.y} r={radius} />

@@ -33,24 +33,70 @@ Do whatever as long as you adhere to the permissive MIT license found within.
 
 ### `<Circle>`
 
-> No documentation.
+```svelte
+<script>
+	// Alias for origin.
+	export let o
+
+	// Center point of the circle.
+	export let origin = "E4"
+
+	// Alias for radius.
+	export let r
+
+	// Circle radius.
+	export let radius = 3
+</script>
+```
 
 ```svelte
-<Circle />
+<Circle
+  o
+  origin="E4"
+  r
+  radius={3} />
+```
+
+### `<Icon>`
+
+```svelte
+<script>
+	// Alias for grid.
+	export let g
+
+	// An instance of the Grid class.
+	export let grid
+</script>
+```
+
+```svelte
+<Icon
+  g
+  grid />
 ```
 
 ### `<Line>`
 
-> No documentation.
-
 ```svelte
-<Line />
+<script>
+	// Alias for from.
+	export let f
+
+	// The starting point.
+	export let from = "B1"
+
+	// Alias for from.
+	export let t
+
+	// The starting point.
+	export let to = "H7"
+</script>
 ```
 
-### `<SVG>`
-
-> No documentation.
-
 ```svelte
-<SVG />
+<Line
+  f
+  from="B1"
+  t
+  to="H7" />
 ```

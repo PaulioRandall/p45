@@ -1,7 +1,7 @@
 export const SIZES = [8, 12, 16, 20, 24, 32, 48, 64]
 
-export default class P45 {
-	constructor(size = 16) {
+export default class Grid {
+	constructor(size = 24) {
 		if (!SIZES.includes(size)) {
 			throw this._newError('', `Invalid size '${size}' choose from: ${SIZES}`)
 		}
