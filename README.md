@@ -137,3 +137,48 @@ The **Polygon** component creates a polygon from a set of points.
   p
   points="B1, H1, H7, B7" />
 ```
+
+### `<RegularPolygon>`
+
+The **RegularPolygon** component creates a regular polygon from an origin
+center point, number of edges, and radius to a vertex.
+
+```svelte
+<script>
+	// Alias for start.
+	export let o
+
+	// Origin node representing the center of the polygon.
+	export let origin = "E4"
+
+	// Alias for side.
+	export let s
+
+	// Number of sides.
+	export let sides = 6
+
+	// Alias for radius.
+	export let r
+
+	// Radius to a vertex.
+	export let radius = 3
+
+	// Alias for rotate.
+	export let ro
+
+	// Amount to rotate counter clockwise in degrees, may be negative.
+	export let rotate = 0
+</script>
+```
+
+```svelte
+<RegularPolygon
+  o
+  origin="E4"
+  s
+  sides={6}
+  r
+  radius={3}
+  ro
+  rotate={0} />
+```

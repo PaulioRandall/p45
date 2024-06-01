@@ -5,6 +5,7 @@
 	import Line from '$lib/Line.svelte'
 	import Circle from '$lib/Circle.svelte'
 	import Polygon from '$lib/Polygon.svelte'
+	import RegularPolygon from '$lib/RegularPolygon.svelte'
 </script>
 
 <main>
@@ -36,6 +37,21 @@
 		</TestIcon>
 		<TestIcon>
 			<Polygon points="M4,T8,T16,M20,F16,F8" />
+		</TestIcon>
+	</IconSet>
+
+	<IconSet title="Regular Polygon">
+		<TestIcon>
+			<RegularPolygon />
+		</TestIcon>
+		<TestIcon>
+			<RegularPolygon origin="M14" sides="3" radius="8" rotate="180" />
+		</TestIcon>
+		<TestIcon>
+			<RegularPolygon origin="M12" sides="4" radius="8" rotate="-30" />
+		</TestIcon>
+		<TestIcon>
+			<RegularPolygon origin="M12" sides="12" radius="9" />
 		</TestIcon>
 	</IconSet>
 </main>
