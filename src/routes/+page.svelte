@@ -3,6 +3,7 @@
 	import TestIcon from './TestIcon.svelte'
 
 	import Line from '$lib/Line.svelte'
+	import Shape from '$lib/Shape.svelte'
 	import Circle from '$lib/Circle.svelte'
 	import Polygon from '$lib/Polygon.svelte'
 	import RegularPolygon from '$lib/RegularPolygon.svelte'
@@ -52,6 +53,18 @@
 		</TestIcon>
 		<TestIcon>
 			<RegularPolygon origin="M12" sides="12" radius="9" />
+		</TestIcon>
+	</IconSet>
+
+	<IconSet title="Shape">
+		<TestIcon>
+			<Shape />
+		</TestIcon>
+		<TestIcon>
+			<Shape points="D3, M3 L, V12 Q V3, V21 L, M21 L, D12 Q D21" />
+		</TestIcon>
+		<TestIcon>
+			<Shape points="D14, H6 C D6 H2, M18 S J18, R6 S R10, V14 S V6" />
 		</TestIcon>
 	</IconSet>
 </main>

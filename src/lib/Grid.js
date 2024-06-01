@@ -14,16 +14,20 @@ export default class Grid {
 	}
 
 	parse(node) {
-		const m = this.splitNode(node)
+		const n = this.splitNode(node)
 
-		if (!m) {
+		if (!n) {
 			throw this._newError('parse', `Invalid node '${node}'`)
 		}
 
-		return {
-			x: this.transformX(m[1]),
-			y: this.transformY(m[2]),
-		}
+		this.transformX(n, 'x')
+		this.transformY(n, 'y')
+		this.transformX(n, 'cp1x')
+		this.transformY(n, 'cp1y')
+		this.transformX(n, 'cp2x')
+		this.transformY(n, 'cp2y')
+
+		return n
 	}
 
 	parseCSV(nodes) {
@@ -34,15 +38,59 @@ export default class Grid {
 	}
 
 	splitNode(node) {
-		return /^([A-Z]+)([0-9]+)$/.exec(node.trim())
+		node = node.trim()
+		let m = null
+
+		m = /^([A-Z]+)([0-9]+)(?:\s+([LT]))?$/.exec(node)
+		if (m) {
+			return {
+				x: m[1],
+				y: m[2],
+				type: m[3] ? m[3] : 'N',
+			}
+		}
+
+		m = /^([A-Z]+)([0-9]+)\s+([SQ])\s+([A-Z]+)([0-9]+)$/.exec(node)
+		if (m) {
+			return {
+				x: m[1],
+				y: m[2],
+				type: m[3],
+				cp1x: m[4],
+				cp1y: m[5],
+			}
+		}
+
+		m = /^([A-Z]+)([0-9]+)\s+([C])\s+([A-Z]+)([0-9]+)\s+([A-Z]+)([0-9]+)$/.exec(
+			node
+		)
+		if (m) {
+			return {
+				x: m[1],
+				y: m[2],
+				type: m[3],
+				cp1x: m[4],
+				cp1y: m[5],
+				cp2x: m[6],
+				cp2y: m[7],
+			}
+		}
+
+		return null
 	}
 
-	transformX(str) {
+	transformX(node, k) {
+		if (!node[k]) {
+			return
+		}
+
+		const v = node[k]
+		const len = v.length
 		let x = 0
 
-		for (let i = str.length - 1; i >= 0; i--) {
-			const j = str.length - 1 - i
-			const charCode = str.charCodeAt(i)
+		for (let i = len - 1; i >= 0; i--) {
+			const j = len - 1 - i
+			const charCode = v.charCodeAt(i)
 			const n = this.charCodeToNumber(charCode)
 
 			if (j === 0) {
@@ -52,15 +100,19 @@ export default class Grid {
 			}
 		}
 
-		return x
+		node[k] = x
 	}
 
-	transformY(y) {
-		const n = Number(y)
+	transformY(node, k) {
+		if (!node[k]) {
+			return
+		}
+
+		const n = Number(node[k])
 		if (isNaN(n)) {
 			throw this._newError('transformY', `Not a valid Y coordinate '${y}'`)
 		}
-		return n
+		node[k] = n
 	}
 
 	charCodeToNumber(charCode) {

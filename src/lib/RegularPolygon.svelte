@@ -11,6 +11,10 @@
 		return Math.round(Number(n))
 	}
 
+	const parseFloat2 = (n) => {
+		return roundTo(Number(n))
+	}
+
 	const generatePoints = (origin, sides, radius, rotate) => {
 		const angle = 360 / sides
 		const points = new Array(sides)
@@ -71,8 +75,8 @@
 		generatePoints(
 			g.parse(origin),
 			parseInt2(sides),
-			parseInt2(radius),
-			parseInt2(rotate)
+			parseFloat2(radius),
+			parseFloat2(rotate)
 		) //
 			.map(({ x, y }) => `${x},${y}`)
 			.join(' ') + ' Z'

@@ -1,5 +1,6 @@
 <script>
 	import { getContext } from 'svelte'
+	import { toSvgPoint } from './path'
 
 	/*p24.description:
 		The **Polygon** component creates a polygon from a set of points.
