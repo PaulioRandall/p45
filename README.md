@@ -197,3 +197,23 @@ The **Shape** component creates a shape from three or more points.
   p
   points="B1,H3,E7" />
 ```
+
+### `<Text>`
+
+The **Text** component renders text.
+
+```svelte
+<script>
+	// Alias for point.
+	export let p
+
+	// Point to render the text.
+	export let point
+</script>
+```
+
+```svelte
+<Text
+  p
+  point />
+```

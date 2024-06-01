@@ -7,6 +7,7 @@
 	import Circle from '$lib/Circle.svelte'
 	import Polygon from '$lib/Polygon.svelte'
 	import RegularPolygon from '$lib/RegularPolygon.svelte'
+	import Text from '$lib/Text.svelte'
 </script>
 
 <main>
@@ -65,6 +66,12 @@
 		</TestIcon>
 		<TestIcon>
 			<Shape points="D14, H6 C D6 H2, M18 S J18, R6 S R10, V14 S V6" />
+		</TestIcon>
+	</IconSet>
+
+	<IconSet title="Text">
+		<TestIcon>
+			<Text point="B14" font-size="8" textLength="22">Hello</Text>
 		</TestIcon>
 	</IconSet>
 </main>
