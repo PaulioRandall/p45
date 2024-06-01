@@ -1,6 +1,5 @@
 <script>
 	import { getContext } from 'svelte'
-	import { toSvgPoint } from './path'
 
 	/*p24.description:
 		The **Shape** component creates a shape from three or more points.
@@ -16,7 +15,10 @@
 	export let p = 'E1,H4,G7,E5,C7,B4'
 	export let points = p
 
-	const path = g.parseCSV(points).map(toSvgPoint).join(' ')
+	const path = g //
+		.parseCSV(points)
+		.map(g.nodeToSvgPoint)
+		.join(' ')
 </script>
 
 <path {...$$restProps} d="{path} Z" />

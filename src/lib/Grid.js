@@ -14,18 +14,20 @@ export default class Grid {
 	}
 
 	parse(node) {
-		const n = this.splitNode(node)
+		const n = this._splitNode(node)
 
 		if (!n) {
 			throw this._newError('parse', `Invalid node '${node}'`)
 		}
 
-		this.transformX(n, 'x')
-		this.transformY(n, 'y')
-		this.transformX(n, 'cp1x')
-		this.transformY(n, 'cp1y')
-		this.transformX(n, 'cp2x')
-		this.transformY(n, 'cp2y')
+		this._transformX(n, 'x')
+		this._transformY(n, 'y')
+
+		this._transformX(n, 'cp1x')
+		this._transformY(n, 'cp1y')
+
+		this._transformX(n, 'cp2x')
+		this._transformY(n, 'cp2y')
 
 		return n
 	}
@@ -37,7 +39,39 @@ export default class Grid {
 			.map((n) => this.parse(n))
 	}
 
-	splitNode(node) {
+	nodeToSvgPoint({ type, x, y, cp1x, cp1y, cp2x, cp2y }, i) {
+		if (i === 0) {
+			return `M ${x},${y}`
+		}
+
+		if (type === 'N') {
+			return `${x},${y}`
+		}
+
+		if (type === 'L') {
+			return `L ${x},${y}`
+		}
+
+		if (type === 'T') {
+			return `T ${x},${y}`
+		}
+
+		if (type === 'S') {
+			return `S ${cp1x},${cp1y} ${x},${y}`
+		}
+
+		if (type === 'Q') {
+			return `Q ${cp1x},${cp1y} ${x},${y}`
+		}
+
+		if (type === 'C') {
+			return `C ${cp1x},${cp1y} ${cp2x},${cp2y} ${x},${y}`
+		}
+
+		throw this._newError('nodeToSvgPoint', `Unknown point type '${type}'`)
+	}
+
+	_splitNode(node) {
 		node = node.trim()
 		let m = null
 
@@ -79,7 +113,7 @@ export default class Grid {
 		return null
 	}
 
-	transformX(node, k) {
+	_transformX(node, k) {
 		if (!node[k]) {
 			return
 		}
@@ -91,7 +125,7 @@ export default class Grid {
 		for (let i = len - 1; i >= 0; i--) {
 			const j = len - 1 - i
 			const charCode = v.charCodeAt(i)
-			const n = this.charCodeToNumber(charCode)
+			const n = this._charCodeToNumber(charCode)
 
 			if (j === 0) {
 				x += n
@@ -103,7 +137,7 @@ export default class Grid {
 		node[k] = x
 	}
 
-	transformY(node, k) {
+	_transformY(node, k) {
 		if (!node[k]) {
 			return
 		}
@@ -115,7 +149,7 @@ export default class Grid {
 		node[k] = n
 	}
 
-	charCodeToNumber(charCode) {
+	_charCodeToNumber(charCode) {
 		const n = charCode - 65
 
 		if (n < 0 || n > 26) {

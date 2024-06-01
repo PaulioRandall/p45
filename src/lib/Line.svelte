@@ -1,6 +1,5 @@
 <script>
 	import { getContext } from 'svelte'
-	import { toSvgPoint } from './path'
 
 	/*p24.description:
 		The **Line** component creates a line from two or more points.
@@ -15,7 +14,10 @@
 	export let p = 'B1,H7'
 	export let points = p
 
-	const path = g.parseCSV(points).map(toSvgPoint).join(' ')
+	const path = g //
+		.parseCSV(points)
+		.map(g.nodeToSvgPoint)
+		.join(' ')
 </script>
 
 <path {...$$restProps} d={path} />

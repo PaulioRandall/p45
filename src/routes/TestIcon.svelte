@@ -5,7 +5,7 @@
 	export let grid = new Grid(24)
 </script>
 
-<div class="icon">
+<div class="icon" {...$$restProps}>
 	<Icon {grid}>
 		<slot />
 	</Icon>

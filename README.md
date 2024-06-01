@@ -217,3 +217,67 @@ The **Text** component renders text.
   p
   point />
 ```
+
+### `<Transform>`
+
+The **Transform** component allows simple transformations.
+
+```svelte
+<script>
+	// Alias for origin.
+	export let o
+
+	// Point to perform transformations around.
+	export let origin = "A0"
+
+	// True to flip along the x-axis.
+	export let flipX = false
+
+	// True to flip along the y-axis.
+	export let flipY = false
+
+	// Amount to translate along the x-axis.
+	export let moveX = 0
+
+	// Amount to translate along the y-axis.
+	export let moveY = 0
+
+	// Amount to translate along the x-axis.
+	export let translateX = 0
+
+	// Amount to translate along the y-axis.
+	export let translateY = 0
+
+	// How much to scale along the x-axis.
+	export let scaleX = 0
+
+	// How much to scale along the y-axis.
+	export let scaleY = 0
+
+	// How much to skew along the x-axis.
+	export let skewX = 0
+
+	// How much to skew along the y-axis.
+	export let skewY = 0
+
+	// Clockwise rotation in degrees.
+	export let rotate = 0
+</script>
+```
+
+```svelte
+<Transform
+  o
+  origin="A0"
+  flipX={false}
+  flipY={false}
+  moveX={0}
+  moveY={0}
+  translateX={0}
+  translateY={0}
+  scaleX={0}
+  scaleY={0}
+  skewX={0}
+  skewY={0}
+  rotate={0} />
+```
