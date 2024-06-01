@@ -94,22 +94,28 @@ raw svg child elements maybe slotted in too.
 
 ### `<Line>`
 
-The **Line** component creates a simple straight line from two points.
+The **Line** component creates a line from two or more points. Each line
+section will be straight.
 
 ```svelte
 <script>
 	// Alias for points.
 	export let p
 
-	// Start and end points separated by a comma.
+	// Points from line start to end, each separated by a comma.
 	export let points = "B1,H7"
+
+	// True to force use of the SVG path element even when an SVG line element
+	// would do.
+	export let usepath = false
 </script>
 ```
 
 ```svelte
 <Line
   p
-  points="B1,H7" />
+  points="B1,H7"
+  usepath={false} />
 ```
 
 ### `<Polygon>`
