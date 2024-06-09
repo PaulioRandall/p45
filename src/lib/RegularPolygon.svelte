@@ -3,8 +3,8 @@
 	import Victor from 'victor'
 
 	/*@component
-		The `<RegularPolygon>` component creates a regular polygon from an origin
-		center point, number of edges, and radius to a vertex.
+		Creates a regular polygon from an origin center point, number of edges,
+		and radius to a vertex.
 	*/
 
 	const parseInt2 = (n) => {

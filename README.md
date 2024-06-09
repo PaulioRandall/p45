@@ -31,7 +31,7 @@ Do whatever as long as you adhere to the permissive MIT license found within.
 
 ### `<Circle>`
 
-The `<Circle>` component creates a circle from a center origin and radius.
+Creates a circle from a center origin and radius.
 
 ```svelte
 <script>
@@ -52,8 +52,7 @@ The `<Circle>` component creates a circle from a center origin and radius.
 
 ### `<Icon>`
 
-The `<Icon>` component is a container for slotted shapes that form an
-		Icon.
+Container for slotted shapes that form an Icon.
 
 		It's represented by an svg element sized by the passed grid. This means
 		raw svg child elements maybe slotted in too.
@@ -89,7 +88,7 @@ The `<Icon>` component is a container for slotted shapes that form an
 
 ### `<Line>`
 
-The `<Line>` component creates a line from two or more points.
+Creates a line from two or more points.
 
 ```svelte
 <script>
@@ -106,7 +105,7 @@ The `<Line>` component creates a line from two or more points.
 
 ### `<Polygon>`
 
-The `<Polygon>` component creates a polygon from a set of points.
+Creates a polygon from a set of points.
 
 ```svelte
 <script>
@@ -123,8 +122,8 @@ The `<Polygon>` component creates a polygon from a set of points.
 
 ### `<RegularPolygon>`
 
-The `<RegularPolygon>` component creates a regular polygon from an origin
-		center point, number of edges, and radius to a vertex.
+Creates a regular polygon from an origin center point, number of edges,
+		and radius to a vertex.
 
 ```svelte
 <RegularPolygon />
@@ -132,7 +131,7 @@ The `<RegularPolygon>` component creates a regular polygon from an origin
 
 ### `<Shape>`
 
-The `<Shape>` component creates a shape from three or more points.
+Creates a shape from three or more points.
 
 ```svelte
 <script>
@@ -150,7 +149,7 @@ The `<Shape>` component creates a shape from three or more points.
 
 ### `<Text>`
 
-The `<Text>` component renders text.
+Renders text.
 
 ```svelte
 <script>
@@ -171,6 +170,8 @@ The `<Text>` component renders text.
 ```
 
 ### `<Transform>`
+
+Creates group with simple transformations.
 
 ```svelte
 <script>

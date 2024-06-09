@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte'
 
 	/*@component
-		The `<Polygon>` component creates a polygon from a set of points.
+		Creates a polygon from a set of points.
 	*/
 
 	const g = getContext('p45-grid')

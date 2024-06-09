@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte'
 
 	/*@component
-		The `<Shape>` component creates a shape from three or more points.
+		Creates a shape from three or more points.
 	*/
 
 	const g = getContext('p45-grid')

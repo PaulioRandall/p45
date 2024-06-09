@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte'
 
 	/*@component
-		The `<Text>` component renders text.
+		Renders text.
 	*/
 
 	const g = getContext('p45-grid')

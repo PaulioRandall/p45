@@ -56,8 +56,8 @@
 <script>
 	import { getContext } from 'svelte'
 
-	/*p24.description:
-		The **Transform** component allows simple transformations.
+	/*@component
+		Creates group with simple transformations.
 	*/
 
 	const g = getContext('p45-grid')

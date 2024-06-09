@@ -2,8 +2,7 @@
 	import { getContext, setContext } from 'svelte'
 
 	/*@component
-		The `<Icon>` component is a container for slotted shapes that form an
-		Icon.
+		Container for slotted shapes that form an Icon.
 
 		It's represented by an svg element sized by the passed grid. This means
 		raw svg child elements maybe slotted in too.

@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte'
 
 	/*@component
-		The `<Circle>` component creates a circle from a center origin and radius.
+		Creates a circle from a center origin and radius.
 	*/
 
 	const g = getContext('p45-grid')

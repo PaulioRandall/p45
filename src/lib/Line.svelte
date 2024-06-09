@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte'
 
 	/*@component
-		The `<Line>` component creates a line from two or more points.
+		Creates a line from two or more points.
 	*/
 
 	const g = getContext('p45-grid')
