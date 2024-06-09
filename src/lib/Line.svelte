@@ -1,16 +1,16 @@
 <script>
 	import { getContext } from 'svelte'
 
-	/*p24.description:
-		The **Line** component creates a line from two or more points.
+	/*@component
+		The `<Line>` component creates a line from two or more points.
 	*/
 
 	const g = getContext('p45-grid')
 
-	//p24.p.let.p: Alias for points.
-	//p24.p.let.points:
+	//@prop points
 	// Comma separated list of points from first to last that represent a line.
-	//p24.d.p.let.points: "B1,H7"
+	// @default "B1,H7"
+	// @alias p
 	export let p = 'B1,H7'
 	export let points = p
 

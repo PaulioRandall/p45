@@ -62,54 +62,63 @@
 
 	const g = getContext('p45-grid')
 
-	//p24.p.let.o: Alias for origin.
-	//p24.p.let.origin: Point to perform transformations around.
-	//p24.d.p.let.origin: "A0"
+	//@prop origin
+	// Point to perform transformations around.
+	// @default "A0"
+	// @alias o
 	export let o = 'A0'
 	export let origin = o
 
 	//p24.p.let.flipX: True to flip along the x-axis.
 	//p24.d.p.let.flipX: false
+
+	//@prop flipX
+	// True to flip along the x-axis.
+	// @default false
 	export let flipX = false
 
-	//p24.p.let.flipY: True to flip along the y-axis.
-	//p24.d.p.let.flipY: false
+	//@prop flipY
+	// True to flip along the y-axis.
+	// @default false
 	export let flipY = false
 
-	//p24.p.let.moveX: Amount to translate along the x-axis.
-	//p24.d.p.let.moveX: 0
+	//@prop translateX
+	// Amount to translate along the x-axis.
+	// @default 0
+	// @alias moveX
 	export let moveX = 0
-
-	//p24.p.let.moveY: Amount to translate along the y-axis.
-	//p24.d.p.let.moveY: 0
-	export let moveY = 0
-
-	//p24.p.let.translateX: Amount to translate along the x-axis.
-	//p24.d.p.let.translateX: 0
 	export let translateX = 0
 
-	//p24.p.let.translateY: Amount to translate along the y-axis.
-	//p24.d.p.let.translateY: 0
+	//@prop translateY
+	// Amount to translate along the y-axis.
+	// @default 0
+	// @alias moveY
+	export let moveY = 0
 	export let translateY = 0
 
-	//p24.p.let.scaleX: How much to scale along the x-axis.
-	//p24.d.p.let.scaleX: 0
+	//@prop scaleX
+	// How much to scale along the x-axis.
+	// @default 0
 	export let scaleX = 0
 
-	//p24.p.let.scaleY: How much to scale along the y-axis.
-	//p24.d.p.let.scaleY: 0
+	//@prop scaleY
+	// How much to scale along the y-axis.
+	// @default 0
 	export let scaleY = 0
 
-	//p24.p.let.skewX: How much to skew along the x-axis.
-	//p24.d.p.let.skewX: 0
+	//@prop skewX
+	// How much to skew along the x-axis.
+	// @default 0
 	export let skewX = 0
 
-	//p24.p.let.skewY: How much to skew along the y-axis.
-	//p24.d.p.let.skewY: 0
+	//@prop skewY
+	// How much to skew along the y-axis.
+	// @default 0
 	export let skewY = 0
 
-	//p24.p.let.rotate: Clockwise rotation in degrees.
-	//p24.d.p.let.rotate: 0
+	//@prop rotate
+	// Clockwise rotation in degrees.
+	// @default 0
 	export let rotate = 0
 
 	const originXY = g.parse(origin)
@@ -117,5 +126,8 @@
 </script>
 
 <g {...$$restProps} transform-origin="{originXY.x} {originXY.y}" {transform}>
+	<!--@slot
+		Components and elements to transform.
+	-->
 	<slot />
 </g>

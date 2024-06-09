@@ -1,30 +1,33 @@
 <script>
 	import { getContext, setContext } from 'svelte'
 
-	/*p24.description:
-		The **Icon** component is a container for slotted shapes that form an
+	/*@component
+		The `<Icon>` component is a container for slotted shapes that form an
 		Icon.
 
 		It's represented by an svg element sized by the passed grid. This means
 		raw svg child elements maybe slotted in too.
 	*/
 
-	//p24.p.let.g: Alias for grid.
-	//p24.p.let.grid: An instance of the Grid class.
-	//p24.d.p.let.grid: getContext('p45-grid')
+	//@prop grid
+	// An instance of the Grid class.
+	// @default getContext('p45-grid')
+	// @alias g
 	export let g = getContext('p45-grid')
 	export let grid = g
 
-	//p24.p.let.title: The icon's title applied using the SVG title tag.
-	//p24.d.p.let.title: ""
+	//@prop title
+	// The icon's title applied using the SVG title tag.
+	// @default ""
 	export let title = ''
 
-	//p24.p.let.description:
+	//@prop description
 	// Description of the icon applied using the SVG description tag.
-	//p24.d.p.let.description: ""
+	// @default ""
 	export let description = ''
 
-	//p24.ctx.p45-grid: Grid used to size the icon and parse nodes.
+	//@ctx p45-grid
+	// Grid used to size the icon and parse nodes.
 	setContext('p45-grid', grid)
 </script>
 
@@ -43,5 +46,8 @@
 	{#if description}
 		<description>{description}</description>
 	{/if}
+	<!--@slot
+		SVG elments and components that form the icon.
+	-->
 	<slot />
 </svg>

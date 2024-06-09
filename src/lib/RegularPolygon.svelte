@@ -2,8 +2,8 @@
 	import { getContext } from 'svelte'
 	import Victor from 'victor'
 
-	/*p24.description:
-		The **RegularPolygon** component creates a regular polygon from an origin
+	/*@component
+		The `<RegularPolygon>` component creates a regular polygon from an origin
 		center point, number of edges, and radius to a vertex.
 	*/
 

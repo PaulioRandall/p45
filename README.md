@@ -31,18 +31,12 @@ Do whatever as long as you adhere to the permissive MIT license found within.
 
 ### `<Circle>`
 
-The **Circle** component creates a circle from a center origin and radius.
+The `<Circle>` component creates a circle from a center origin and radius.
 
 ```svelte
 <script>
-	// Alias for origin.
-	export let o
-
-	// Center point of the circle.
+	// Circle center point.
 	export let origin = "E4"
-
-	// Alias for radius.
-	export let r
 
 	// Circle radius.
 	export let radius = 3
@@ -51,25 +45,21 @@ The **Circle** component creates a circle from a center origin and radius.
 
 ```svelte
 <Circle
-  o
-  origin="E4"
-  r
-  radius={3} />
+	origin="E4"
+	radius={3}
+/>
 ```
 
 ### `<Icon>`
 
-The **Icon** component is a container for slotted shapes that form an
-Icon.
+The `<Icon>` component is a container for slotted shapes that form an
+		Icon.
 
-It's represented by an svg element sized by the passed grid. This means
-raw svg child elements maybe slotted in too.
+		It's represented by an svg element sized by the passed grid. This means
+		raw svg child elements maybe slotted in too.
 
 ```svelte
 <script>
-	// Alias for grid.
-	export let g
-
 	// An instance of the Grid class.
 	export let grid = getContext('p45-grid')
 
@@ -80,27 +70,29 @@ raw svg child elements maybe slotted in too.
 	export let description = ""
 
 	// Grid used to size the icon and parse nodes.
-	setContext('p45-grid', ...)
+	setContext("p45-grid", ...)
 </script>
+
+<!-- SVG elments and components that form the icon. -->
+<slot />
 ```
 
 ```svelte
 <Icon
-  g
-  grid={getContext('p45-grid')}
-  title=""
-  description="" />
+	grid={getContext('p45-grid')}
+	title=""
+	description=""
+>
+	<div />
+</Icon>
 ```
 
 ### `<Line>`
 
-The **Line** component creates a line from two or more points.
+The `<Line>` component creates a line from two or more points.
 
 ```svelte
 <script>
-	// Alias for points.
-	export let p
-
 	// Comma separated list of points from first to last that represent a line.
 	export let points = "B1,H7"
 </script>
@@ -108,19 +100,16 @@ The **Line** component creates a line from two or more points.
 
 ```svelte
 <Line
-  p
-  points="B1,H7" />
+	points="B1,H7"
+/>
 ```
 
 ### `<Polygon>`
 
-The **Polygon** component creates a polygon from a set of points.
+The `<Polygon>` component creates a polygon from a set of points.
 
 ```svelte
 <script>
-	// Alias for points.
-	export let p
-
 	// Comma separated list of nodes.
 	export let points = "B1, H1, H7, B7"
 </script>
@@ -128,105 +117,63 @@ The **Polygon** component creates a polygon from a set of points.
 
 ```svelte
 <Polygon
-  p
-  points="B1, H1, H7, B7" />
+	points="B1, H1, H7, B7"
+/>
 ```
 
 ### `<RegularPolygon>`
 
-The **RegularPolygon** component creates a regular polygon from an origin
-center point, number of edges, and radius to a vertex.
+The `<RegularPolygon>` component creates a regular polygon from an origin
+		center point, number of edges, and radius to a vertex.
 
 ```svelte
-<script>
-	// Alias for start.
-	export let o
-
-	// Origin node representing the center of the polygon.
-	export let origin = "E4"
-
-	// Alias for side.
-	export let s
-
-	// Number of sides.
-	export let sides = 6
-
-	// Alias for radius.
-	export let r
-
-	// Radius to a vertex.
-	export let radius = 3
-
-	// Alias for rotate.
-	export let ro
-
-	// Amount to rotate counter clockwise in degrees, may be negative.
-	export let rotate = 0
-</script>
-```
-
-```svelte
-<RegularPolygon
-  o
-  origin="E4"
-  s
-  sides={6}
-  r
-  radius={3}
-  ro
-  rotate={0} />
+<RegularPolygon />
 ```
 
 ### `<Shape>`
 
-The **Shape** component creates a shape from three or more points.
+The `<Shape>` component creates a shape from three or more points.
 
 ```svelte
 <script>
-	// Alias for points.
-	export let p
-
 	// Comma separated list of points from first to last that represent a shape.
 	// The shape will complete itself with a straight line.
-	export let points = "B1,H3,E7"
+	export let points = "E1,H4,G7,E5,C7,B4"
 </script>
 ```
 
 ```svelte
 <Shape
-  p
-  points="B1,H3,E7" />
+	points="E1,H4,G7,E5,C7,B4"
+/>
 ```
 
 ### `<Text>`
 
-The **Text** component renders text.
+The `<Text>` component renders text.
 
 ```svelte
 <script>
-	// Alias for point.
-	export let p
-
-	// Point to render the text.
-	export let point
+	// Node to render the text at.
+	export let point = "E4"
 </script>
+
+<!-- Text and associated SVG text elements. -->
+<slot />
 ```
 
 ```svelte
 <Text
-  p
-  point />
+	point="E4"
+>
+	<div />
+</Text>
 ```
 
 ### `<Transform>`
 
-The **Transform** component allows simple transformations.
-
 ```svelte
 <script>
-	// Alias for origin.
-	export let o
-
 	// Point to perform transformations around.
 	export let origin = "A0"
 
@@ -235,12 +182,6 @@ The **Transform** component allows simple transformations.
 
 	// True to flip along the y-axis.
 	export let flipY = false
-
-	// Amount to translate along the x-axis.
-	export let moveX = 0
-
-	// Amount to translate along the y-axis.
-	export let moveY = 0
 
 	// Amount to translate along the x-axis.
 	export let translateX = 0
@@ -263,21 +204,24 @@ The **Transform** component allows simple transformations.
 	// Clockwise rotation in degrees.
 	export let rotate = 0
 </script>
+
+<!-- Components and elements to transform. -->
+<slot />
 ```
 
 ```svelte
 <Transform
-  o
-  origin="A0"
-  flipX={false}
-  flipY={false}
-  moveX={0}
-  moveY={0}
-  translateX={0}
-  translateY={0}
-  scaleX={0}
-  scaleY={0}
-  skewX={0}
-  skewY={0}
-  rotate={0} />
+	origin="A0"
+	flipX={false}
+	flipY={false}
+	translateX={0}
+	translateY={0}
+	scaleX={0}
+	scaleY={0}
+	skewX={0}
+	skewY={0}
+	rotate={0}
+>
+	<div />
+</Transform>
 ```
