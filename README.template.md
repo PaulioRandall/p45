@@ -4,21 +4,6 @@
 
 # P45
 
-<div>
-	<img src="/logo.svg" width="50" height="50" />
-	<img src="/icons/smiley.svg" width="50" height="50" />
-	<img src="/icons/clock.svg" width="50" height="50" />
-	<img src="/icons/parabola.svg" width="50" height="50" />
-	<img src="/icons/circle.svg" width="50" height="50" />
-	<img src="/icons/diagonal.svg" width="50" height="50" />
-	<img src="/icons/conical-flask.svg" width="50" height="50" />
-	<img src="/icons/diamond.svg" width="50" height="50" />
-	<img src="/icons/hexagon.svg" width="50" height="50" />
-	<img src="/icons/squared.svg" width="50" height="50" />
-</div>
-
-<br/>
-
 Svelte library for programmatically crafting grid based SVG icons.
 
 **Requires Svelte version 4.**
