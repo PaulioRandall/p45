@@ -9,9 +9,9 @@
 
 	//@prop points
 	// Comma separated list of points from first to last that represent a line.
-	// @default "B1,H7"
+	// @default Grid.nodeOf(1, 1) + "," + Grid.nodeOf(Grid.size-1, Grid.size-1)
 	// @alias p
-	export let p = 'B1,H7'
+	export let p = g.nodeOf(1, 1) + ',' + g.nodeOf(g.size - 1, g.size - 1)
 	export let points = p
 
 	const path = g //

@@ -9,16 +9,16 @@
 
 	//@prop origin
 	// Circle center point.
-	// @default "E4"
+	// @default Grid.centerNode
 	// @alias o
-	export let o = 'E4'
+	export let o = g.centerNode
 	export let origin = o
 
 	//@prop radius
 	// Circle radius.
-	// @default 3
+	// @default Grid.center-1
 	// @alias r
-	export let r = 3
+	export let r = g.center - 1
 	export let radius = r
 
 	const cxy = g.parse(origin)

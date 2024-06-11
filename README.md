@@ -21,17 +21,17 @@ Creates a circle from a center origin and radius.
 ```svelte
 <script>
 	// Circle center point.
-	export let origin = "E4"
+	export let origin = Grid.centerNode
 
 	// Circle radius.
-	export let radius = 3
+	export let radius = Grid.center-1
 </script>
 ```
 
 ```svelte
 <Circle
-	origin="E4"
-	radius={3}
+	origin={Grid.centerNode}
+	radius={Grid.center-1}
 />
 ```
 
@@ -78,13 +78,13 @@ Creates a line from two or more points.
 ```svelte
 <script>
 	// Comma separated list of points from first to last that represent a line.
-	export let points = "B1,H7"
+	export let points = Grid.nodeOf(1, 1) + "," + Grid.nodeOf(Grid.size-1, Grid.size-1)
 </script>
 ```
 
 ```svelte
 <Line
-	points="B1,H7"
+	points={Grid.nodeOf(1, 1) + "," + Grid.nodeOf(Grid.size-1, Grid.size-1)}
 />
 ```
 
@@ -95,13 +95,23 @@ Creates a polygon from a set of points.
 ```svelte
 <script>
 	// Comma separated list of nodes.
-	export let points = "B1, H1, H7, B7"
+	export let points = [
+	Grid.nodeOf(1, 1),
+  Grid.nodeOf(Grid.size-1, 1),
+	Grid.nodeOf(Grid.size-1, Grid.size-1),
+	Grid.nodeOf(1, Grid.size-1),
+].join(',')
 </script>
 ```
 
 ```svelte
 <Polygon
-	points="B1, H1, H7, B7"
+	points={[
+	Grid.nodeOf(1, 1),
+  Grid.nodeOf(Grid.size-1, 1),
+	Grid.nodeOf(Grid.size-1, Grid.size-1),
+	Grid.nodeOf(1, Grid.size-1),
+].join(',')}
 />
 ```
 

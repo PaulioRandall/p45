@@ -7,10 +7,20 @@ export default class Grid {
 		}
 
 		this._size = size
+		this._center = size / 2
+		this._centerNode = this.nodeOf(this._center, this._center)
 	}
 
 	get size() {
 		return this._size
+	}
+
+	get center() {
+		return this._center
+	}
+
+	get centerNode() {
+		return this._centerNode
 	}
 
 	parse(node) {
@@ -69,6 +79,24 @@ export default class Grid {
 		}
 
 		throw this._newError('nodeToSvgPoint', `Unknown point type '${type}'`)
+	}
+
+	nodeOf(x, y) {
+		return this.numberToAlpha(x) + y
+	}
+
+	numberToAlpha(n) {
+		const A = 65
+		const result = []
+
+		while (n >= 26) {
+			let rem = n % 26
+			result.unshift(rem + A)
+			n -= rem
+		}
+
+		result.unshift(n + 65)
+		return String.fromCharCode(...result)
 	}
 
 	_splitNode(node) {

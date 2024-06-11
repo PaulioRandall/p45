@@ -10,6 +10,16 @@ describe('Grid.js', () => {
 		test('Allows valid size', () => {
 			new Grid(16)
 		})
+
+		test('Creates correct center node', () => {
+			const g = new Grid(16)
+			expect(g.centerNode).toEqual('I8')
+		})
+
+		test('Creates correct center node', () => {
+			const g = new Grid(24)
+			expect(g.centerNode).toEqual('M12')
+		})
 	})
 
 	describe('parse', () => {

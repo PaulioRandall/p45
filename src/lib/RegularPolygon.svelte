@@ -48,8 +48,8 @@
 
 	//p24.p.let.o: Alias for start.
 	//p24.p.let.origin: Origin node representing the center of the polygon.
-	//p24.d.p.let.origin: "E4"
-	export let o = 'E4'
+	//p24.d.p.let.origin: Grid.centerNode
+	export let o = g.centerNode
 	export let origin = o
 
 	//p24.p.let.s: Alias for side.
@@ -60,8 +60,8 @@
 
 	//p24.p.let.r: Alias for radius.
 	//p24.p.let.radius: Radius to a vertex.
-	//p24.d.p.let.radius: 3
-	export let r = 3
+	//p24.d.p.let.radius: Grid.center - 1
+	export let r = g.center - 1
 	export let radius = r
 
 	//p24.p.let.ro: Alias for rotate.

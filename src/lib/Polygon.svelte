@@ -9,9 +9,19 @@
 
 	//@prop points
 	// Comma separated list of nodes.
-	// @default "B1, H1, H7, B7"
+	// @default [
+	// 	Grid.nodeOf(1, 1),
+	//  Grid.nodeOf(Grid.size-1, 1),
+	// 	Grid.nodeOf(Grid.size-1, Grid.size-1),
+	// 	Grid.nodeOf(1, Grid.size-1),
+	// ].join(',')
 	// @alias p
-	export let p = 'B1, H1, H7, B7'
+	export let p = [
+		g.nodeOf(1, 1),
+		g.nodeOf(g.size - 1, 1),
+		g.nodeOf(g.size - 1, g.size - 1),
+		g.nodeOf(1, g.size - 1),
+	].join(',')
 	export let points = p
 
 	const svgPoints = g //
