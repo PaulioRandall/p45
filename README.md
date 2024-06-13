@@ -171,7 +171,7 @@ Creates group with simple transformations.
 ```svelte
 <script>
 	// Point to perform transformations around.
-	export let origin = "A0"
+	export let origin = Grid.centerNode
 
 	// True to flip along the x-axis.
 	export let flipX = false
@@ -207,7 +207,7 @@ Creates group with simple transformations.
 
 ```svelte
 <Transform
-	origin="A0"
+	origin={Grid.centerNode}
 	flipX={false}
 	flipY={false}
 	translateX={0}

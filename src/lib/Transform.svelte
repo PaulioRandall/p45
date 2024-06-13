@@ -64,9 +64,9 @@
 
 	//@prop origin
 	// Point to perform transformations around.
-	// @default "A0"
+	// @default Grid.centerNode
 	// @alias o
-	export let o = 'A0'
+	export let o = g.centerNode
 	export let origin = o
 
 	//p24.p.let.flipX: True to flip along the x-axis.
