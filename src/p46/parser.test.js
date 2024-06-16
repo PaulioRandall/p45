@@ -10,13 +10,13 @@ describe('parser.js', () => {
 		})
 
 		describe('straight line', () => {
-			test(`"straight line to D3"`, () => {
-				const act = parse(['straight', 'line', 'to', 'D3'])
+			test(`"line to D3"`, () => {
+				const act = parse(['line', 'to', 'D3'])
 				expect(act).toEqual('L 3 3')
 			})
 
-			test(`"line to D3"`, () => {
-				const act = parse(['line', 'to', 'D3'])
+			test(`"straight line to D3"`, () => {
+				const act = parse(['straight', 'line', 'to', 'D3'])
 				expect(act).toEqual('L 3 3')
 			})
 
@@ -24,9 +24,24 @@ describe('parser.js', () => {
 				const act = parse(['draw', 'line', 'to', 'D3'])
 				expect(act).toEqual('L 3 3')
 			})
+
+			test(`"draw straight line to D3"`, () => {
+				const act = parse(['draw', 'straight', 'line', 'to', 'D3'])
+				expect(act).toEqual('L 3 3')
+			})
 		})
 
 		describe('quadratic curve', () => {
+			test(`"q curve to D3 with slope D0"`, () => {
+				const act = parse(['q', 'curve', 'to', 'D3', 'with', 'slope', 'D0'])
+				expect(act).toEqual('Q 3 0, 3 3')
+			})
+
+			test(`"quad curve to D3 with slope D0"`, () => {
+				const act = parse(['quad', 'curve', 'to', 'D3', 'with', 'slope', 'D0'])
+				expect(act).toEqual('Q 3 0, 3 3')
+			})
+
 			test(`"quadratic curve to D3 with slope D0"`, () => {
 				const act = parse([
 					'quadratic',
@@ -37,12 +52,7 @@ describe('parser.js', () => {
 					'slope',
 					'D0',
 				])
-				expect(act).toEqual('Q 3 3, 3 0')
-			})
-
-			test(`"quad curve to D3 with slope D0"`, () => {
-				const act = parse(['quad', 'curve', 'to', 'D3', 'with', 'slope', 'D0'])
-				expect(act).toEqual('Q 3 3, 3 0')
+				expect(act).toEqual('Q 3 0, 3 3')
 			})
 
 			test(`"draw quadratic curve to D3 with slope D0"`, () => {
@@ -56,7 +66,7 @@ describe('parser.js', () => {
 					'slope',
 					'D0',
 				])
-				expect(act).toEqual('Q 3 3, 3 0')
+				expect(act).toEqual('Q 3 0, 3 3')
 			})
 		})
 
@@ -89,7 +99,7 @@ describe('parser.js', () => {
 					'and',
 					'D0',
 				])
-				expect(act).toEqual('C 3 3, 2 2, 3 0')
+				expect(act).toEqual('C 2 2, 3 0, 3 3')
 			})
 
 			test(`"draw curve to D3 with slope C2 and D0"`, () => {
@@ -104,19 +114,19 @@ describe('parser.js', () => {
 					'and',
 					'D0',
 				])
-				expect(act).toEqual('C 3 3, 2 2, 3 0')
+				expect(act).toEqual('C 2 2, 3 0, 3 3')
 			})
 		})
 
 		describe('symmetric cubic curve', () => {
 			test(`"curve to D3 with slope D0"`, () => {
 				const act = parse(['curve', 'to', 'D3', 'with', 'slope', 'D0'])
-				expect(act).toEqual('S 3 3, 3 0')
+				expect(act).toEqual('S 3 0, 3 3')
 			})
 
 			test(`"draw curve to D3 with slope D0"`, () => {
 				const act = parse(['draw', 'curve', 'to', 'D3', 'with', 'slope', 'D0'])
-				expect(act).toEqual('S 3 3, 3 0')
+				expect(act).toEqual('S 3 0, 3 3')
 			})
 		})
 	})

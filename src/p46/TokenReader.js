@@ -16,6 +16,12 @@ export default class TokenReader {
 		return this.idx >= this.cmd.length
 	}
 
+	read() {
+		const tk = this.get()
+		this.idx++
+		return tk
+	}
+
 	get() {
 		if (this.empty()) {
 			throw new Error(`No more tokens! Token list length: ${this.cmd.length}`)
@@ -24,22 +30,19 @@ export default class TokenReader {
 		return this.cmd[this.idx]
 	}
 
-	is(s) {
-		return !this.empty() && this.get() === s
+	getLower() {
+		return this.get().toLowerCase()
 	}
 
-	read() {
-		const tk = this.get()
-		this.idx++
-		return tk
-	}
+	is(...options) {
+		if (this.empty()) {
+			return false
+		}
 
-	accept(...options) {
-		const token = this.get()
+		const token = this.getLower()
 
 		for (const o of options) {
 			if (token === o) {
-				this.idx++
 				return true
 			}
 		}
@@ -47,14 +50,17 @@ export default class TokenReader {
 		return false
 	}
 
-	expect(...options) {
-		const token = this.get()
+	accept(...options) {
+		if (this.is(...options)) {
+			this.idx++
+			return true
+		}
+		return false
+	}
 
-		for (const o of options) {
-			if (token === o) {
-				this.idx++
-				return token
-			}
+	expect(...options) {
+		if (this.is(...options)) {
+			return this.read()
 		}
 
 		throw new Error(

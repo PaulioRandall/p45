@@ -25,7 +25,7 @@ const parseDraw = (r) => {
 		return parseDrawStraightLine(r)
 	}
 
-	if (r.is('quadratic') || r.is('quad')) {
+	if (r.is('quadratic') || r.is('quad') || r.is('q')) {
 		return parseQuadraticCurve(r)
 	}
 
@@ -46,7 +46,7 @@ const parseDrawStraightLine = (r) => {
 }
 
 const parseQuadraticCurve = (r) => {
-	r.expect('quadratic', 'quad')
+	r.expect('q', 'quad', 'quadratic')
 	r.expect('curve')
 	r.expect('to')
 
@@ -60,7 +60,7 @@ const parseQuadraticCurve = (r) => {
 	r.expect('slope')
 
 	const cp = parseNode(r.read())
-	return `Q ${n.x} ${n.y}, ${cp.x} ${cp.y}`
+	return `Q ${cp.x} ${cp.y}, ${n.x} ${n.y}`
 }
 
 const parseCubicCurve = (r) => {
@@ -73,17 +73,24 @@ const parseCubicCurve = (r) => {
 	r.expect('with')
 
 	if (r.accept('slope')) {
-		const cp = parseNode(r.read())
-		return `S ${n.x} ${n.y}, ${cp.x} ${cp.y}`
+		return parseCubicSymmetricCurve(r, n)
 	} else if (r.accept('slopes')) {
-		const cp1 = parseNode(r.read())
-		r.expect('and')
-		const cp2 = parseNode(r.read())
-
-		return `C ${n.x} ${n.y}, ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}`
+		return parseCubicNonSymmetricCurve(r, n)
 	}
 
 	throw new Error(`Unable to determine cubic curve parameters`)
+}
+
+const parseCubicSymmetricCurve = (r, n) => {
+	const cp = parseNode(r.read())
+	return `S ${cp.x} ${cp.y}, ${n.x} ${n.y}`
+}
+
+const parseCubicNonSymmetricCurve = (r, n) => {
+	const cp1 = parseNode(r.read())
+	r.expect('and')
+	const cp2 = parseNode(r.read())
+	return `C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${n.x} ${n.y}`
 }
 
 export default parse
