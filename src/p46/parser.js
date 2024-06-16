@@ -22,17 +22,17 @@ const parseMove = (r) => {
 
 const parseDraw = (r) => {
 	if (r.is('straight') || r.is('line')) {
-		return parseStraightLine(r)
+		return parseDrawStraightLine(r)
 	}
 
-	if (r.is('curved')) {
-		return parseCurvedLine(r)
+	if (r.is('continue') || r.is('curved')) {
+		return parseDrawCurvedLine(r)
 	}
 
 	return []
 }
 
-const parseStraightLine = (r) => {
+const parseDrawStraightLine = (r) => {
 	r.accept('straight')
 	r.expect('line')
 	r.expect('to')
@@ -41,23 +41,62 @@ const parseStraightLine = (r) => {
 	return `L ${n.x} ${n.y}`
 }
 
-const parseCurvedLine = (r) => {
+const parseDrawCurvedLine = (r) => {
+	const symmetry = r.accept('continue')
+
+	if (symmetry) {
+		r.accept('drawing')
+	}
+
 	r.expect('curved')
 	r.expect('line')
 	r.expect('to')
 
 	const n = parseNode(r.read())
+	return parseCurveSlope(r, symmetry, n)
+}
+
+const parseCurveSlope = (r, symmetry, n) => {
+	if (r.empty()) {
+		return continuedQuadraticCurve(r, n)
+	}
 
 	r.expect('with')
 
-	if (r.accept('slope')) {
-		return quadraticLine(r, n)
+	if (r.accept('slopes')) {
+		return cubicCurve(r, n)
 	}
+
+	if (!symmetry && r.accept('slope')) {
+		return quadraticCurve(r, n)
+	}
+
+	if (symmetry && r.accept('slope')) {
+		return continuedCubicCurve(r, n)
+	}
+
+	throw new Error(`Unable to determine curve type`)
 }
 
-const quadraticLine = (r, n) => {
-	const s = parseNode(r.read())
-	return `Q ${n.x} ${n.y}, ${s.x} ${s.y}`
+const quadraticCurve = (r, n) => {
+	const cp = parseNode(r.read())
+	return `Q ${n.x} ${n.y}, ${cp.x} ${cp.y}`
+}
+
+const continuedQuadraticCurve = (r, n) => {
+	return `T ${n.x} ${n.y}`
+}
+
+const cubicCurve = (r, n) => {
+	const cp1 = parseNode(r.read())
+	r.expect('and')
+	const cp2 = parseNode(r.read())
+	return `C ${n.x} ${n.y}, ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}`
+}
+
+const continuedCubicCurve = (r, n) => {
+	const cp = parseNode(r.read())
+	return `S ${n.x} ${n.y}, ${cp.x} ${cp.y}`
 }
 
 export default parse

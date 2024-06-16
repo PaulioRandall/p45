@@ -12,8 +12,12 @@ export default class TokenReader {
 		this.idx += n
 	}
 
+	empty() {
+		return this.idx >= this.cmd.length
+	}
+
 	get() {
-		if (this.idx > this.cmd.length) {
+		if (this.empty()) {
 			throw new Error(`No more tokens! Token list length: ${this.cmd.length}`)
 		}
 
@@ -21,7 +25,7 @@ export default class TokenReader {
 	}
 
 	is(s) {
-		return this.get() === s
+		return !this.empty() && this.get() === s
 	}
 
 	read() {
