@@ -19,8 +19,13 @@ const expectArrayEquals = (act, exp) => {
 describe('scanner.js', () => {
 	describe('scan', () => {
 		describe('string', () => {
-			test('null input returns error', () => {
+			test('bad type returns error', () => {
 				const [lexemes, err] = scan(null)
+				expectError(err)
+			})
+
+			test('bad command list item type returns error', () => {
+				const [lexemes, err] = scan([null])
 				expectError(err)
 			})
 		})
