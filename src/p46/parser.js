@@ -25,8 +25,12 @@ const parseDraw = (r) => {
 		return parseDrawStraightLine(r)
 	}
 
-	if (r.is('continue') || r.is('curved')) {
-		return parseDrawCurvedLine(r)
+	if (r.is('quadratic') || r.is('quad')) {
+		return parseQuadraticCurve(r)
+	}
+
+	if (r.is('cubic') || r.is('curve')) {
+		return parseCubicCurve(r)
 	}
 
 	return []
@@ -41,62 +45,45 @@ const parseDrawStraightLine = (r) => {
 	return `L ${n.x} ${n.y}`
 }
 
-const parseDrawCurvedLine = (r) => {
-	const symmetry = r.accept('continue')
-
-	if (symmetry) {
-		r.accept('drawing')
-	}
-
-	r.expect('curved')
-	r.expect('line')
+const parseQuadraticCurve = (r) => {
+	r.expect('quadratic', 'quad')
+	r.expect('curve')
 	r.expect('to')
 
 	const n = parseNode(r.read())
-	return parseCurveSlope(r, symmetry, n)
-}
 
-const parseCurveSlope = (r, symmetry, n) => {
 	if (r.empty()) {
-		return continuedQuadraticCurve(r, n)
+		return `T ${n.x} ${n.y}`
 	}
 
 	r.expect('with')
+	r.expect('slope')
 
-	if (r.accept('slopes')) {
-		return cubicCurve(r, n)
-	}
-
-	if (!symmetry && r.accept('slope')) {
-		return quadraticCurve(r, n)
-	}
-
-	if (symmetry && r.accept('slope')) {
-		return continuedCubicCurve(r, n)
-	}
-
-	throw new Error(`Unable to determine curve type`)
-}
-
-const quadraticCurve = (r, n) => {
 	const cp = parseNode(r.read())
 	return `Q ${n.x} ${n.y}, ${cp.x} ${cp.y}`
 }
 
-const continuedQuadraticCurve = (r, n) => {
-	return `T ${n.x} ${n.y}`
-}
+const parseCubicCurve = (r) => {
+	r.accept('cubic')
+	r.expect('curve')
+	r.expect('to')
 
-const cubicCurve = (r, n) => {
-	const cp1 = parseNode(r.read())
-	r.expect('and')
-	const cp2 = parseNode(r.read())
-	return `C ${n.x} ${n.y}, ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}`
-}
+	const n = parseNode(r.read())
 
-const continuedCubicCurve = (r, n) => {
-	const cp = parseNode(r.read())
-	return `S ${n.x} ${n.y}, ${cp.x} ${cp.y}`
+	r.expect('with')
+
+	if (r.accept('slope')) {
+		const cp = parseNode(r.read())
+		return `S ${n.x} ${n.y}, ${cp.x} ${cp.y}`
+	} else if (r.accept('slopes')) {
+		const cp1 = parseNode(r.read())
+		r.expect('and')
+		const cp2 = parseNode(r.read())
+
+		return `C ${n.x} ${n.y}, ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}`
+	}
+
+	throw new Error(`Unable to determine cubic curve parameters`)
 }
 
 export default parse

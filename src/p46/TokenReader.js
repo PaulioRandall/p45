@@ -34,24 +34,31 @@ export default class TokenReader {
 		return tk
 	}
 
-	accept(s) {
-		if (this.is(s)) {
-			this.idx++
-			return true
+	accept(...options) {
+		const token = this.get()
+
+		for (const o of options) {
+			if (token === o) {
+				this.idx++
+				return true
+			}
 		}
+
 		return false
 	}
 
-	expect(s) {
+	expect(...options) {
 		const token = this.get()
 
-		if (token === s) {
-			this.idx++
-			return token
+		for (const o of options) {
+			if (token === o) {
+				this.idx++
+				return token
+			}
 		}
 
 		throw new Error(
-			`At token index ${this.idx}, expected '${s}' but got '${token}'`
+			`At token index ${this.idx}, expected '${options}' but got '${token}'`
 		)
 	}
 }
