@@ -71,50 +71,6 @@ Container for slotted shapes that form an Icon.
 </Icon>
 ```
 
-### `<Line>`
-
-Creates a line from two or more points.
-
-```svelte
-<script>
-	// Comma separated list of points from first to last that represent a line.
-	export let points = Grid.nodeOf(1, 1) + "," + Grid.nodeOf(Grid.size-1, Grid.size-1)
-</script>
-```
-
-```svelte
-<Line
-	points={Grid.nodeOf(1, 1) + "," + Grid.nodeOf(Grid.size-1, Grid.size-1)}
-/>
-```
-
-### `<Polygon>`
-
-Creates a polygon from a set of points.
-
-```svelte
-<script>
-	// Comma separated list of nodes.
-	export let points = [
-	Grid.nodeOf(1, 1),
-  Grid.nodeOf(Grid.size-1, 1),
-	Grid.nodeOf(Grid.size-1, Grid.size-1),
-	Grid.nodeOf(1, Grid.size-1),
-].join(',')
-</script>
-```
-
-```svelte
-<Polygon
-	points={[
-	Grid.nodeOf(1, 1),
-  Grid.nodeOf(Grid.size-1, 1),
-	Grid.nodeOf(Grid.size-1, Grid.size-1),
-	Grid.nodeOf(1, Grid.size-1),
-].join(',')}
-/>
-```
-
 ### `<RegularPolygon>`
 
 Creates a regular polygon from an origin center point, number of edges,
@@ -130,38 +86,15 @@ Creates a shape from three or more points.
 
 ```svelte
 <script>
-	// Comma separated list of points from first to last that represent a shape.
-	// The shape will complete itself with a straight line.
-	export let points = "E1,H4,G7,E5,C7,B4"
+	// Either an array off commands or a line separated list of commands.
+	export let commands = /* Simple drawing */
 </script>
 ```
 
 ```svelte
 <Shape
-	points="E1,H4,G7,E5,C7,B4"
+	commands={/* Simple drawing */}
 />
-```
-
-### `<Text>`
-
-Renders text.
-
-```svelte
-<script>
-	// Node to render the text at.
-	export let point = "E4"
-</script>
-
-<!-- Text and associated SVG text elements. -->
-<slot />
-```
-
-```svelte
-<Text
-	point="E4"
->
-	<div />
-</Text>
 ```
 
 ### `<Transform>`

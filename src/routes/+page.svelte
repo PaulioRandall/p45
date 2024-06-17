@@ -2,52 +2,82 @@
 	import IconSet from './IconSet.svelte'
 	import TestIcon from './TestIcon.svelte'
 
-	import Line from '$lib/Line.svelte'
-	import Shape from '$lib/Shape.svelte'
 	import Circle from '$lib/Circle.svelte'
-	import Polygon from '$lib/Polygon.svelte'
+	import Shape from '$lib/Shape.svelte'
 	import RegularPolygon from '$lib/RegularPolygon.svelte'
-	import Text from '$lib/Text.svelte'
 	import Transform from '$lib/Transform.svelte'
 </script>
 
 <main>
-	<IconSet title="Line">
-		<TestIcon title="default">
-			<Line />
+	<IconSet title="Shape">
+		<TestIcon title="Default">
+			<Shape />
 		</TestIcon>
-		<TestIcon title="Two lines">
-			<Line points="I6,I18" />
-			<Line points="Q6,Q18" />
+		<TestIcon title="Diagonal line">
+			<Shape
+				commands="
+				move to C2
+				line to W22
+			" />
 		</TestIcon>
-		<TestIcon title="points='D14,H6,M18,R6,V14'">
-			<Line points="D14,H6,M18,R6,V14" />
+		<TestIcon title="Stick bird">
+			<Shape
+				commands="
+				move to D14
+				line to H6
+				line to M18
+				line to R6
+				line to V14
+			" />
+		</TestIcon>
+		<TestIcon title="Square">
+			<Shape
+				commands="
+				move to C2
+				line to W2
+				line to W22
+				line to C22
+				close
+			" />
+		</TestIcon>
+		<TestIcon title="Lemon">
+			<Shape
+				commands="
+				move to D3
+				line to M3
+				curve to V12 with slope V3
+				line to V21
+				line to M21
+				curve to D12 with slope D21
+				close
+			" />
+		</TestIcon>
+		<TestIcon title="Horns">
+			<Shape
+				commands="
+				move to D14
+				curve to H6 with slopes D6 and H2
+				curve to M18 with slope J18
+				curve to R6 with slope R10
+				curve to V14 with slope V6
+				curve to start with slopes V24 and D24
+				close
+			" />
 		</TestIcon>
 	</IconSet>
 
 	<IconSet title="Circle">
-		<TestIcon title="default">
+		<TestIcon title="Default">
 			<Circle />
 		</TestIcon>
-		<TestIcon title="origin='M12' radius='6'">
-			<Circle origin="M12" radius="6" />
+		<TestIcon title="Cooking Hobs">
+			<Circle origin="G6" radius="5" />
+			<Circle origin="S6" radius="5" />
+			<Circle origin="S18" radius="5" />
+			<Circle origin="G18" radius="5" />
 		</TestIcon>
-	</IconSet>
-
-	<IconSet title="Polygon">
-		<TestIcon title="default">
-			<Polygon />
-		</TestIcon>
-		<TestIcon title="points='M4,T8,T16,M20,F16,F8'">
-			<Polygon points="M4,T8,T16,M20,F16,F8" />
-		</TestIcon>
-		<TestIcon title="Lots of squares">
-			<Polygon points="B1,X1,X23,B23" />
-			<Polygon points="D3,V3,V21,D21" />
-			<Polygon points="F5,T5,T19,F19" />
-			<Polygon points="H7,R7,R17,H17" />
-			<Polygon points="J9,P9,P15,J15" />
-			<Polygon points="L11,N11,N13,L13" />
+		<TestIcon title="Offside">
+			<Circle origin="X12" radius="12" />
 		</TestIcon>
 	</IconSet>
 
@@ -66,80 +96,52 @@
 		</TestIcon>
 	</IconSet>
 
-	<IconSet title="Shape">
-		<TestIcon title="default">
-			<Shape />
-		</TestIcon>
-		<TestIcon title="points='D3, M3 L, V12 Q V3, V21 L, M21 L, D12 Q D21'">
-			<Shape points="D3, M3 L, V12 Q V3, V21 L, M21 L, D12 Q D21" />
-		</TestIcon>
-		<TestIcon title="points='D14, H6 C D6 H2, M18 S J18, R6 S R10, V14 S V6'">
-			<Shape points="D14, H6 C D6 H2, M18 S J18, R6 S R10, V14 S V6" />
-		</TestIcon>
-	</IconSet>
-
-	<IconSet title="Text">
-		<TestIcon title="point='B14' font-size='8' textLength='22'">
-			<Text point="B14" font-size="8" textLength="22">Hello</Text>
-		</TestIcon>
-	</IconSet>
-
 	<IconSet title="Transform">
 		<TestIcon title="origin='M12' flipX flipY">
 			<Transform origin="M12" flipX flipY>
-				<Polygon />
+				<Shape />
 			</Transform>
 		</TestIcon>
 
 		<TestIcon title="origin='M12' scaleX='0.5' scaleY='1.5'">
 			<Transform origin="M12" scaleX="0.5" scaleY="1.5">
-				<Polygon points="H7,R7,R17,H17" />
+				<Shape
+					commands="
+					move to H7
+					line to R7
+					line to R17
+					line to H17
+					close" />
 			</Transform>
 		</TestIcon>
 
 		<TestIcon title="origin='M12' skewX='45' skewY='-25'">
 			<Transform origin="M12" skewX="45" skewY="-25">
-				<Polygon points="H7,R7,R17,H17" />
+				<Shape
+					commands="
+					move to H7
+					line to R7
+					line to R17
+					line to H17
+					close" />
 			</Transform>
 		</TestIcon>
 
 		<TestIcon title="origin='M12' moveX='2' moveY='4'">
 			<Transform origin="M12" moveX="2" moveY="4">
-				<Polygon />
+				<Shape />
 			</Transform>
 		</TestIcon>
 
 		<TestIcon title="origin='M12' rotate='21'">
 			<Transform origin="M12" rotate="21">
-				<Polygon points="H7,R7,R17,H17" />
-			</Transform>
-		</TestIcon>
-	</IconSet>
-
-	<IconSet title="Transform Property Order">
-		<TestIcon
-			title="origin='M12' rotate='40' scaleX='0.6' scaleY='1.1' moveX='-6' moveY='-4'">
-			<Transform
-				origin="M12"
-				rotate="40"
-				scaleX="0.6"
-				scaleY="1.1"
-				moveX="-6"
-				moveY="-4">
-				<Polygon points="H7,R7,R17,H17" />
-			</Transform>
-		</TestIcon>
-
-		<TestIcon
-			title="origin='M12' moveX='-6' moveY='-4' rotate='40' scaleX='0.6' scaleY='1.1'">
-			<Transform
-				origin="M12"
-				moveX="-6"
-				moveY="-4"
-				rotate="40"
-				scaleX="0.6"
-				scaleY="1.1">
-				<Polygon points="H7,R7,R17,H17" />
+				<Shape
+					commands="
+					move to H7
+					line to R7
+					line to R17
+					line to H17
+					close" />
 			</Transform>
 		</TestIcon>
 	</IconSet>

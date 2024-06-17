@@ -112,11 +112,11 @@ const parseCubicNonSymmetricCurve = (shape, r, n) => {
 }
 
 const parseNode = (shape, r) => {
-	if (r.is('start')) {
+	if (r.accept('start')) {
 		return shape.getStart()
 	}
 
-	if (r.is('center')) {
+	if (r.accept('center')) {
 		return shape.getCenter()
 	}
 

@@ -7,18 +7,20 @@
 
 	const g = getContext('p45-grid')
 
-	//@prop points
-	// Comma separated list of points from first to last that represent a shape.
-	// The shape will complete itself with a straight line.
-	// @default "E1,H4,G7,E5,C7,B4"
-	// @alias p
-	export let p = 'E1,H4,G7,E5,C7,B4'
-	export let points = p
-
-	const path = g //
-		.parseCSV(points)
-		.map(g.nodeToSvgPoint)
-		.join(' ')
+	//@prop commands
+	// Either an array off commands or a line separated list of commands.
+	// @default /* Simple drawing */
+	// @alias c
+	export let c = `
+		move to E1
+		line to H4
+		line to G7
+		line to E5
+		line to C7
+		line to B4
+		close
+	`
+	export let commands = c
 </script>
 
-<path {...$$restProps} d="{path} Z" />
+<path {...$$restProps} d={g.parseCommands(commands)} />

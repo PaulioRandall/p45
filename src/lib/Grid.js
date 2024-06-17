@@ -1,3 +1,5 @@
+import { scan, parse, ShapeState } from '../p46'
+
 export const SIZES = [8, 12, 16, 20, 24, 32, 48, 64]
 
 export default class Grid {
@@ -22,6 +24,27 @@ export default class Grid {
 	get centerNode() {
 		return this._centerNode
 	}
+
+	parseCommands(cmds) {
+		const [commandsAsTokens, err] = scan(cmds)
+
+		if (err) {
+			throw new Error(err)
+		}
+
+		const shape = new ShapeState(this.size, this.size)
+		let result = ''
+
+		for (const cmd of commandsAsTokens) {
+			result += parse(shape, cmd)
+			result += '\n'
+		}
+
+		return result.trim()
+	}
+
+	// ***
+	// OLD
 
 	parse(node) {
 		const n = this._splitNode(node)

@@ -1,4 +1,4 @@
-const parse = (node) => {
+export const parseNode = (node) => {
 	const n = splitNode(node)
 
 	if (!n) {
@@ -11,7 +11,7 @@ const parse = (node) => {
 	return n
 }
 
-const nodeOf = (x, y) => {
+export const nodeOf = (x, y) => {
 	return numberToAlpha(x) + y
 }
 
@@ -33,7 +33,7 @@ const splitNode = (node) => {
 	node = node.trim()
 	let m = null
 
-	m = /^([A-Z]+)([0-9]+)(?:\s+([LT]))?$/.exec(node)
+	m = /^([A-Z]+)([0-9]+)$/.exec(node)
 	if (m) {
 		return {
 			x: m[1],
@@ -90,4 +90,4 @@ const parseY = (node, k) => {
 	node[k] = n
 }
 
-export default parse
+export default parseNode

@@ -1,49 +1,12 @@
-<script context="module">
+<script>
 	import { getContext } from 'svelte'
-	import Victor from 'victor'
+	import { generatePath } from './regular-polygon.js'
 
 	/*@component
 		Creates a regular polygon from an origin center point, number of edges,
 		and radius to a vertex.
 	*/
 
-	const parseInt2 = (n) => {
-		return Math.round(Number(n))
-	}
-
-	const parseFloat2 = (n) => {
-		return roundTo(Number(n))
-	}
-
-	const generatePoints = (origin, sides, radius, rotate) => {
-		const angle = 360 / sides
-		const points = new Array(sides)
-
-		for (let i = 0; i < sides; i++) {
-			points[i] = makePoint(i, angle, radius, origin, rotate)
-		}
-
-		return points
-	}
-
-	const makePoint = (i, angle, radius, origin, rotate) => {
-		const v = new Victor(0, radius)
-		v.rotateDeg(angle * i - rotate)
-		v.add(origin)
-
-		const p = v.toObject()
-		p.x = roundTo(p.x)
-		p.y = roundTo(p.y)
-		return p
-	}
-
-	const roundTo = (n, dp = 3) => {
-		const mod = Math.pow(10, dp)
-		return Math.round(n * mod) / mod
-	}
-</script>
-
-<script>
 	const g = getContext('p45-grid')
 
 	//p24.p.let.o: Alias for start.
@@ -71,15 +34,7 @@
 	export let ro = 0
 	export let rotate = ro
 
-	const points =
-		generatePoints(
-			g.parse(origin),
-			parseInt2(sides),
-			parseFloat2(radius),
-			parseFloat2(rotate)
-		) //
-			.map(({ x, y }) => `${x},${y}`)
-			.join(' ') + ' Z'
+	const points = generatePath(origin, sides, radius, rotate)
 </script>
 
 <polygon {...$$restProps} {points} />
