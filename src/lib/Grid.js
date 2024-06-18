@@ -1,4 +1,5 @@
-import { scan, parse, ShapeState } from '../p46'
+import CmdParser from './private/CmdParser.js'
+import CmdScanner from './private/CmdScanner.js'
 
 export const SIZES = [8, 12, 16, 20, 24, 32, 48, 64]
 
@@ -26,21 +27,16 @@ export default class Grid {
 	}
 
 	parseCommands(cmds) {
-		const [commandsAsTokens, err] = scan(cmds)
+		const cs = new CmdScanner(cmds)
+		const cp = new CmdParser(this.size)
+		const result = []
 
-		if (err) {
-			throw new Error(err)
+		while (!cs.empty()) {
+			const cmd = cs.next()
+			result.push(cp.parse(cmd))
 		}
 
-		const shape = new ShapeState(this.size, this.size)
-		let result = ''
-
-		for (const cmd of commandsAsTokens) {
-			result += parse(shape, cmd)
-			result += '\n'
-		}
-
-		return result.trim()
+		return result.join('\n')
 	}
 
 	// ***

@@ -1,32 +1,34 @@
-export const parseNode = (node) => {
-	const n = splitNode(node)
+export default class NodeParser {
+	static parse(node) {
+		const n = splitNode(node)
 
-	if (!n) {
-		throw new Error(`Invalid node '${node}'`)
+		if (!n) {
+			throw new Error(`Invalid node '${node}'`)
+		}
+
+		parseX(n, 'x')
+		parseY(n, 'y')
+
+		return n
 	}
 
-	parseX(n, 'x')
-	parseY(n, 'y')
-
-	return n
-}
-
-export const nodeOf = (x, y) => {
-	return numberToAlpha(x) + y
-}
-
-const numberToAlpha = (n) => {
-	const A = 65
-	const result = []
-
-	while (n >= 26) {
-		let rem = n % 26
-		result.unshift(rem + A)
-		n -= rem
+	static nodeOf(x, y) {
+		return numberToAlpha(x) + y
 	}
 
-	result.unshift(n + 65)
-	return String.fromCharCode(...result)
+	static numberToAlpha(n) {
+		const A = 65
+		const result = []
+
+		while (n >= 26) {
+			let rem = n % 26
+			result.unshift(rem + A)
+			n -= rem
+		}
+
+		result.unshift(n + 65)
+		return String.fromCharCode(...result)
+	}
 }
 
 const splitNode = (node) => {
@@ -89,5 +91,3 @@ const parseY = (node, k) => {
 	}
 	node[k] = n
 }
-
-export default parseNode

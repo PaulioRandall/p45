@@ -1,6 +1,6 @@
 <script>
 	import { getContext } from 'svelte'
-	import { generatePath } from './regular-polygon.js'
+	import RegularPolygon from './private/RegularPolygon.js'
 
 	/*@component
 		Creates a regular polygon from an origin center point, number of edges,
@@ -34,7 +34,7 @@
 	export let ro = 0
 	export let rotate = ro
 
-	const points = generatePath(origin, sides, radius, rotate)
+	const points = RegularPolygon.generatePath(origin, sides, radius, rotate)
 </script>
 
 <polygon {...$$restProps} {points} />
