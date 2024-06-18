@@ -13,7 +13,7 @@ export default class NodeParser {
 	}
 
 	static nodeOf(x, y) {
-		return numberToAlpha(x) + y
+		return NodeParser.numberToAlpha(x) + y
 	}
 
 	static numberToAlpha(n) {

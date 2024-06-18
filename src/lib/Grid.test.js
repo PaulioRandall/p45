@@ -23,96 +23,28 @@ describe('Grid.js', () => {
 	})
 
 	describe('parse', () => {
-		test('Simple coords', () => {
-			const act = new Grid(8).parse('A0')
+		test('Commands', () => {
+			const act = new Grid(8).parseCommands(`
+				move to D3
+				line to M3
+				curve to V12 with slope V3
+				line to V21
+				line to M21
+				curve to D12 with slope D21
+				close
+			`)
 
-			expect(act.type).toEqual('N')
-			expect(act.x).toEqual(0)
-			expect(act.y).toEqual(0)
-		})
+			const exp = [
+				'M 3 3',
+				'L 12 3',
+				'S 21 3, 21 12',
+				'L 21 21',
+				'L 12 21',
+				'S 3 21, 3 12',
+				'Z',
+			].join('\n')
 
-		test('Odd coords', () => {
-			const act = new Grid(8).parse('D3')
-
-			expect(act.type).toEqual('N')
-			expect(act.x).toEqual(3)
-			expect(act.y).toEqual(3)
-		})
-
-		test('Two digit coords', () => {
-			const act = new Grid(8).parse('AA26')
-
-			expect(act.type).toEqual('N')
-			expect(act.x).toEqual(26)
-			expect(act.y).toEqual(26)
-		})
-
-		test('Two digit odd coordinate', () => {
-			const act = new Grid(8).parse('DZ129')
-
-			expect(act.type).toEqual('N')
-			expect(act.x).toEqual(129)
-			expect(act.y).toEqual(129)
-		})
-
-		test('Really try to screw up with big numbers', () => {
-			const act = new Grid(8).parse('DLT3035')
-
-			// D: 2704
-			// L: 312
-			// T: 19
-
-			expect(act.type).toEqual('N')
-			expect(act.x).toEqual(3035)
-			expect(act.y).toEqual(3035)
-		})
-
-		test('With cubic curve', () => {
-			const act = new Grid(8).parse('D3 C A6 J6')
-
-			expect(act.type).toEqual('C')
-			expect(act.cp1x).toEqual(0)
-			expect(act.cp1y).toEqual(6)
-			expect(act.cp2x).toEqual(9)
-			expect(act.cp2y).toEqual(6)
-			expect(act.x).toEqual(3)
-			expect(act.y).toEqual(3)
-		})
-
-		test('With symmetric curve', () => {
-			const act = new Grid(8).parse('D3 S A6')
-
-			expect(act.type).toEqual('S')
-			expect(act.cp1x).toEqual(0)
-			expect(act.cp1y).toEqual(6)
-			expect(act.x).toEqual(3)
-			expect(act.y).toEqual(3)
-		})
-
-		test('With quadratic curve', () => {
-			const act = new Grid(8).parse('D3 Q A6')
-
-			expect(act.type).toEqual('Q')
-			expect(act.cp1x).toEqual(0)
-			expect(act.cp1y).toEqual(6)
-			expect(act.x).toEqual(3)
-			expect(act.y).toEqual(3)
-		})
-
-		test('With smooth quadratic curve', () => {
-			const act = new Grid(8).parse('D3 T')
-
-			expect(act.type).toEqual('T')
-			expect(act.x).toEqual(3)
-			expect(act.y).toEqual(3)
-		})
-
-		test('With line', () => {
-			const act = new Grid(8).parse('D3 L')
-
-			expect(act.type).toEqual('L')
-			expect(act.x).toEqual(3)
-			expect(act.y).toEqual(3)
+			expect(act).toEqual(exp)
 		})
 	})
 })

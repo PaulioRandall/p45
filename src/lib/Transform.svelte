@@ -121,7 +121,7 @@
 	// @default 0
 	export let rotate = 0
 
-	const originXY = g.parse(origin)
+	const originXY = g.parseNode(origin)
 	const transform = parseCommands($$props).join(' ')
 </script>
 

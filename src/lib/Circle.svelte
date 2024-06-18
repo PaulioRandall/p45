@@ -21,7 +21,7 @@
 	export let r = g.center - 1
 	export let radius = r
 
-	const cxy = g.parse(origin)
+	const cxy = g.parseNode(origin)
 </script>
 
 <circle {...$$restProps} cx={cxy.x} cy={cxy.y} r={radius} />
