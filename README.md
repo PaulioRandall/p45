@@ -88,12 +88,20 @@ Creates a shape from three or more points.
 <script>
 	// Either an array off commands or a line separated list of commands.
 	export let commands = /* Simple drawing */
+
+	// Either an array off commands or a line separated list of commands.
+	export let transforms = /* Does nothing */
+
+	// Origin to use for transforms.
+	export let origin
 </script>
 ```
 
 ```svelte
 <Shape
 	commands={/* Simple drawing */}
+	transforms={/* Does nothing */}
+	origin
 />
 ```
 

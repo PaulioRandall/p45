@@ -10,8 +10,7 @@
 	//@prop commands
 	// Either an array off commands or a line separated list of commands.
 	// @default /* Simple drawing */
-	// @alias c
-	export let c = `
+	export let draw = `
 		move to E1
 		line to H4
 		line to G7
@@ -20,7 +19,22 @@
 		line to B4
 		close
 	`
-	export let commands = c
+
+	//@prop transforms
+	// Either an array off commands or a line separated list of commands.
+	// @default /* Does nothing */
+	export let transforms = ``
+
+	//@prop origin
+	// Origin to use for transforms.
+	export let origin = undefined
+
+	const originObj = origin ? g.parseNode(origin) : undefined
+	const originStr = originObj ? `${originObj.x} ${originObj.y}` : undefined
 </script>
 
-<path {...$$restProps} d={g.parseCommands(commands)} />
+<path
+	{...$$restProps}
+	transform-origin={originStr}
+	d={g.parseDrawCommands(draw)}
+	transform={g.parseTransformCommands(transforms)} />

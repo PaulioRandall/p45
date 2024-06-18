@@ -64,7 +64,18 @@ export default class TokenReader {
 		}
 
 		throw new Error(
-			`At token index ${this.idx}, expected '${options}' but got '${token}'`
+			`At token index ${this.idx}, expected one of ${options} but got '${this.get()}'`
+		)
+	}
+
+	expectNumber() {
+		const tk = this.get()
+		if (/^[\-\+]?[0-9]+$/.test(tk)) {
+			return tk
+		}
+
+		throw new Error(
+			`At token index ${this.idx}, expected number but got '${tk}'`
 		)
 	}
 }

@@ -1,5 +1,6 @@
-import CmdParser from './private/CmdParser.js'
 import CmdScanner from './private/CmdScanner.js'
+import DrawCmdParser from './private/DrawCmdParser.js'
+import TransformCmdParser from './private/TransformCmdParser.js'
 import NodeParser from './private/NodeParser.js'
 
 export const SIZES = [8, 12, 16, 20, 24, 32, 48, 64]
@@ -31,14 +32,23 @@ export default class Grid {
 		return NodeParser.parse(node)
 	}
 
-	parseCommands(cmds) {
-		const cs = new CmdScanner(cmds)
-		const cp = new CmdParser(this.size)
+	parseDrawCommands(cmds) {
+		const parser = new DrawCmdParser(this.size)
+		return this._parse(cmds, parser)
+	}
+
+	parseTransformCommands(cmds) {
+		const parser = new TransformCmdParser(this.size)
+		return this._parse(cmds, parser)
+	}
+
+	_parse(cmds, parser) {
+		const scanner = new CmdScanner(cmds)
 		const result = []
 
-		while (!cs.empty()) {
-			const cmd = cs.next()
-			result.push(cp.parse(cmd))
+		while (!scanner.empty()) {
+			const cmd = scanner.next()
+			result.push(parser.parse(cmd))
 		}
 
 		return result.join('\n')

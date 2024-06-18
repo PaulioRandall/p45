@@ -15,14 +15,14 @@
 		</TestIcon>
 		<TestIcon title="Diagonal line">
 			<Shape
-				commands="
+				draw="
 				move to C2
 				line to W22
 			" />
 		</TestIcon>
 		<TestIcon title="Stick bird">
 			<Shape
-				commands="
+				draw="
 				move to D14
 				line to H6
 				line to M18
@@ -32,7 +32,7 @@
 		</TestIcon>
 		<TestIcon title="Square">
 			<Shape
-				commands="
+				draw="
 				move to C2
 				line to W2
 				line to W22
@@ -42,7 +42,7 @@
 		</TestIcon>
 		<TestIcon title="Lemon">
 			<Shape
-				commands="
+				draw="
 				move to D3
 				line to M3
 				curve to V12 with slope V3
@@ -54,7 +54,7 @@
 		</TestIcon>
 		<TestIcon title="Horns">
 			<Shape
-				commands="
+				draw="
 				move to D14
 				curve to H6 with slopes D6 and H2
 				curve to M18 with slope J18
@@ -106,7 +106,7 @@
 		<TestIcon title="origin='M12' scaleX='0.5' scaleY='1.5'">
 			<Transform origin="M12" scaleX="0.5" scaleY="1.5">
 				<Shape
-					commands="
+					draw="
 					move to H7
 					line to R7
 					line to R17
@@ -118,7 +118,7 @@
 		<TestIcon title="origin='M12' skewX='45' skewY='-25'">
 			<Transform origin="M12" skewX="45" skewY="-25">
 				<Shape
-					commands="
+					draw="
 					move to H7
 					line to R7
 					line to R17
@@ -136,7 +136,7 @@
 		<TestIcon title="origin='M12' rotate='21'">
 			<Transform origin="M12" rotate="21">
 				<Shape
-					commands="
+					draw="
 					move to H7
 					line to R7
 					line to R17

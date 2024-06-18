@@ -1,10 +1,10 @@
-import CmdParser from './CmdParser.js'
+import DrawCmdParser from './DrawCmdParser.js'
 
-describe('CmdParser.js', () => {
+describe('DrawCmdParser.js', () => {
 	describe('parse', () => {
 		describe('move', () => {
 			test(`"move to D3"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				const act = cp.parse([
 					'move', //
 					'to',
@@ -19,7 +19,7 @@ describe('CmdParser.js', () => {
 
 		describe('line', () => {
 			test(`"line to D3"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				const act = cp.parse([
 					'line', //
 					'to',
@@ -32,7 +32,7 @@ describe('CmdParser.js', () => {
 
 		describe('quadratic curve', () => {
 			test(`"q curve to D3 with slope D0"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				const act = cp.parse([
 					'q', //
 					'curve',
@@ -47,7 +47,7 @@ describe('CmdParser.js', () => {
 			})
 
 			test(`"quad curve to D3 with slope D0"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				const act = cp.parse([
 					'quad', //
 					'curve',
@@ -62,7 +62,7 @@ describe('CmdParser.js', () => {
 			})
 
 			test(`"quadratic curve to D3 with slope D0"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				const act = cp.parse([
 					'quadratic', //
 					'curve',
@@ -79,7 +79,7 @@ describe('CmdParser.js', () => {
 
 		describe('symmetric quadratic curve', () => {
 			test(`"quadratic curve to D3"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				const act = cp.parse([
 					'quadratic', //
 					'curve',
@@ -91,7 +91,7 @@ describe('CmdParser.js', () => {
 			})
 
 			test(`"quad curve to D3"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				const act = cp.parse([
 					'quad', //
 					'curve',
@@ -105,7 +105,7 @@ describe('CmdParser.js', () => {
 
 		describe('cubic curve', () => {
 			test(`"curve to D3 with slope C2 and D0"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				const act = cp.parse([
 					'curve', //
 					'to',
@@ -123,7 +123,7 @@ describe('CmdParser.js', () => {
 
 		describe('symmetric quadratic cubic curve', () => {
 			test(`"curve to D3 with slope D0"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				const act = cp.parse([
 					'curve', //
 					'to',
@@ -139,7 +139,7 @@ describe('CmdParser.js', () => {
 
 		describe('line/curve to start', () => {
 			test(`"line to start"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				cp.start = { x: 1, y: 1 }
 
 				const act = cp.parse([
@@ -154,7 +154,7 @@ describe('CmdParser.js', () => {
 
 		describe('line/curve to center', () => {
 			test(`"line to center"`, () => {
-				const cp = new CmdParser(100)
+				const cp = new DrawCmdParser(100)
 				const act = cp.parse([
 					'line', //
 					'to',
@@ -167,7 +167,7 @@ describe('CmdParser.js', () => {
 
 		describe('close path', () => {
 			test(`"close path"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				const act = cp.parse([
 					'close', //
 					'path',
@@ -177,7 +177,7 @@ describe('CmdParser.js', () => {
 			})
 
 			test(`"close path"`, () => {
-				const cp = new CmdParser()
+				const cp = new DrawCmdParser()
 				const act = cp.parse([
 					'close', //
 				])

@@ -24,7 +24,7 @@ describe('Grid.js', () => {
 
 	describe('parse', () => {
 		test('Commands', () => {
-			const act = new Grid(8).parseCommands(`
+			const act = new Grid(8).parseDrawCommands(`
 				move to D3
 				line to M3
 				curve to V12 with slope V3

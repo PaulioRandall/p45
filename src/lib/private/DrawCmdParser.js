@@ -1,7 +1,7 @@
 import TokenReader from './TokenReader.js'
 import NodeParser from './NodeParser.js'
 
-export default class CmdParser {
+export default class DrawCmdParser {
 	constructor(gridSize = 0) {
 		this.start = { x: 0, y: 0 }
 		this.pos = { x: 0, y: 0 }
