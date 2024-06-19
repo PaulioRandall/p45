@@ -20,6 +20,10 @@
 		close
 	`
 
+	//@prop mask
+	// ID of a mask cut out.
+	export let mask = ''
+
 	//@prop transforms
 	// Either an array off commands or a line separated list of commands.
 	// @default /* Does nothing */
@@ -41,7 +45,9 @@
 </script>
 
 <path
+	stroke="currentColor"
 	{...$$restProps}
 	transform-origin={parseOrigin()}
+	mask="url(#{mask})"
 	d={g.parseDrawCommands(draw)}
 	transform={g.parseTransformCommands(transforms)} />

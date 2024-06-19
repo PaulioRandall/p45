@@ -26,6 +26,12 @@ describe('TransformCmdParser.js', () => {
 				const act = cp.parse(['move', 'down', 'by', '3'])
 				expect(act).toEqual('translate(0, 3)')
 			})
+
+			test(`"move by D3"`, () => {
+				const cp = new TransformCmdParser()
+				const act = cp.parse(['move', 'by', 'D3'])
+				expect(act).toEqual('translate(3, 3)')
+			})
 		})
 
 		describe('rotate', () => {

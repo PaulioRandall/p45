@@ -71,6 +71,23 @@ Container for slotted shapes that form an Icon.
 </Icon>
 ```
 
+### `<Mask>`
+
+Creates a referencable mask to cut out shapes in other shapes.
+
+```svelte
+<script>
+	// Unique ID to reference the mask.
+	export let id
+</script>
+```
+
+```svelte
+<Mask
+	id
+/>
+```
+
 ### `<RegularPolygon>`
 
 Creates a regular polygon from an origin center point, number of edges,
@@ -89,6 +106,9 @@ Creates a shape from three or more points.
 	// Either an array off commands or a line separated list of commands.
 	export let commands = /* Simple drawing */
 
+	// ID of a mask cut out.
+	export let mask
+
 	// Either an array off commands or a line separated list of commands.
 	export let transforms = /* Does nothing */
 
@@ -100,6 +120,7 @@ Creates a shape from three or more points.
 ```svelte
 <Shape
 	commands={/* Simple drawing */}
+	mask
 	transforms={/* Does nothing */}
 	origin={Grid.centerNode}
 />

@@ -35,8 +35,13 @@ export default class TransformCmdParser {
 
 	parseMove(r) {
 		r.expect('move')
-		const direction = r.expect('up', 'down', 'left', 'right')
 
+		if (r.accept('by')) {
+			const n = this.parseNode(r)
+			return `translate(${n.x}, ${n.y})`
+		}
+
+		const direction = this.parseDirection(r)
 		r.expect('by')
 		const amount = r.expectNumber()
 
@@ -114,6 +119,10 @@ export default class TransformCmdParser {
 			case 'y':
 				return `skewY(${amount})`
 		}
+	}
+
+	parseDirection(r) {
+		return r.expect('up', 'down', 'left', 'right')
 	}
 
 	parseAxis(r) {

@@ -6,6 +6,7 @@
 	import Shape from '$lib/Shape.svelte'
 	import RegularPolygon from '$lib/RegularPolygon.svelte'
 	import Transform from '$lib/Transform.svelte'
+	import Mask from '$lib/Mask.svelte'
 </script>
 
 <main>
@@ -113,6 +114,15 @@
 			</Transform>
 		</TestIcon>
 
+		<TestIcon title="Move by M12">
+			<Transform
+				transforms="
+				move by M12
+			">
+				<Shape />
+			</Transform>
+		</TestIcon>
+
 		<TestIcon title="Rotate by 180">
 			<Transform
 				transforms="
@@ -193,6 +203,25 @@
 			">
 				<Shape />
 			</Transform>
+		</TestIcon>
+	</IconSet>
+
+	<IconSet title="Mask">
+		<TestIcon title="No transformations">
+			<Mask id="abc">
+				<Shape stroke="black" fill="black" />
+			</Mask>
+			<Shape
+				mask="abc"
+				stroke="darkgrey"
+				fill="darkgrey"
+				draw="
+					move to A0
+					line to Y0
+					line to Y24
+					line to A24
+					close
+				" />
 		</TestIcon>
 	</IconSet>
 </main>
