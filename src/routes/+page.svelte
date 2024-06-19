@@ -103,11 +103,11 @@
 			</Transform>
 		</TestIcon>
 
-		<TestIcon title="Move to center">
+		<TestIcon title="Move right & down by 4">
 			<Transform
 				transforms="
-				move right by 8
-				move down by 8
+				move right by 4
+				move down by 4
 			">
 				<Shape />
 			</Transform>
@@ -122,7 +122,7 @@
 			</Transform>
 		</TestIcon>
 
-		<TestIcon title="Scale by 2.5">
+		<TestIcon title="Scale individually by 2.5">
 			<Transform
 				origin="A0"
 				transforms="
@@ -133,12 +133,32 @@
 			</Transform>
 		</TestIcon>
 
-		<TestIcon title="Skew by 15">
+		<TestIcon title="Scale together by 2">
+			<Transform
+				origin="A0"
+				transforms="
+					scale by 2
+			">
+				<Shape />
+			</Transform>
+		</TestIcon>
+
+		<TestIcon title="Skew individually by 15">
 			<Transform
 				origin="A0"
 				transforms="
 					skew width by 15
 					skew y by 15
+			">
+				<Shape />
+			</Transform>
+		</TestIcon>
+
+		<TestIcon title="Skew together by 20">
+			<Transform
+				origin="A0"
+				transforms="
+					skew by 20
 			">
 				<Shape />
 			</Transform>

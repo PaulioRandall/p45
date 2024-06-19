@@ -58,12 +58,14 @@ export default class TransformCmdParser {
 
 	parseScale(r) {
 		r.expect('scale')
-		const axis = r.expect('width', 'x', 'height', 'y')
+		const axis = this.parseAxis(r)
 
 		r.expect('by')
 		const amount = r.expectNumber()
 
 		switch (axis) {
+			case null:
+				return `scale(${amount}, ${amount})`
 			case 'width':
 			case 'x':
 				return `scale(${amount}, 1)`
@@ -75,12 +77,14 @@ export default class TransformCmdParser {
 
 	parseSkew(r) {
 		r.expect('skew')
-		const axis = r.expect('width', 'x', 'height', 'y')
+		const axis = this.parseAxis(r)
 
 		r.expect('by')
 		const amount = r.expectNumber()
 
 		switch (axis) {
+			case null:
+				return `skewX(${amount}) skewY(${amount})`
 			case 'width':
 			case 'x':
 				return `skewX(${amount})`
@@ -88,6 +92,13 @@ export default class TransformCmdParser {
 			case 'y':
 				return `skewY(${amount})`
 		}
+	}
+
+	parseAxis(r) {
+		if (r.is('width', 'x', 'height', 'y')) {
+			return r.read()
+		}
+		return null
 	}
 
 	parseNode(r) {
