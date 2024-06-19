@@ -67,5 +67,31 @@ describe('TransformCmdParser.js', () => {
 				expect(act).toEqual('scale(1, -3.5)')
 			})
 		})
+
+		describe('skew', () => {
+			test(`"skew width by 30"`, () => {
+				const cp = new TransformCmdParser()
+				const act = cp.parse(['skew', 'width', 'by', '30'])
+				expect(act).toEqual('skewX(30)')
+			})
+
+			test(`"skew x by -30"`, () => {
+				const cp = new TransformCmdParser()
+				const act = cp.parse(['skew', 'x', 'by', '-30'])
+				expect(act).toEqual('skewX(-30)')
+			})
+
+			test(`"skew height by 30"`, () => {
+				const cp = new TransformCmdParser()
+				const act = cp.parse(['skew', 'height', 'by', '30'])
+				expect(act).toEqual('skewY(30)')
+			})
+
+			test(`"skew y by -30"`, () => {
+				const cp = new TransformCmdParser()
+				const act = cp.parse(['skew', 'y', 'by', '-30'])
+				expect(act).toEqual('skewY(-30)')
+			})
+		})
 	})
 })

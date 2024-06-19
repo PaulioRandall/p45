@@ -132,6 +132,17 @@
 				<Shape />
 			</Transform>
 		</TestIcon>
+
+		<TestIcon title="Skew by 15">
+			<Transform
+				origin="A0"
+				transforms="
+					skew width by 15
+					skew y by 15
+			">
+				<Shape />
+			</Transform>
+		</TestIcon>
 	</IconSet>
 </main>
 

@@ -22,6 +22,10 @@ export default class TransformCmdParser {
 			return this.parseScale(r)
 		}
 
+		if (r.is('skew')) {
+			return this.parseSkew(r)
+		}
+
 		throw new Error(`Unknown command '${r.get()}'`)
 	}
 
@@ -66,6 +70,23 @@ export default class TransformCmdParser {
 			case 'height':
 			case 'y':
 				return `scale(1, ${amount})`
+		}
+	}
+
+	parseSkew(r) {
+		r.expect('skew')
+		const axis = r.expect('width', 'x', 'height', 'y')
+
+		r.expect('by')
+		const amount = r.expectNumber()
+
+		switch (axis) {
+			case 'width':
+			case 'x':
+				return `skewX(${amount})`
+			case 'height':
+			case 'y':
+				return `skewY(${amount})`
 		}
 	}
 
