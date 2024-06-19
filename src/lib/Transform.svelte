@@ -18,6 +18,10 @@
 	export let origin = g.centerNode
 
 	const parseOrigin = () => {
+		if (origin === 'center') {
+			origin = g.centerNode
+		}
+
 		const xy = g.parseNode(origin)
 		return `${xy.x} ${xy.y}`
 	}

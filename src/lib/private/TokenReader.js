@@ -73,7 +73,7 @@ export default class TokenReader {
 		const tk = this.get()
 
 		if (numberPattern.test(tk)) {
-			return tk
+			return this.read()
 		}
 
 		throw new Error(

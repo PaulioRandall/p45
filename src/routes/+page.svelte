@@ -122,6 +122,16 @@
 			</Transform>
 		</TestIcon>
 
+		<TestIcon title="Rotate by 180 around I8">
+			<Transform
+				origin="A0"
+				transforms="
+				rotate by 180 around I8
+			">
+				<Shape />
+			</Transform>
+		</TestIcon>
+
 		<TestIcon title="Scale individually by 2.5">
 			<Transform
 				origin="A0"

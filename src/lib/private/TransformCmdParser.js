@@ -57,7 +57,13 @@ export default class TransformCmdParser {
 		r.expect('by')
 
 		const amount = r.expectNumber()
-		return `rotate(${amount})`
+
+		if (!r.accept('around')) {
+			return `rotate(${amount})`
+		}
+
+		const n = this.parseNode(r)
+		return `rotate(${amount}, ${n.x}, ${n.y})`
 	}
 
 	parseScale(r) {
