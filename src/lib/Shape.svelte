@@ -27,14 +27,17 @@
 
 	//@prop origin
 	// Origin to use for transforms.
-	export let origin = undefined
+	// @default Grid.centerNode
+	export let origin = g.centerNode
 
-	const originObj = origin ? g.parseNode(origin) : undefined
-	const originStr = originObj ? `${originObj.x} ${originObj.y}` : undefined
+	const parseOrigin = () => {
+		const xy = g.parseNode(origin)
+		return `${xy.x} ${xy.y}`
+	}
 </script>
 
 <path
 	{...$$restProps}
-	transform-origin={originStr}
+	transform-origin={parseOrigin()}
 	d={g.parseDrawCommands(draw)}
 	transform={g.parseTransformCommands(transforms)} />

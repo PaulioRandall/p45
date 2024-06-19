@@ -93,7 +93,7 @@ Creates a shape from three or more points.
 	export let transforms = /* Does nothing */
 
 	// Origin to use for transforms.
-	export let origin
+	export let origin = Grid.centerNode
 </script>
 ```
 
@@ -101,7 +101,7 @@ Creates a shape from three or more points.
 <Shape
 	commands={/* Simple drawing */}
 	transforms={/* Does nothing */}
-	origin
+	origin={Grid.centerNode}
 />
 ```
 
