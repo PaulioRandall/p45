@@ -105,5 +105,25 @@ describe('TransformCmdParser.js', () => {
 				expect(act).toEqual('skewX(30) skewY(30)')
 			})
 		})
+
+		describe('flip', () => {
+			test(`"flip x"`, () => {
+				const cp = new TransformCmdParser()
+				const act = cp.parse(['flip', 'x'])
+				expect(act).toEqual('scale(-1, 1)')
+			})
+
+			test(`"flip y"`, () => {
+				const cp = new TransformCmdParser()
+				const act = cp.parse(['flip', 'y'])
+				expect(act).toEqual('scale(1, -1)')
+			})
+
+			test(`"flip"`, () => {
+				const cp = new TransformCmdParser()
+				const act = cp.parse(['flip'])
+				expect(act).toEqual('scale(-1, -1)')
+			})
+		})
 	})
 })

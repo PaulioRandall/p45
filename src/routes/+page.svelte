@@ -85,13 +85,13 @@
 		<TestIcon title="default">
 			<RegularPolygon />
 		</TestIcon>
-		<TestIcon title="origin='M14' sides='3' radius='8' rotate='180'">
+		<TestIcon title="Triangle">
 			<RegularPolygon origin="M14" sides="3" radius="8" rotate="180" />
 		</TestIcon>
-		<TestIcon title="origin='M12' sides='4' radius='8' rotate='-30'">
+		<TestIcon title="Square">
 			<RegularPolygon origin="M12" sides="4" radius="8" rotate="-30" />
 		</TestIcon>
-		<TestIcon title="origin='M12' sides='12' radius='9'">
+		<TestIcon title="Dodecagon">
 			<RegularPolygon origin="M12" sides="12" radius="9" />
 		</TestIcon>
 	</IconSet>
@@ -159,6 +159,27 @@
 				origin="A0"
 				transforms="
 					skew by 20
+			">
+				<Shape />
+			</Transform>
+		</TestIcon>
+
+		<TestIcon title="Flip individually">
+			<Transform
+				origin="E4"
+				transforms="
+					flip x
+					flip y
+			">
+				<Shape />
+			</Transform>
+		</TestIcon>
+
+		<TestIcon title="Flip together">
+			<Transform
+				origin="I8"
+				transforms="
+					flip
 			">
 				<Shape />
 			</Transform>

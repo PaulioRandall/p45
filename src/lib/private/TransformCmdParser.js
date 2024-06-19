@@ -22,6 +22,10 @@ export default class TransformCmdParser {
 			return this.parseScale(r)
 		}
 
+		if (r.is('flip')) {
+			return this.parseFlip(r)
+		}
+
 		if (r.is('skew')) {
 			return this.parseSkew(r)
 		}
@@ -66,12 +70,24 @@ export default class TransformCmdParser {
 		switch (axis) {
 			case null:
 				return `scale(${amount}, ${amount})`
-			case 'width':
 			case 'x':
 				return `scale(${amount}, 1)`
-			case 'height':
 			case 'y':
 				return `scale(1, ${amount})`
+		}
+	}
+
+	parseFlip(r) {
+		r.expect('flip')
+		const axis = this.parseAxis(r)
+
+		switch (axis) {
+			case null:
+				return `scale(-1, -1)`
+			case 'x':
+				return `scale(-1, 1)`
+			case 'y':
+				return `scale(1, -1)`
 		}
 	}
 
@@ -95,9 +111,14 @@ export default class TransformCmdParser {
 	}
 
 	parseAxis(r) {
-		if (r.is('width', 'x', 'height', 'y')) {
-			return r.read()
+		if (r.accept('width', 'x', 'horizontally')) {
+			return 'x'
 		}
+
+		if (r.accept('height', 'y', 'vertically')) {
+			return 'y'
+		}
+
 		return null
 	}
 
