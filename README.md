@@ -107,39 +107,15 @@ Creates a shape from three or more points.
 
 ### `<Transform>`
 
-Creates group with simple transformations.
+Creates a group for simple transformations.
 
 ```svelte
 <script>
-	// Point to perform transformations around.
+	// Either an array off commands or a line separated list of commands.
+	export let transforms = /* Does nothing */
+
+	// Origin to use for transforms.
 	export let origin = Grid.centerNode
-
-	// True to flip along the x-axis.
-	export let flipX = false
-
-	// True to flip along the y-axis.
-	export let flipY = false
-
-	// Amount to translate along the x-axis.
-	export let translateX = 0
-
-	// Amount to translate along the y-axis.
-	export let translateY = 0
-
-	// How much to scale along the x-axis.
-	export let scaleX = 0
-
-	// How much to scale along the y-axis.
-	export let scaleY = 0
-
-	// How much to skew along the x-axis.
-	export let skewX = 0
-
-	// How much to skew along the y-axis.
-	export let skewY = 0
-
-	// Clockwise rotation in degrees.
-	export let rotate = 0
 </script>
 
 <!-- Components and elements to transform. -->
@@ -148,16 +124,8 @@ Creates group with simple transformations.
 
 ```svelte
 <Transform
+	transforms={/* Does nothing */}
 	origin={Grid.centerNode}
-	flipX={false}
-	flipY={false}
-	translateX={0}
-	translateY={0}
-	scaleX={0}
-	scaleY={0}
-	skewX={0}
-	skewY={0}
-	rotate={0}
 >
 	<div />
 </Transform>

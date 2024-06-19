@@ -18,6 +18,10 @@ export default class TransformCmdParser {
 			return this.parseRotate(r)
 		}
 
+		if (r.is('scale')) {
+			return this.parseScale(r)
+		}
+
 		throw new Error(`Unknown command '${r.get()}'`)
 	}
 
@@ -46,6 +50,23 @@ export default class TransformCmdParser {
 
 		const amount = r.expectNumber()
 		return `rotate(${amount})`
+	}
+
+	parseScale(r) {
+		r.expect('scale')
+		const axis = r.expect('width', 'x', 'height', 'y')
+
+		r.expect('by')
+		const amount = r.expectNumber()
+
+		switch (axis) {
+			case 'width':
+			case 'x':
+				return `scale(${amount}, 1)`
+			case 'height':
+			case 'y':
+				return `scale(1, ${amount})`
+		}
 	}
 
 	parseNode(r) {

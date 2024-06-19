@@ -69,8 +69,10 @@ export default class TokenReader {
 	}
 
 	expectNumber() {
+		const numberPattern = /^[\-\+]?[0-9]+(\.[0-9]+)?$/
 		const tk = this.get()
-		if (/^[\-\+]?[0-9]+$/.test(tk)) {
+
+		if (numberPattern.test(tk)) {
 			return tk
 		}
 

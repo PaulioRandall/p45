@@ -97,51 +97,39 @@
 	</IconSet>
 
 	<IconSet title="Transform">
-		<TestIcon title="origin='M12' flipX flipY">
-			<Transform origin="M12" flipX flipY>
+		<TestIcon title="No transformations">
+			<Transform>
 				<Shape />
 			</Transform>
 		</TestIcon>
 
-		<TestIcon title="origin='M12' scaleX='0.5' scaleY='1.5'">
-			<Transform origin="M12" scaleX="0.5" scaleY="1.5">
-				<Shape
-					draw="
-					move to H7
-					line to R7
-					line to R17
-					line to H17
-					close" />
-			</Transform>
-		</TestIcon>
-
-		<TestIcon title="origin='M12' skewX='45' skewY='-25'">
-			<Transform origin="M12" skewX="45" skewY="-25">
-				<Shape
-					draw="
-					move to H7
-					line to R7
-					line to R17
-					line to H17
-					close" />
-			</Transform>
-		</TestIcon>
-
-		<TestIcon title="origin='M12' moveX='2' moveY='4'">
-			<Transform origin="M12" moveX="2" moveY="4">
+		<TestIcon title="Move to center">
+			<Transform
+				transforms="
+				move right by 8
+				move down by 8
+			">
 				<Shape />
 			</Transform>
 		</TestIcon>
 
-		<TestIcon title="origin='M12' rotate='21'">
-			<Transform origin="M12" rotate="21">
-				<Shape
-					draw="
-					move to H7
-					line to R7
-					line to R17
-					line to H17
-					close" />
+		<TestIcon title="Rotate by 180">
+			<Transform
+				transforms="
+				rotate by 180
+			">
+				<Shape />
+			</Transform>
+		</TestIcon>
+
+		<TestIcon title="Scale by 2.5">
+			<Transform
+				origin="A0"
+				transforms="
+					scale width by 2.5
+					scale y by 2.5
+			">
+				<Shape />
 			</Transform>
 		</TestIcon>
 	</IconSet>
