@@ -5,7 +5,7 @@
 		Creates a group for simple transformations.
 	*/
 
-	const g = getContext('p45-grid')
+	const p45 = getContext('p45')
 
 	//@prop transforms
 	// Either an array off commands or a line separated list of commands.
@@ -14,15 +14,15 @@
 
 	//@prop origin
 	// Origin to use for transforms.
-	// @default Grid.centerNode
-	export let origin = g.centerNode
+	// @default P45.centerNode
+	export let origin = p45.centerNode
 
 	const parseOrigin = () => {
 		if (origin === 'center') {
-			origin = g.centerNode
+			origin = p45.centerNode
 		}
 
-		const xy = g.parseNode(origin)
+		const xy = p45.parseNode(origin)
 		return `${xy.x} ${xy.y}`
 	}
 </script>
@@ -30,7 +30,7 @@
 <g
 	{...$$restProps}
 	transform-origin={parseOrigin()}
-	transform={g.parseTransformCommands(transforms)}>
+	transform={p45.parseTransformCommands(transforms)}>
 	<!--@slot
 		Components and elements to transform.
 	-->

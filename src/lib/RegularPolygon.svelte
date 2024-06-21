@@ -7,12 +7,12 @@
 		and radius to a vertex.
 	*/
 
-	const g = getContext('p45-grid')
+	const p45 = getContext('p45')
 
 	//p24.p.let.o: Alias for start.
 	//p24.p.let.origin: Origin node representing the center of the polygon.
-	//p24.d.p.let.origin: Grid.centerNode
-	export let o = g.centerNode
+	//p24.d.p.let.origin: P45.centerNode
+	export let o = p45.centerNode
 	export let origin = o
 
 	//p24.p.let.s: Alias for side.
@@ -23,8 +23,8 @@
 
 	//p24.p.let.r: Alias for radius.
 	//p24.p.let.radius: Radius to a vertex.
-	//p24.d.p.let.radius: Grid.center - 1
-	export let r = g.center - 1
+	//p24.d.p.let.radius: P45.center - 1
+	export let r = p45.center - 1
 	export let radius = r
 
 	//p24.p.let.ro: Alias for rotate.

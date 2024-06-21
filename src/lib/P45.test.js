@@ -1,30 +1,30 @@
-import Grid from './Grid'
+import P45 from './P45'
 
-describe('Grid.js', () => {
+describe('P45.js', () => {
 	describe('constructor', () => {
 		test('Disallows invalid size', () => {
-			const t = () => new Grid(1)
+			const t = () => new P45(1)
 			expect(t).toThrow(Error)
 		})
 
 		test('Allows valid size', () => {
-			new Grid(16)
+			new P45(16)
 		})
 
 		test('Creates correct center node', () => {
-			const g = new Grid(16)
+			const g = new P45(16)
 			expect(g.centerNode).toEqual('I8')
 		})
 
 		test('Creates correct center node', () => {
-			const g = new Grid(24)
+			const g = new P45(24)
 			expect(g.centerNode).toEqual('M12')
 		})
 	})
 
 	describe('parse', () => {
 		test('Commands', () => {
-			const act = new Grid(8).parseDrawCommands(`
+			const act = new P45(8).parseDrawCommands(`
 				move to D3
 				line to M3
 				curve to V12 with slope V3

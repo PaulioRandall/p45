@@ -1,12 +1,12 @@
 <script>
-	import Grid from '$lib/Grid'
+	import P45 from '$lib/P45'
 	import Icon from '$lib/Icon.svelte'
 
-	export let grid = new Grid(24)
+	export let p45 = new P45(24)
 </script>
 
 <div class="icon" {...$$restProps}>
-	<Icon {grid}>
+	<Icon {p45}>
 		<slot />
 	</Icon>
 </div>

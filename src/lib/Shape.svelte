@@ -5,7 +5,7 @@
 		Creates a shape from three or more points.
 	*/
 
-	const g = getContext('p45-grid')
+	const p45 = getContext('p45')
 
 	//@prop commands
 	// Either an array off commands or a line separated list of commands.
@@ -31,15 +31,15 @@
 
 	//@prop origin
 	// Origin to use for transforms.
-	// @default Grid.centerNode
-	export let origin = g.centerNode
+	// @default P45.centerNode
+	export let origin = p45.centerNode
 
 	const parseOrigin = () => {
 		if (origin === 'center') {
-			origin = g.centerNode
+			origin = p45.centerNode
 		}
 
-		const xy = g.parseNode(origin)
+		const xy = p45.parseNode(origin)
 		return `${xy.x} ${xy.y}`
 	}
 </script>
@@ -49,5 +49,5 @@
 	{...$$restProps}
 	transform-origin={parseOrigin()}
 	mask="url(#{mask})"
-	d={g.parseDrawCommands(draw)}
-	transform={g.parseTransformCommands(transforms)} />
+	d={p45.parseDrawCommands(draw)}
+	transform={p45.parseTransformCommands(transforms)} />

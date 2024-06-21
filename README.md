@@ -21,17 +21,17 @@ Creates a circle from a center origin and radius.
 ```svelte
 <script>
 	// Circle center point.
-	export let origin = Grid.centerNode
+	export let origin = P45.centerNode
 
 	// Circle radius.
-	export let radius = Grid.center-1
+	export let radius = P45.center-1
 </script>
 ```
 
 ```svelte
 <Circle
-	origin={Grid.centerNode}
-	radius={Grid.center-1}
+	origin={P45.centerNode}
+	radius={P45.center-1}
 />
 ```
 
@@ -39,13 +39,13 @@ Creates a circle from a center origin and radius.
 
 Container for slotted shapes that form an Icon.
 
-		It's represented by an svg element sized by the passed grid. This means
-		raw svg child elements maybe slotted in too.
+		It's represented by an svg element sized by the passed P45b instance.
+		This means raw svg child elements maybe slotted in too.
 
 ```svelte
 <script>
-	// An instance of the Grid class.
-	export let grid = getContext('p45-grid')
+	// An instance of the P45 class.
+	export let p45 = getContext('p45')
 
 	// The icon's title applied using the SVG title tag.
 	export let title = ""
@@ -53,8 +53,8 @@ Container for slotted shapes that form an Icon.
 	// Description of the icon applied using the SVG description tag.
 	export let description = ""
 
-	// Grid used to size the icon and parse nodes.
-	setContext("p45-grid", ...)
+	// P45 instance used to size the icon and parse nodes.
+	setContext("p45", ...)
 </script>
 
 <!-- SVG elments and components that form the icon. -->
@@ -63,7 +63,7 @@ Container for slotted shapes that form an Icon.
 
 ```svelte
 <Icon
-	grid={getContext('p45-grid')}
+	p45={getContext('p45')}
 	title=""
 	description=""
 >
@@ -113,7 +113,7 @@ Creates a shape from three or more points.
 	export let transforms = /* Does nothing */
 
 	// Origin to use for transforms.
-	export let origin = Grid.centerNode
+	export let origin = P45.centerNode
 </script>
 ```
 
@@ -122,7 +122,7 @@ Creates a shape from three or more points.
 	commands={/* Simple drawing */}
 	mask
 	transforms={/* Does nothing */}
-	origin={Grid.centerNode}
+	origin={P45.centerNode}
 />
 ```
 
@@ -136,7 +136,7 @@ Creates a group for simple transformations.
 	export let transforms = /* Does nothing */
 
 	// Origin to use for transforms.
-	export let origin = Grid.centerNode
+	export let origin = P45.centerNode
 </script>
 
 <!-- Components and elements to transform. -->
@@ -146,7 +146,7 @@ Creates a group for simple transformations.
 ```svelte
 <Transform
 	transforms={/* Does nothing */}
-	origin={Grid.centerNode}
+	origin={P45.centerNode}
 >
 	<div />
 </Transform>

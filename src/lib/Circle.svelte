@@ -5,23 +5,23 @@
 		Creates a circle from a center origin and radius.
 	*/
 
-	const g = getContext('p45-grid')
+	const p45 = getContext('p45')
 
 	//@prop origin
 	// Circle center point.
-	// @default Grid.centerNode
+	// @default P45.centerNode
 	// @alias o
-	export let o = g.centerNode
+	export let o = p45.centerNode
 	export let origin = o
 
 	//@prop radius
 	// Circle radius.
-	// @default Grid.center-1
+	// @default P45.center-1
 	// @alias r
-	export let r = g.center - 1
+	export let r = p45.center - 1
 	export let radius = r
 
-	const cxy = g.parseNode(origin)
+	const cxy = p45.parseNode(origin)
 </script>
 
 <circle {...$$restProps} cx={cxy.x} cy={cxy.y} r={radius} />

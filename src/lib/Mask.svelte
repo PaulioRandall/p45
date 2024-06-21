@@ -5,7 +5,7 @@
 		Creates a referencable mask to cut out shapes in other shapes.
 	*/
 
-	const g = getContext('p45-grid')
+	const p45 = getContext('p45')
 
 	//@prop id
 	// Unique ID to reference the mask.
@@ -16,8 +16,8 @@
 	<rect
 		x="0"
 		y="0"
-		width={g.size}
-		height={g.size}
+		width={p45.size}
+		height={p45.size}
 		fill="white"
 		{...$$restProps} />
 	<g stroke="black" fill="black">
