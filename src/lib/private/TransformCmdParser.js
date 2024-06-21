@@ -136,10 +136,6 @@ export default class TransformCmdParser {
 	}
 
 	parseNode(r) {
-		if (r.accept('center')) {
-			return this.grid.center
-		}
-
 		return this.grid.parseNode(r.read())
 	}
 }
