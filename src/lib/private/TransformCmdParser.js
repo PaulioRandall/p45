@@ -1,10 +1,8 @@
 import TokenReader from './TokenReader.js'
-import NodeParser from './NodeParser.js'
 
 export default class TransformCmdParser {
-	constructor(gridSize = 0) {
-		this.size = { w: gridSize, h: gridSize }
-		this.center = { x: gridSize / 2, y: gridSize / 2 }
+	constructor(grid) {
+		this.grid = grid
 	}
 
 	parse(cmd) {
@@ -139,9 +137,9 @@ export default class TransformCmdParser {
 
 	parseNode(r) {
 		if (r.accept('center')) {
-			return this.center
+			return this.grid.center
 		}
 
-		return NodeParser.parse(r.read())
+		return this.grid.parseNode(r.read())
 	}
 }

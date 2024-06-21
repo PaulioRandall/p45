@@ -1,12 +1,10 @@
 import TokenReader from './TokenReader.js'
-import NodeParser from './NodeParser.js'
 
 export default class DrawCmdParser {
-	constructor(gridSize = 0) {
+	constructor(grid) {
+		this.grid = grid
 		this.start = { x: 0, y: 0 }
 		this.pos = { x: 0, y: 0 }
-		this.size = { w: gridSize, h: gridSize }
-		this.center = { x: gridSize / 2, y: gridSize / 2 }
 	}
 
 	parse(cmd) {
@@ -122,10 +120,6 @@ export default class DrawCmdParser {
 			return this.start
 		}
 
-		if (r.accept('center')) {
-			return this.center
-		}
-
-		return NodeParser.parse(r.read())
+		return this.grid.parseNode(r.read())
 	}
 }

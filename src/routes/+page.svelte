@@ -197,7 +197,7 @@
 
 		<TestIcon title="Flip together">
 			<Transform
-				origin="I8"
+				origin="center"
 				transforms="
 					flip
 			">

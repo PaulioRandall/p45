@@ -34,7 +34,9 @@
 	export let ro = 0
 	export let rotate = ro
 
-	const points = RegularPolygon.generatePath(origin, sides, radius, rotate)
+	const rp = new RegularPolygon(p45)
+
+	const points = rp.generatePath(origin, sides, radius, rotate)
 </script>
 
 <polygon {...$$restProps} {points} />

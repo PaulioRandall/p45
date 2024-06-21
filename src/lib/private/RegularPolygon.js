@@ -1,18 +1,21 @@
 import Victor from 'victor'
-import NodeParser from './NodeParser.js'
 
 export default class RegularPolygon {
-	static generatePath(origin, sides, radius, rotate) {
+	constructor(grid) {
+		this.grid = grid
+	}
+
+	generatePath(origin, sides, radius, rotate) {
 		return (
-			RegularPolygon.generateVertices(origin, sides, radius, rotate) //
+			this.generateVertices(origin, sides, radius, rotate) //
 				.map(({ x, y }) => `${x},${y}`)
 				.join(' ') + ' Z'
 		)
 	}
 
-	static generateVertices(origin, sides, radius, rotate) {
+	generateVertices(origin, sides, radius, rotate) {
 		if (typeof origin === 'string') {
-			origin = NodeParser.parse(origin)
+			origin = this.grid.parseNode(origin)
 		}
 
 		sides = parseInt2(sides)
