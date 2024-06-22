@@ -64,7 +64,7 @@ export default class TokenReader {
 		}
 
 		throw new Error(
-			`At token index ${this.idx}, expected one of ${options} but got '${this.get()}'`
+			`At token index ${this.idx}, expected one of '${options}' but got '${this.get()}'`
 		)
 	}
 

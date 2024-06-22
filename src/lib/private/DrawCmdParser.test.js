@@ -107,7 +107,7 @@ describe('DrawCmdParser.js', () => {
 		})
 
 		describe('cubic curve', () => {
-			test(`"curve to D3 with slope C2 and D0"`, () => {
+			test(`"curve to D3 with slopes C2 and D0"`, () => {
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
 					'curve', //
@@ -187,6 +187,100 @@ describe('DrawCmdParser.js', () => {
 				])
 
 				expect(act).toEqual('Z')
+			})
+		})
+
+		describe('arc', () => {
+			test(`"arc to D3 with x radius 3 with y radius 2"`, () => {
+				const grid = new Grid(24)
+				const cp = new DrawCmdParser(grid)
+				const act = cp.parse([
+					'arc', //
+					'to',
+					'D3',
+					'with',
+					'x',
+					'radius',
+					'3',
+					'with',
+					'y',
+					'radius',
+					'2',
+				])
+
+				expect(act).toEqual('A 3 2 0 0 0 3 3')
+			})
+
+			test(`"arc to D3 with x radius 3 with y radius 2 with rotation 45"`, () => {
+				const grid = new Grid(24)
+				const cp = new DrawCmdParser(grid)
+				const act = cp.parse([
+					'arc', //
+					'to',
+					'D3',
+					'with',
+					'x',
+					'radius',
+					'3',
+					'with',
+					'y',
+					'radius',
+					'2',
+					'with',
+					'rotation',
+					'45',
+				])
+
+				expect(act).toEqual('A 3 2 45 0 0 3 3')
+			})
+
+			test(`"arc to D3 with x radius 3 with y radius 2 with rotation 45"`, () => {
+				const grid = new Grid(24)
+				const cp = new DrawCmdParser(grid)
+				const act = cp.parse([
+					'arc', //
+					'to',
+					'D3',
+					'with',
+					'x',
+					'radius',
+					'3',
+					'with',
+					'y',
+					'radius',
+					'2',
+					'with',
+					'rotation',
+					'45',
+				])
+
+				expect(act).toEqual('A 3 2 45 0 0 3 3')
+			})
+
+			test(`"arc to D3 with x radius 3 with y radius 2 and is large and is sweeping"`, () => {
+				const grid = new Grid(24)
+				const cp = new DrawCmdParser(grid)
+				const act = cp.parse([
+					'arc', //
+					'to',
+					'D3',
+					'with',
+					'x',
+					'radius',
+					'3',
+					'with',
+					'y',
+					'radius',
+					'2',
+					'and',
+					'is',
+					'large',
+					'and',
+					'is',
+					'sweeping',
+				])
+
+				expect(act).toEqual('A 3 2 0 1 1 3 3')
 			})
 		})
 	})

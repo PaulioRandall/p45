@@ -18,27 +18,6 @@ export default class DrawCmdParser {
 			return this.parseClose(r)
 		}
 
-		return this.parseDraw(r)
-	}
-
-	parseMove(r) {
-		r.expect('move')
-		r.expect('to')
-
-		const n = this.parseNode(r)
-		this.start = n
-		return `M ${n.x} ${n.y}`
-	}
-
-	parseClose(r) {
-		r.expect('close')
-		r.accept('path')
-
-		this.pos = this.start
-		return `Z`
-	}
-
-	parseDraw(r) {
 		if (r.is('line')) {
 			return this.parseDrawLine(r)
 		}
@@ -51,16 +30,37 @@ export default class DrawCmdParser {
 			return this.parseCubicCurve(r)
 		}
 
+		if (r.is('arc')) {
+			return this.parseArc(r)
+		}
+
 		return []
+	}
+
+	parseMove(r) {
+		r.expect('move')
+		r.expect('to')
+
+		const to = this.parseNode(r)
+		this.start = to
+		return `M ${to.x} ${to.y}`
+	}
+
+	parseClose(r) {
+		r.expect('close')
+		r.accept('path')
+
+		this.pos = this.start
+		return `Z`
 	}
 
 	parseDrawLine(r) {
 		r.expect('line')
 		r.expect('to')
 
-		const n = this.parseNode(r)
-		this.pos = n
-		return `L ${n.x} ${n.y}`
+		const to = this.parseNode(r)
+		this.pos = to
+		return `L ${to.x} ${to.y}`
 	}
 
 	parseQuadraticCurve(r) {
@@ -68,19 +68,19 @@ export default class DrawCmdParser {
 		r.expect('curve')
 		r.expect('to')
 
-		const n = this.parseNode(r)
+		const to = this.parseNode(r)
 
 		if (r.empty()) {
-			this.pos = n
-			return `T ${n.x} ${n.y}`
+			this.pos = to
+			return `T ${to.x} ${to.y}`
 		}
 
 		r.expect('with')
 		r.expect('slope')
 
 		const cp = this.parseNode(r)
-		this.pos = n
-		return `Q ${cp.x} ${cp.y}, ${n.x} ${n.y}`
+		this.pos = to
+		return `Q ${cp.x} ${cp.y}, ${to.x} ${to.y}`
 	}
 
 	parseCubicCurve(r) {
@@ -88,31 +88,77 @@ export default class DrawCmdParser {
 		r.expect('curve')
 		r.expect('to')
 
-		const n = this.parseNode(r)
+		const to = this.parseNode(r)
 
 		r.expect('with')
 
 		if (r.accept('slope')) {
-			return this.parseCubicSymmetricCurve(r, n)
+			return this.parseCubicSymmetricCurve(r, to)
 		} else if (r.accept('slopes')) {
-			return this.parseCubicNonSymmetricCurve(r, n)
+			return this.parseCubicNonSymmetricCurve(r, to)
 		}
 
 		throw new Error(`Unable to determine cubic curve parameters`)
 	}
 
-	parseCubicSymmetricCurve(r, n) {
+	parseCubicSymmetricCurve(r, to) {
 		const cp = this.parseNode(r)
-		this.pos = n
-		return `S ${cp.x} ${cp.y}, ${n.x} ${n.y}`
+		this.pos = to
+		return `S ${cp.x} ${cp.y}, ${to.x} ${to.y}`
 	}
 
-	parseCubicNonSymmetricCurve(r, n) {
+	parseCubicNonSymmetricCurve(r, to) {
 		const cp1 = this.parseNode(r)
 		r.expect('and')
 		const cp2 = this.parseNode(r)
-		this.pos = n
-		return `C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${n.x} ${n.y}`
+		this.pos = to
+		return `C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${to.x} ${to.y}`
+	}
+
+	parseArc(r) {
+		// [rx, ry, ro, large, sweep, x, y]
+		const params = [0, 0, 0, 0, 0, 0, 0]
+
+		r.expect('arc')
+		r.expect('to')
+		const to = this.parseNode(r)
+		params[5] = to.x
+		params[6] = to.y
+
+		r.expect('with')
+		r.expect('x')
+		r.expect('radius')
+		params[0] = r.expectNumber()
+
+		r.expect('with')
+		r.expect('y')
+		r.expect('radius')
+		params[1] = r.expectNumber()
+
+		this.parseOptionllyArcParams(r, params)
+
+		this.pos = to
+		return `A ${params.join(' ')}`
+	}
+
+	parseOptionllyArcParams(r, params) {
+		while (!r.empty()) {
+			if (r.accept('with')) {
+				r.expect('rotation')
+				params[2] = r.expectNumber()
+				continue
+			}
+
+			r.expect('and')
+			r.expect('is')
+
+			if (r.accept('large')) {
+				params[3] = 1
+			} else {
+				r.expect('sweeping')
+				params[4] = 1
+			}
+		}
 	}
 
 	parseNode(r) {
