@@ -1,16 +1,11 @@
 <script>
-	import { getContext, setContext } from 'svelte'
+	import { setContext } from 'svelte'
+	import ReferenceGridContext from './private/ReferenceGridContext.svelte'
 	import Icon from './Icon.svelte'
 
 	//@prop p45
 	// An instance of the P45 class.
-	// @default getContext('p45')
-	export let p45 = getContext('p45')
-
-	//@prop nodeColor
-	// Color of the dots.
-	// @default "darkgrey"
-	export let nodeColor = 'darkgrey'
+	export let p45
 
 	const points = []
 
@@ -56,6 +51,16 @@
 		nodeNamesOn = !nodeNamesOn
 	}
 
+	let pointsOn = true
+	const togglePoints = () => {
+		pointsOn = !pointsOn
+	}
+
+	let guidelinesOn = true
+	const toggleGuidelines = () => {
+		guidelinesOn = !guidelinesOn
+	}
+
 	const copyText = (event) => {
 		navigator?.clipboard?.writeText(event.target.textContent)
 
@@ -74,24 +79,34 @@
 
 <div class="p45-reference-grid">
 	<div class="p45-header">
-		<div>
-			<button
-				class="p45-header-button"
-				data-copied-element-id="p45-header-button-left-copied"
-				on:click={copyText}>
-				{selected.node}
+		<div class="p45-header-row">
+			<button class="p45-header-button" on:click={togglePoints}
+				>Points <input type="checkbox" bind:checked={pointsOn} />
 			</button>
-			<span id="p45-header-button-left-copied">Copied</span>
+			<button class="p45-header-button" on:click={toggleGuidelines}
+				>Guidelines <input type="checkbox" bind:checked={guidelinesOn} />
+			</button>
+			<button class="p45-header-button" on:click={toggleNodeNames}
+				>Node names <input type="checkbox" bind:checked={nodeNamesOn} />
+			</button>
 		</div>
-		<button class="p45-header-button" on:click={toggleNodeNames}
-			>Turn node names {nodeNamesOn ? 'off' : 'on'}
-		</button>
-		<div>
-			<span id="p45-header-button-right-copied">Copied</span>
-			<button
-				data-copied-element-id="p45-header-button-right-copied"
-				class="p45-header-button"
-				on:click={copyText}>{selected.x}:{selected.y}</button>
+		<div class="p45-header-row">
+			<div>
+				<button
+					class="p45-header-button"
+					data-copied-element-id="p45-header-button-left-copied"
+					on:click={copyText}>
+					{selected.node}
+				</button>
+				<span id="p45-header-button-left-copied">Copied</span>
+			</div>
+			<div>
+				<span id="p45-header-button-right-copied">Copied</span>
+				<button
+					data-copied-element-id="p45-header-button-right-copied"
+					class="p45-header-button"
+					on:click={copyText}>{selected.x}:{selected.y}</button>
+			</div>
 		</div>
 	</div>
 	<svg
@@ -102,28 +117,23 @@
 		aria-hidden="true"
 		stroke="white"
 		fill="transparent">
-		<rect
-			x={points[0].dotPos.x}
-			y={points[0].dotPos.y}
-			width={p45.size}
-			height={p45.size}
-			fill="transparent"
-			stroke="DarkSlateBlue"
-			stroke-width="0.15"
-			stroke-dasharray="0 0.25 0.25"
-			class="p45-border" />
-		<g stroke="transparent" fill={nodeColor} class="p45-nodes">
+		{#if guidelinesOn}
+			<ReferenceGridContext {p45} {points} />
+		{/if}
+		<g stroke="transparent" fill="darkgrey" class="p45-nodes">
 			{#each points as p (p.node)}
 				{#if nodeNamesOn}
 					<text x={p.textPos.x} y={p.textPos.y} class="p45-node-text">
 						{p.node}
 					</text>
 				{/if}
-				<circle
-					class="p45-node-circle"
-					r="0.1"
-					cx={p.dotPos.x}
-					cy={p.dotPos.y} />
+				{#if pointsOn}
+					<circle
+						class="p45-node-circle"
+						r="0.1"
+						cx={p.dotPos.x}
+						cy={p.dotPos.y} />
+				{/if}
 			{/each}
 			{#each points as p (p.node)}
 				<rect
@@ -159,18 +169,27 @@
 
 	.p45-header {
 		display: flex;
+		flex-direction: column;
+		margin-bottom: 1rem;
+		gap: 1rem;
+	}
+
+	.p45-header-row {
+		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		align-items: center;
-		height: 4rem;
 		padding: 0 1rem;
-		margin-bottom: 1rem;
+		gap: 1rem;
 	}
 
 	.p45-header-button {
+		min-width: 5rem;
 		font-size: 1.2rem;
 		padding: 0.5rem 1rem;
 		border-radius: 0.5rem;
 		cursor: pointer;
+		flex-grow: 1;
 	}
 
 	#p45-header-button-left-copied {

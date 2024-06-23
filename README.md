@@ -93,10 +93,7 @@ Creates a referencable mask to cut out shapes in other shapes.
 ```svelte
 <script>
 	// An instance of the P45 class.
-	export let p45 = getContext('p45')
-
-	// Color of the dots.
-	export let nodeColor = "darkgrey"
+	export let p45
 
 	// The selected node object.
 	export let selected = { x: P45.center, y: P45.center }
@@ -108,8 +105,7 @@ Creates a referencable mask to cut out shapes in other shapes.
 
 ```svelte
 <ReferenceGrid
-	p45={getContext('p45')}
-	nodeColor="darkgrey"
+	p45
 	selected={{ x: P45.center, y: P45.center }}
 />
 ```
