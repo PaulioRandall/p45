@@ -101,10 +101,10 @@ export default class Grid {
 			throw new Error(`Invalid node '${node}'`)
 		}
 
-		parseX(n, 'x')
-		parseY(n, 'y')
-
-		return n
+		return {
+			x: parseX(n.x, n.xSign),
+			y: parseY(n.y, n.ySign),
+		}
 	}
 
 	static nodeOf(x, y) {
@@ -113,8 +113,11 @@ export default class Grid {
 }
 
 const numberToAlpha = (n) => {
+	const isNegative = n < 0
 	const A = 65
 	const result = []
+
+	n = Math.abs(n)
 
 	while (n >= 26) {
 		let rem = n % 26
@@ -123,36 +126,38 @@ const numberToAlpha = (n) => {
 	}
 
 	result.unshift(n + 65)
-	return String.fromCharCode(...result)
+	const alpha = String.fromCharCode(...result)
+	return isNegative ? '-' + alpha : alpha
 }
 
 const splitNode = (node) => {
 	node = node.trim()
 	let m = null
 
-	m = /^([A-Z]+)([0-9]+)$/.exec(node)
+	m = /^([\-\+])?([A-Z]+)([\-\+])?([0-9]+)$/.exec(node)
 	if (m) {
 		return {
-			x: m[1],
-			y: m[2],
+			xSign: m[1],
+			x: m[2],
+			ySign: m[3],
+			y: m[4],
 		}
 	}
 
 	return null
 }
 
-const parseX = (node, k) => {
-	if (!node[k]) {
-		return
+const parseX = (s, sign) => {
+	if (!s) {
+		return s
 	}
 
-	const v = node[k]
-	const len = v.length
+	const len = s.length
 	let x = 0
 
 	for (let i = len - 1; i >= 0; i--) {
 		const j = len - 1 - i
-		const charCode = v.charCodeAt(i)
+		const charCode = s.charCodeAt(i)
 		const n = charCodeToNumber(charCode)
 
 		if (j === 0) {
@@ -162,7 +167,7 @@ const parseX = (node, k) => {
 		}
 	}
 
-	node[k] = x
+	return sign === '-' ? -x : x
 }
 
 const charCodeToNumber = (charCode) => {
@@ -175,14 +180,15 @@ const charCodeToNumber = (charCode) => {
 	return n
 }
 
-const parseY = (node, k) => {
-	if (!node[k]) {
-		return
+const parseY = (s, sign) => {
+	if (!s) {
+		return s
 	}
 
-	const n = Number(node[k])
-	if (isNaN(n)) {
-		throw new Error(`Not a valid Y coordinate '${y}'`)
+	const y = Number(s)
+	if (isNaN(y)) {
+		throw new Error(`Not a valid Y coordinate '${s}'`)
 	}
-	node[k] = n
+
+	return sign === '-' ? -y : y
 }

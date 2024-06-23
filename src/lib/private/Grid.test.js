@@ -1,6 +1,18 @@
 import Grid from './Grid.js'
 
 describe('Grid.js', () => {
+	describe('nodeOf', () => {
+		test('Simple coords', () => {
+			const act = Grid.nodeOf(3, 3)
+			expect(act).toEqual('D3')
+		})
+
+		test('Negative coords', () => {
+			const act = Grid.nodeOf(-3, -3)
+			expect(act).toEqual('-D-3')
+		})
+	})
+
 	describe('parseNode', () => {
 		test('Simple coords', () => {
 			const act = Grid.parseNode('A0')
@@ -39,6 +51,13 @@ describe('Grid.js', () => {
 
 			expect(act.x).toEqual(3035)
 			expect(act.y).toEqual(3035)
+		})
+
+		test('Negative coords', () => {
+			const act = Grid.parseNode('-D-3')
+
+			expect(act.x).toEqual(-3)
+			expect(act.y).toEqual(-3)
 		})
 	})
 })

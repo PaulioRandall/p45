@@ -95,8 +95,11 @@
 			<Circle origin="S18" radius="5" />
 			<Circle origin="G18" radius="5" />
 		</TestIcon>
-		<TestIcon title="Offside">
-			<Circle origin="X12" radius="12" />
+		<TestIcon title="Negative coords">
+			<Circle origin="-E-4" radius="12" />
+		</TestIcon>
+		<TestIcon title="Beyond the grid">
+			<Circle origin="AB28" radius="12" />
 		</TestIcon>
 	</IconSet>
 
