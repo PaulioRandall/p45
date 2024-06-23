@@ -72,7 +72,7 @@
 	}
 </script>
 
-<div>
+<div class="p45-reference-grid">
 	<div class="p45-header">
 		<div>
 			<button
@@ -154,6 +154,9 @@
 </div>
 
 <style>
+	.p45-reference-grid {
+	}
+
 	.p45-header {
 		display: flex;
 		justify-content: space-between;
