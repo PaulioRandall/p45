@@ -20,6 +20,11 @@ describe('P45.js', () => {
 			const g = new P45(24)
 			expect(g.centerNode).toEqual('M12')
 		})
+
+		test('Creates big grid', () => {
+			const g = new P45(64)
+			expect(g.centerNode).toEqual('AG32')
+		})
 	})
 
 	describe('parse', () => {

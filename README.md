@@ -35,6 +35,32 @@ Creates a circle from a center origin and radius.
 />
 ```
 
+### `<GridCanvas>`
+
+```svelte
+<script>
+	// An instance of the P45 class.
+	export let p45 = getContext('p45')
+
+	// Color of the dots.
+	export let nodeColor = "darkgrey"
+
+	// The selected node object.
+	export let selected = { x: P45.center, y: P45.center }
+
+	// P45 instance used to size the icon and parse nodes.
+	setContext("p45", ...)
+</script>
+```
+
+```svelte
+<GridCanvas
+	p45={getContext('p45')}
+	nodeColor="darkgrey"
+	selected={{ x: P45.center, y: P45.center }}
+/>
+```
+
 ### `<Icon>`
 
 Container for slotted shapes that form an Icon.

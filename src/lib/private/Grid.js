@@ -115,18 +115,27 @@ export default class Grid {
 const numberToAlpha = (n) => {
 	const isNegative = n < 0
 	const A = 65
-	const result = []
-
+	const charCodes = []
 	n = Math.abs(n)
 
-	while (n >= 26) {
-		let rem = n % 26
-		result.unshift(rem + A)
-		n -= rem
+	while (n > 0) {
+		const rem = n % 26
+		n = (n - rem) / 26
+
+		// Because only the most insignificant digit has rule: A == 0
+		// All overflowing digits have rule: A == 1
+		if (charCodes.length === 0) {
+			charCodes.unshift(rem + A)
+		} else {
+			charCodes.unshift(rem + A - 1)
+		}
 	}
 
-	result.unshift(n + 65)
-	const alpha = String.fromCharCode(...result)
+	if (charCodes.length === 0) {
+		charCodes.unshift(A)
+	}
+
+	const alpha = String.fromCharCode(...charCodes)
 	return isNegative ? '-' + alpha : alpha
 }
 

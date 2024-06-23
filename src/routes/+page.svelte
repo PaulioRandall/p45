@@ -1,4 +1,6 @@
 <script>
+	import GridCanvasContainer from './GridCanvasContainer.svelte'
+
 	import IconSet from './IconSet.svelte'
 	import TestIcon from './TestIcon.svelte'
 
@@ -10,6 +12,8 @@
 </script>
 
 <main>
+	<GridCanvasContainer />
+
 	<IconSet title="Shape">
 		<TestIcon title="Default">
 			<Shape />

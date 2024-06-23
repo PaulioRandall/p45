@@ -11,6 +11,11 @@ describe('Grid.js', () => {
 			const act = Grid.nodeOf(-3, -3)
 			expect(act).toEqual('-D-3')
 		})
+
+		test('0:0 coord', () => {
+			const act = Grid.nodeOf(0, 0)
+			expect(act).toEqual('A0')
+		})
 	})
 
 	describe('parseNode', () => {
