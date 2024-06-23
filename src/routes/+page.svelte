@@ -237,10 +237,10 @@
 				stroke="darkgrey"
 				fill="darkgrey"
 				draw="
-					move to A0
-					line to Y0
-					line to Y24
-					line to A24
+					move to a0
+					line to y0
+					line to y24
+					line to a24
 					close
 				" />
 		</TestIcon>

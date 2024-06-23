@@ -134,7 +134,7 @@ const splitNode = (node) => {
 	node = node.trim()
 	let m = null
 
-	m = /^([\-\+])?([A-Z]+)([\-\+])?([0-9]+)$/.exec(node)
+	m = /^([\-\+])?([A-Za-z]+)([\-\+])?([0-9]+)$/.exec(node)
 	if (m) {
 		return {
 			xSign: m[1],
@@ -152,6 +152,7 @@ const parseX = (s, sign) => {
 		return s
 	}
 
+	s = s.toUpperCase()
 	const len = s.length
 	let x = 0
 

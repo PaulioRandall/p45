@@ -59,5 +59,12 @@ describe('Grid.js', () => {
 			expect(act.x).toEqual(-3)
 			expect(act.y).toEqual(-3)
 		})
+
+		test('Lowercase coords', () => {
+			const act = Grid.parseNode('d3')
+
+			expect(act.x).toEqual(3)
+			expect(act.y).toEqual(3)
+		})
 	})
 })
