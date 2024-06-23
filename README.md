@@ -39,8 +39,8 @@ Creates a circle from a center origin and radius.
 
 Container for slotted shapes that form an Icon.
 
-		It's represented by an svg element sized by the passed P45b instance.
-		This means raw svg child elements maybe slotted in too.
+It's represented by an svg element sized by the passed P45b instance.
+This means raw svg child elements maybe slotted in too.
 
 ```svelte
 <script>
@@ -117,7 +117,7 @@ Creates a referencable mask to cut out shapes in other shapes.
 ### `<RegularPolygon>`
 
 Creates a regular polygon from an origin center point, number of edges,
-		and radius to a vertex.
+and radius to a vertex.
 
 ```svelte
 <RegularPolygon />
