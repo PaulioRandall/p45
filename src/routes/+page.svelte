@@ -1,5 +1,5 @@
 <script>
-	import ReferenceGridContainer from './ReferenceGridContainer.svelte'
+	import RefGridContainer from './RefGridContainer.svelte'
 
 	import IconSet from './IconSet.svelte'
 	import TestIcon from './TestIcon.svelte'
@@ -12,7 +12,7 @@
 </script>
 
 <main>
-	<ReferenceGridContainer />
+	<RefGridContainer />
 
 	<IconSet title="Shape">
 		<TestIcon title="Default">

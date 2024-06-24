@@ -10,7 +10,8 @@
 	y2="{pos}.5"
 	stroke="RebeccaPurple"
 	stroke-width="0.15"
-	stroke-dasharray="0.125" />
+	stroke-dasharray="0.125"
+	class="p45-ref-grid-guideline" />
 
 <line
 	y1="0.5"
@@ -19,4 +20,5 @@
 	x2="{pos}.5"
 	stroke="RebeccaPurple"
 	stroke-width="0.15"
-	stroke-dasharray="0.125" />
+	stroke-dasharray="0.125"
+	class="p45-ref-grid-guideline" />

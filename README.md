@@ -88,25 +88,38 @@ Creates a referencable mask to cut out shapes in other shapes.
 />
 ```
 
-### `<ReferenceGrid>`
+### `<RefGrid>`
 
 ```svelte
 <script>
 	// An instance of the P45 class.
 	export let p45
 
-	// The selected node object.
-	export let selected = { x: P45.center, y: P45.center }
+	// The selected node.
+	export let selected
+
+	// The selected node.
+	export let selected = Grid.centerNode
 
 	// P45 instance used to size the icon and parse nodes.
 	setContext("p45", ...)
+
+	// Readable store for communicating the points.
+	setContext("p45-ref-grid-points-store", ...)
+
+	// Writable store for controlling grid features.
+	setContext("p45-ref-grid-control-store", ...)
+
+	// Derived store for controlling grid features.
+	setContext("p45-ref-grid-selected-store", ...)
 </script>
 ```
 
 ```svelte
-<ReferenceGrid
+<RefGrid
 	p45
-	selected={{ x: P45.center, y: P45.center }}
+	selected
+	selected={Grid.centerNode}
 />
 ```
 
