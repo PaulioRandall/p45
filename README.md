@@ -26,13 +26,18 @@ Creates a circle from a center origin and radius.
 	// Circle radius.
 	export let radius = P45.center-1
 </script>
+
+<!-- Animation and other inner elements. -->
+<slot />
 ```
 
 ```svelte
 <Circle
 	origin={P45.centerNode}
 	radius={P45.center-1}
-/>
+>
+	<div />
+</Circle>
 ```
 
 ### `<Icon>`
@@ -129,7 +134,14 @@ Creates a regular polygon from an origin center point, number of edges,
 and radius to a vertex.
 
 ```svelte
-<RegularPolygon />
+<!-- Animation and other inner elements. -->
+<slot />
+```
+
+```svelte
+<RegularPolygon>
+	<div />
+</RegularPolygon>
 ```
 
 ### `<Shape>`
@@ -150,6 +162,9 @@ Creates a shape from three or more points.
 	// Origin to use for transforms.
 	export let origin = P45.centerNode
 </script>
+
+<!-- Animation and other inner elements. -->
+<slot />
 ```
 
 ```svelte
@@ -158,7 +173,9 @@ Creates a shape from three or more points.
 	mask
 	transforms={/* Does nothing */}
 	origin={P45.centerNode}
-/>
+>
+	<div />
+</Shape>
 ```
 
 ### `<Transform>`

@@ -8,19 +8,19 @@
 					x,
 					y,
 					pos: {
-						x: x,
-						y: y,
+						x: x + 1,
+						y: y + 1,
 					},
 					hitBoxPos: {
-						x: x,
-						y: y,
-					},
-					dotPos: {
 						x: x + 0.5,
 						y: y + 0.5,
 					},
+					dotPos: {
+						x: x + 1,
+						y: y + 1,
+					},
 					textPos: {
-						x: x + 0.5,
+						x: x + 1,
 						y: y + 0.08,
 					},
 					node: p45.nodeOf(x, y),

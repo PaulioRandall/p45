@@ -12,8 +12,8 @@
 		$controlStore.guidelinesEnabled = !$controlStore.guidelinesEnabled
 	}
 
-	const toggleNodeNames = () => {
-		$controlStore.nodeNamesEnabled = !$controlStore.nodeNamesEnabled
+	const toggleAxis = () => {
+		$controlStore.axisEnabled = !$controlStore.axisEnabled
 	}
 
 	const copyText = (event) => {
@@ -42,7 +42,7 @@
 	<input type="checkbox" bind:checked={$controlStore.guidelinesEnabled} />
 </RefGridButton>
 
-<RefGridButton on:click={toggleNodeNames}>
-	Node names
-	<input type="checkbox" bind:checked={$controlStore.nodeNamesEnabled} />
+<RefGridButton on:click={toggleAxis}>
+	Axis
+	<input type="checkbox" bind:checked={$controlStore.axisEnabled} />
 </RefGridButton>

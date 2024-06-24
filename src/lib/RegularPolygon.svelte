@@ -39,4 +39,9 @@
 	const points = rp.generatePath(origin, sides, radius, rotate)
 </script>
 
-<polygon {...$$restProps} {points} />
+<polygon {...$$restProps} {points}>
+	<!--@slot
+		Animation and other inner elements.
+	-->
+	<slot />
+</polygon>

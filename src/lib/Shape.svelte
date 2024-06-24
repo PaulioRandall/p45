@@ -50,4 +50,9 @@
 	transform-origin={parseOrigin()}
 	mask="url(#{mask})"
 	d={p45.parseDrawCommands(draw)}
-	transform={p45.parseTransformCommands(transforms)} />
+	transform={p45.parseTransformCommands(transforms)}>
+	<!--@slot
+		Animation and other inner elements.
+	-->
+	<slot />
+</path>

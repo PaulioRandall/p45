@@ -94,6 +94,10 @@ export default class Grid {
 		return Grid.nodeOf(x, y)
 	}
 
+	numberToAlpha(n) {
+		return Grid.numberToAlpha(n)
+	}
+
 	static parseNode(node) {
 		const n = splitNode(node)
 
@@ -109,6 +113,10 @@ export default class Grid {
 
 	static nodeOf(x, y) {
 		return numberToAlpha(x) + y
+	}
+
+	static numberToAlpha(n) {
+		return numberToAlpha(n)
 	}
 }
 

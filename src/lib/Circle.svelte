@@ -24,4 +24,9 @@
 	const cxy = p45.parseNode(origin)
 </script>
 
-<circle {...$$restProps} cx={cxy.x} cy={cxy.y} r={radius} />
+<circle {...$$restProps} cx={cxy.x} cy={cxy.y} r={radius}>
+	<!--@slot
+		Animation and other inner elements.
+	-->
+	<slot />
+</circle>
