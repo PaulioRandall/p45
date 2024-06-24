@@ -1,5 +1,6 @@
 <script>
 	import { getContext } from 'svelte'
+	import { fade } from 'svelte/transition'
 	import RefGridButton from './RefGridButton.svelte'
 
 	const selectedStore = getContext('p45-ref-grid-selected-store')
@@ -16,27 +17,35 @@
 
 		if (buttonName === 'left') {
 			leftButton = true
-			setTimeout(() => (leftButton = false), 2500)
+			setTimeout(() => (leftButton = false), 1500)
 		} else {
 			rightButton = true
-			setTimeout(() => (rightButton = false), 2500)
+			setTimeout(() => (rightButton = false), 1500)
 		}
 	}
 </script>
 
-<div>
+<div class="p45-ref-grid-copy-button-container">
 	<RefGridButton on:click={newTextCopier('left')}>
 		{$selectedStore.node}
 	</RefGridButton>
 	{#if leftButton}
-		Copied
+		<span transition:fade={{ duration: 1000 }}> Copied </span>
 	{/if}
 </div>
-<div>
+<div class="p45-ref-grid-copy-button-container">
 	{#if rightButton}
-		Copied
+		<span transition:fade={{ duration: 1000 }}> Copied </span>
 	{/if}
 	<RefGridButton on:click={newTextCopier('right')}>
 		{$selectedStore.x}:{$selectedStore.y}
 	</RefGridButton>
 </div>
+
+<style>
+	.p45-ref-grid-copy-button-container {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+</style>

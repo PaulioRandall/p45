@@ -36,6 +36,8 @@
 	aria-hidden="true"
 	stroke="white"
 	fill="transparent"
+	stroke-linecap="round"
+	stroke-linejoin="round"
 	{...$$restProps}>
 	{#if title}
 		<title>{title}</title>

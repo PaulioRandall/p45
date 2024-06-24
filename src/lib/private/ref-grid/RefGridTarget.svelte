@@ -46,15 +46,15 @@
 	class="p45-ref-grid-selected-guideline" />
 
 <rect
-	x={$selectedStore.hitBoxPos.x - 0.25}
-	y={$selectedStore.hitBoxPos.y - 0.25}
-	width="1.5"
-	height="1.5"
+	x={$selectedStore.hitBoxPos.x - 0.125}
+	y={$selectedStore.hitBoxPos.y - 0.125}
+	width="1.25"
+	height="1.25"
 	rx="1"
 	fill="transparent"
 	stroke="crimson"
 	stroke-width="0.16"
-	stroke-dasharray="0.16 0.314"
+	stroke-dasharray="0.17 0.314"
 	class="p45-ref-grid-node-selected">
 	<animateTransform
 		attributeName="transform"
