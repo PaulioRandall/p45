@@ -1,14 +1,24 @@
 <script>
 	import RefGridControls from './RefGridControls.svelte'
 	import RefGridInfo from './RefGridInfo.svelte'
+
+	export let selected
+	export let pointsEnabled
+	export let guidelinesEnabled
+	export let targetEnabled
+	export let axisEnabled
 </script>
 
 <div class="p45-ref-grid-header">
 	<div class="p45-ref-grid-header-row">
-		<RefGridControls />
+		<RefGridControls
+			bind:pointsEnabled
+			bind:guidelinesEnabled
+			bind:targetEnabled
+			bind:axisEnabled />
 	</div>
 	<div class="p45-ref-grid-header-row">
-		<RefGridInfo />
+		<RefGridInfo {selected} />
 	</div>
 </div>
 

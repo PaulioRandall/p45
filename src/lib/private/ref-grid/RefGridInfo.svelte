@@ -1,9 +1,8 @@
 <script>
-	import { getContext } from 'svelte'
 	import { fade } from 'svelte/transition'
 	import RefGridButton from './RefGridButton.svelte'
 
-	const selectedStore = getContext('p45-ref-grid-selected-store')
+	export let selected
 
 	let leftButton = false
 	let rightButton = false
@@ -25,22 +24,24 @@
 	}
 </script>
 
-<div class="p45-ref-grid-copy-button-container">
-	<RefGridButton on:click={newTextCopier('left')}>
-		{$selectedStore.node}
-	</RefGridButton>
-	{#if leftButton}
-		<span transition:fade={{ duration: 1000 }}> Copied </span>
-	{/if}
-</div>
-<div class="p45-ref-grid-copy-button-container">
-	{#if rightButton}
-		<span transition:fade={{ duration: 1000 }}> Copied </span>
-	{/if}
-	<RefGridButton on:click={newTextCopier('right')}>
-		{$selectedStore.x}:{$selectedStore.y}
-	</RefGridButton>
-</div>
+{#if selected}
+	<div class="p45-ref-grid-copy-button-container">
+		<RefGridButton on:click={newTextCopier('left')}>
+			{selected.node}
+		</RefGridButton>
+		{#if leftButton}
+			<span transition:fade={{ duration: 1000 }}> Copied </span>
+		{/if}
+	</div>
+	<div class="p45-ref-grid-copy-button-container">
+		{#if rightButton}
+			<span transition:fade={{ duration: 1000 }}> Copied </span>
+		{/if}
+		<RefGridButton on:click={newTextCopier('right')}>
+			{selected.x}:{selected.y}
+		</RefGridButton>
+	</div>
+{/if}
 
 <style>
 	.p45-ref-grid-copy-button-container {

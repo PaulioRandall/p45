@@ -5,7 +5,10 @@
 		Creates a circle from a center origin and radius.
 	*/
 
-	const p45 = getContext('p45')
+	//@prop p45
+	// P45 instance to use as grid and context.
+	// @default getContext('p45')
+	export let p45 = getContext('p45')
 
 	//@prop origin
 	// Circle center point.

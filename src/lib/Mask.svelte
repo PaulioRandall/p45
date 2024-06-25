@@ -5,7 +5,10 @@
 		Creates a referencable mask to cut out shapes in other shapes.
 	*/
 
-	const p45 = getContext('p45')
+	//@prop p45
+	// P45 instance to use as grid and context.
+	// @default getContext('p45')
+	export let p45 = getContext('p45')
 
 	//@prop id
 	// Unique ID to reference the mask.

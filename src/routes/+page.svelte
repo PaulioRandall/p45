@@ -13,7 +13,6 @@
 
 <main>
 	<RefGridContainer />
-
 	<IconSet title="Shape">
 		<TestIcon title="Default">
 			<Shape />

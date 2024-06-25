@@ -1,19 +1,25 @@
 <script>
-	import { getContext } from 'svelte'
 	import RefGridButton from './RefGridButton.svelte'
 
-	const controlStore = getContext('p45-ref-grid-control-store')
+	export let pointsEnabled
+	export let guidelinesEnabled
+	export let targetEnabled
+	export let axisEnabled
 
 	const togglePoints = () => {
-		$controlStore.pointsEnabled = !$controlStore.pointsEnabled
+		pointsEnabled = !pointsEnabled
 	}
 
 	const toggleGuidelines = () => {
-		$controlStore.guidelinesEnabled = !$controlStore.guidelinesEnabled
+		guidelinesEnabled = !guidelinesEnabled
+	}
+
+	const toggleTarget = () => {
+		targetEnabled = !targetEnabled
 	}
 
 	const toggleAxis = () => {
-		$controlStore.axisEnabled = !$controlStore.axisEnabled
+		axisEnabled = !axisEnabled
 	}
 
 	const copyText = (event) => {
@@ -34,15 +40,20 @@
 
 <RefGridButton on:click={togglePoints}>
 	Points
-	<input type="checkbox" bind:checked={$controlStore.pointsEnabled} />
+	<input type="checkbox" bind:checked={pointsEnabled} />
 </RefGridButton>
 
 <RefGridButton on:click={toggleGuidelines}>
 	Guidelines
-	<input type="checkbox" bind:checked={$controlStore.guidelinesEnabled} />
+	<input type="checkbox" bind:checked={guidelinesEnabled} />
+</RefGridButton>
+
+<RefGridButton on:click={toggleTarget}>
+	Target
+	<input type="checkbox" bind:checked={targetEnabled} />
 </RefGridButton>
 
 <RefGridButton on:click={toggleAxis}>
 	Axis
-	<input type="checkbox" bind:checked={$controlStore.axisEnabled} />
+	<input type="checkbox" bind:checked={axisEnabled} />
 </RefGridButton>

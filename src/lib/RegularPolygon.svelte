@@ -7,7 +7,10 @@
 		and radius to a vertex.
 	*/
 
-	const p45 = getContext('p45')
+	//@prop p45
+	// P45 instance to use as grid and context.
+	// @default getContext('p45')
+	export let p45 = getContext('p45')
 
 	//p24.p.let.o: Alias for start.
 	//p24.p.let.origin: Origin node representing the center of the polygon.

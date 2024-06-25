@@ -5,7 +5,10 @@
 		Creates a group for simple transformations.
 	*/
 
-	const p45 = getContext('p45')
+	//@prop p45
+	// P45 instance to use as grid and context.
+	// @default getContext('p45')
+	export let p45 = getContext('p45')
 
 	//@prop transforms
 	// Either an array off commands or a line separated list of commands.

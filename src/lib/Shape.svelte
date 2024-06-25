@@ -5,7 +5,10 @@
 		Creates a shape from three or more points.
 	*/
 
-	const p45 = getContext('p45')
+	//@prop p45
+	// P45 instance to use as grid and context.
+	// @default getContext('p45')
+	export let p45 = getContext('p45')
 
 	//@prop commands
 	// Either an array off commands or a line separated list of commands.
@@ -34,7 +37,7 @@
 	// @default P45.centerNode
 	export let origin = p45.centerNode
 
-	const parseOrigin = () => {
+	const parseOrigin = (origin) => {
 		if (origin === 'center') {
 			origin = p45.centerNode
 		}
@@ -42,15 +45,33 @@
 		const xy = p45.parseNode(origin)
 		return `${xy.x} ${xy.y}`
 	}
+
+	const tryCatch = (f) => {
+		try {
+			f()
+		} catch (err) {
+			console.error(err)
+		}
+	}
+
+	let d = ''
+	let transform = ''
+	let transformOrigin = ''
+
+	$: tryCatch(() => (d = p45.parseDrawCommands(draw)))
+	$: tryCatch(() => (transform = p45.parseTransformCommands(transforms)))
+	$: tryCatch(() => (transformOrigin = parseOrigin(origin)))
 </script>
 
 <path
 	stroke="currentColor"
+	stroke-linecap="round"
+	stroke-linejoin="round"
 	{...$$restProps}
-	transform-origin={parseOrigin()}
+	transform-origin={transformOrigin}
 	mask="url(#{mask})"
-	d={p45.parseDrawCommands(draw)}
-	transform={p45.parseTransformCommands(transforms)}>
+	{d}
+	{transform}>
 	<!--@slot
 		Animation and other inner elements.
 	-->

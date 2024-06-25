@@ -7,21 +7,13 @@
 				points.push({
 					x,
 					y,
-					pos: {
+					center: {
 						x: x + 1,
 						y: y + 1,
 					},
-					hitBoxPos: {
+					topLeft: {
 						x: x + 0.5,
 						y: y + 0.5,
-					},
-					dotPos: {
-						x: x + 1,
-						y: y + 1,
-					},
-					textPos: {
-						x: x + 1,
-						y: y + 0.08,
 					},
 					node: p45.nodeOf(x, y),
 				})
@@ -34,14 +26,18 @@
 
 <script>
 	import { setContext } from 'svelte'
-	import { writable, readable } from 'svelte/store'
 
 	import RefGridHeader from './private/ref-grid/RefGridHeader.svelte'
-	import RegGridSvg from './private/ref-grid/RefGridSvg.svelte'
+	import RefGridPoints from './private/ref-grid/RefGridPoints.svelte'
+	import RefGridGuidelines from './private/ref-grid/RefGridGuidelines.svelte'
+	import RefGridAxis from './private/ref-grid/RefGridAxis.svelte'
+	import RefGridHitboxes from './private/ref-grid/RefGridHitboxes.svelte'
+	import RefGridTarget from './private/ref-grid/RefGridTarget.svelte'
 
 	//@prop p45
-	// An instance of the P45 class.
-	export let p45
+	// P45 instance to use as grid and context.
+	// @default getContext('p45')
+	export let p45 = getContext('p45')
 
 	//@prop selected
 	// The selected node.
@@ -54,34 +50,54 @@
 		return p.x === p45.center && p.y === p45.center
 	})
 
-	const pointsStore = readable(points)
-	const selectedStore = writable(null)
-	$: selectedStore.set(selected)
-
-	const controlStore = writable({
-		pointsEnabled: true,
-		guidelinesEnabled: true,
-		nodeNamesEnabled: false,
-	})
+	let pointsEnabled = true
+	let guidelinesEnabled = true
+	let targetEnabled = true
+	let axisEnabled = true
 
 	//@ctx p45
 	// P45 instance used to size the icon and parse nodes.
 	setContext('p45', p45)
-
-	//@ctx p45-ref-grid-points-store
-	// Readable store for communicating the points.
-	setContext('p45-ref-grid-points-store', pointsStore)
-
-	//@ctx p45-ref-grid-control-store
-	// Writable store for controlling grid features.
-	setContext('p45-ref-grid-control-store', controlStore)
-
-	//@ctx p45-ref-grid-selected-store
-	// Derived store for controlling grid features.
-	setContext('p45-ref-grid-selected-store', selectedStore)
 </script>
 
 <div class="p45-ref-grid">
-	<RefGridHeader />
-	<RegGridSvg />
+	<RefGridHeader
+		{selected}
+		bind:pointsEnabled
+		bind:guidelinesEnabled
+		bind:targetEnabled
+		bind:axisEnabled />
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		viewBox="0 0 {p45.size + 2} {p45.size + 2}"
+		preserveAspectRatio="xMidYMid"
+		aria-hidden="true"
+		stroke="white"
+		fill="transparent"
+		class="p45-ref-grid-svg">
+		<g stroke="transparent" fill="darkgrey" class="p45-ref-grid-nodes">
+			{#if guidelinesEnabled}
+				<RefGridGuidelines {p45} {points} />
+			{/if}
+
+			{#if axisEnabled}
+				<RefGridAxis {p45} {points} />
+			{/if}
+
+			{#if pointsEnabled}
+				<RefGridPoints {points} />
+			{/if}
+
+			<g transform="translate(1,1)">
+				<slot />
+			</g>
+
+			<RefGridHitboxes {points} bind:selected />
+
+			{#if targetEnabled}
+				<RefGridTarget {p45} {selected} />
+			{/if}
+		</g>
+	</svg>
 </div>
