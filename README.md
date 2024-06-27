@@ -101,32 +101,6 @@ Creates a referencable mask to cut out shapes in other shapes.
 />
 ```
 
-### `<RefGrid>`
-
-```svelte
-<script>
-	// P45 instance to use as grid and context.
-	export let p45 = getContext('p45')
-
-	// The selected node.
-	export let selected
-
-	// The selected node.
-	export let selected = Grid.centerNode
-
-	// P45 instance used to size the icon and parse nodes.
-	setContext("p45", ...)
-</script>
-```
-
-```svelte
-<RefGrid
-	p45={getContext('p45')}
-	selected
-	selected={Grid.centerNode}
-/>
-```
-
 ### `<RegularPolygon>`
 
 Creates a regular polygon from an origin center point, number of edges,

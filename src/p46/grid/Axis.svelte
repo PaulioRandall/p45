@@ -10,7 +10,7 @@
 			y={p.center.y - 0.1}
 			text-anchor="end"
 			dominant-baseline="middle"
-			class="p45-ref-grid-axis">
+			class="p46-ref-grid-axis">
 			{p.y}
 		</text>
 	{/if}
@@ -20,14 +20,14 @@
 			y={p.center.y - 0.5}
 			text-anchor="middle"
 			dominant-baseline="middle"
-			class="p45-ref-grid-axis">
+			class="p46-ref-grid-axis">
 			{p45.numberToAlpha(p.x)}
 		</text>
 	{/if}
 {/each}
 
 <style>
-	.p45-ref-grid-axis {
+	.p46-ref-grid-axis {
 		font-size: 0.6px;
 
 		user-select: none;

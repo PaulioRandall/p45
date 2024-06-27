@@ -1,5 +1,5 @@
 <script>
-	import RefGridButton from './RefGridButton.svelte'
+	import Button from './Button.svelte'
 
 	export let pointsEnabled
 	export let guidelinesEnabled
@@ -38,22 +38,22 @@
 	}
 </script>
 
-<RefGridButton on:click={togglePoints}>
+<Button on:click={togglePoints}>
 	Points
 	<input type="checkbox" bind:checked={pointsEnabled} />
-</RefGridButton>
+</Button>
 
-<RefGridButton on:click={toggleGuidelines}>
+<Button on:click={toggleGuidelines}>
 	Guidelines
 	<input type="checkbox" bind:checked={guidelinesEnabled} />
-</RefGridButton>
+</Button>
 
-<RefGridButton on:click={toggleTarget}>
+<Button on:click={toggleTarget}>
 	Target
 	<input type="checkbox" bind:checked={targetEnabled} />
-</RefGridButton>
+</Button>
 
-<RefGridButton on:click={toggleAxis}>
+<Button on:click={toggleAxis}>
 	Axis
 	<input type="checkbox" bind:checked={axisEnabled} />
-</RefGridButton>
+</Button>

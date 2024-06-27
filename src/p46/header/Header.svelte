@@ -1,6 +1,6 @@
 <script>
-	import RefGridControls from './RefGridControls.svelte'
-	import RefGridInfo from './RefGridInfo.svelte'
+	import Controls from './Controls.svelte'
+	import CoordInfo from './CoordInfo.svelte'
 
 	export let selected
 	export let pointsEnabled
@@ -9,21 +9,21 @@
 	export let axisEnabled
 </script>
 
-<div class="p45-ref-grid-header">
-	<div class="p45-ref-grid-header-row">
-		<RefGridControls
+<div class="p46-header">
+	<div class="p46-header-row">
+		<Controls
 			bind:pointsEnabled
 			bind:guidelinesEnabled
 			bind:targetEnabled
 			bind:axisEnabled />
 	</div>
-	<div class="p45-ref-grid-header-row">
-		<RefGridInfo {selected} />
+	<div class="p46-header-row">
+		<CoordInfo {selected} />
 	</div>
 </div>
 
 <style>
-	.p45-ref-grid-header {
+	.p46-header {
 		display: flex;
 		flex-direction: column;
 		margin-bottom: 1rem;
@@ -31,7 +31,7 @@
 		width: 100%;
 	}
 
-	.p45-ref-grid-header-row {
+	.p46-header-row {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;

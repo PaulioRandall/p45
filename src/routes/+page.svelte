@@ -1,5 +1,6 @@
 <script>
-	import RefGridContainer from './RefGridContainer.svelte'
+	import P46 from 'p46'
+	import P45 from '$lib/P45'
 
 	import IconSet from './IconSet.svelte'
 	import TestIcon from './TestIcon.svelte'
@@ -12,7 +13,8 @@
 </script>
 
 <main>
-	<RefGridContainer />
+	<P46 p45={new P45(24)} />
+
 	<IconSet title="Shape">
 		<TestIcon title="Default">
 			<Shape />

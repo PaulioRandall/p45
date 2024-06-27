@@ -13,7 +13,7 @@
 			stroke="crimson"
 			stroke-width="0.075"
 			stroke-dasharray="0 0.25 0.25"
-			class="p45-ref-grid-selected-guideline" />
+			class="p46-ref-grid-target-line" />
 	{/if}
 
 	{#if selected.center.x <= p45.size}
@@ -25,7 +25,7 @@
 			stroke="crimson"
 			stroke-width="0.075"
 			stroke-dasharray="0 0.25 0.25"
-			class="p45-ref-grid-selected-guideline" />
+			class="p46-ref-grid-target-line" />
 	{/if}
 
 	{#if selected.center.y > 1}
@@ -37,7 +37,7 @@
 			stroke="crimson"
 			stroke-width="0.075"
 			stroke-dasharray="0 0.25 0.25"
-			class="p45-ref-grid-selected-guideline" />
+			class="p46-ref-grid-target-line" />
 	{/if}
 
 	{#if selected.center.y <= p45.size}
@@ -49,7 +49,7 @@
 			stroke="crimson"
 			stroke-width="0.075"
 			stroke-dasharray="0 0.25 0.25"
-			class="p45-ref-grid-selected-guideline" />
+			class="p46-ref-grid-target-line" />
 	{/if}
 
 	<rect
@@ -62,7 +62,7 @@
 		stroke="crimson"
 		stroke-width="0.16"
 		stroke-dasharray="0.17 0.314"
-		class="p45-ref-grid-selected-target">
+		class="p46-ref-grid-target-circle">
 		<animateTransform
 			attributeName="transform"
 			type="rotate"

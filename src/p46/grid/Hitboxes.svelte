@@ -12,12 +12,12 @@
 		fill="transparent"
 		stroke="transparent"
 		stroke-width="0.1"
-		class="p45-ref-grid-hitbox"
+		class="p46-ref-grid-hitbox"
 		on:click={() => (selected = p)} />
 {/each}
 
 <style>
-	.p45-ref-grid-hitbox {
+	.p46-ref-grid-hitbox {
 		cursor: pointer;
 	}
 </style>

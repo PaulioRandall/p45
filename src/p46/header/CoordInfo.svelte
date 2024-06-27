@@ -1,6 +1,6 @@
 <script>
 	import { fade } from 'svelte/transition'
-	import RefGridButton from './RefGridButton.svelte'
+	import Button from './Button.svelte'
 
 	export let selected
 
@@ -25,26 +25,26 @@
 </script>
 
 {#if selected}
-	<div class="p45-ref-grid-copy-button-container">
-		<RefGridButton on:click={newTextCopier('left')}>
+	<div class="p46-copy-button-container">
+		<Button on:click={newTextCopier('left')}>
 			{selected.node}
-		</RefGridButton>
+		</Button>
 		{#if leftButton}
 			<span transition:fade={{ duration: 1000 }}> Copied </span>
 		{/if}
 	</div>
-	<div class="p45-ref-grid-copy-button-container">
+	<div class="p46-copy-button-container">
 		{#if rightButton}
 			<span transition:fade={{ duration: 1000 }}> Copied </span>
 		{/if}
-		<RefGridButton on:click={newTextCopier('right')}>
+		<Button on:click={newTextCopier('right')}>
 			{selected.x}:{selected.y}
-		</RefGridButton>
+		</Button>
 	</div>
 {/if}
 
 <style>
-	.p45-ref-grid-copy-button-container {
+	.p46-copy-button-container {
 		display: flex;
 		align-items: center;
 		gap: 1rem;

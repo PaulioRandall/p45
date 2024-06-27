@@ -11,7 +11,7 @@
 	stroke="RebeccaPurple"
 	stroke-width="0.15"
 	stroke-dasharray="0.125"
-	class="p45-ref-grid-guideline" />
+	class="p46-ref-grid-guideline" />
 
 <line
 	y1="1"
@@ -21,4 +21,4 @@
 	stroke="RebeccaPurple"
 	stroke-width="0.15"
 	stroke-dasharray="0.125"
-	class="p45-ref-grid-guideline" />
+	class="p46-ref-grid-guideline" />
