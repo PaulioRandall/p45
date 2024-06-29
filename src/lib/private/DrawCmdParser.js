@@ -108,10 +108,10 @@ export default class DrawCmdParser {
 		params[5] = to.x
 		params[6] = to.y
 
-		r.expectSequence('with', 'x', 'radius')
+		r.expectSequence('with', 'radius')
 		params[0] = r.expectNumber()
 
-		r.expectSequence('with', 'y', 'radius')
+		r.expect('and')
 		params[1] = r.expectNumber()
 
 		this.parseOptionllyArcParams(r, params)

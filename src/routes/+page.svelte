@@ -69,15 +69,15 @@
 			<Shape
 				draw="
 				move to H6
-				arc to V16 with x radius 6 with y radius 8 with rotation 60
+				arc to V16 with radius 6 and 8 with rotation 60
 			" />
 		</TestIcon>
 		<TestIcon title="Heart">
 			<Shape
 				draw="
 				move to D13
-				arc to M3 with x radius 5 with y radius 5 and is sweeping
-				arc to V13 with x radius 5 with y radius 5 and is sweeping
+				arc to M3 with radius 5 and 5 and is sweeping
+				arc to V13 with radius 5 and 5 and is sweeping
 				line to M22
 				line to D13
 				close

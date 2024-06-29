@@ -176,7 +176,7 @@ describe('DrawCmdParser.js', () => {
 		})
 
 		describe('arc', () => {
-			test(`"arc to D3 with x radius 3 with y radius 2"`, () => {
+			test(`"arc to D3 with radius 3 and 2"`, () => {
 				const grid = new Grid(24)
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
@@ -184,19 +184,16 @@ describe('DrawCmdParser.js', () => {
 					'to',
 					'D3',
 					'with',
-					'x',
 					'radius',
 					'3',
-					'with',
-					'y',
-					'radius',
+					'and',
 					'2',
 				])
 
 				expect(act).toEqual('A 3 2 0 0 0 3 3')
 			})
 
-			test(`"arc to D3 with x radius 3 with y radius 2 with rotation 45"`, () => {
+			test(`"arc to D3 with radius 3 and 2 with rotation 45"`, () => {
 				const grid = new Grid(24)
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
@@ -204,12 +201,9 @@ describe('DrawCmdParser.js', () => {
 					'to',
 					'D3',
 					'with',
-					'x',
 					'radius',
 					'3',
-					'with',
-					'y',
-					'radius',
+					'and',
 					'2',
 					'with',
 					'rotation',
@@ -219,7 +213,7 @@ describe('DrawCmdParser.js', () => {
 				expect(act).toEqual('A 3 2 45 0 0 3 3')
 			})
 
-			test(`"arc to D3 with x radius 3 with y radius 2 with rotation 45"`, () => {
+			test(`"arc to D3 with radius 3 and 2 with rotation 45"`, () => {
 				const grid = new Grid(24)
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
@@ -227,12 +221,9 @@ describe('DrawCmdParser.js', () => {
 					'to',
 					'D3',
 					'with',
-					'x',
 					'radius',
 					'3',
-					'with',
-					'y',
-					'radius',
+					'and',
 					'2',
 					'with',
 					'rotation',
@@ -242,7 +233,7 @@ describe('DrawCmdParser.js', () => {
 				expect(act).toEqual('A 3 2 45 0 0 3 3')
 			})
 
-			test(`"arc to D3 with x radius 3 with y radius 2 and is large and is sweeping"`, () => {
+			test(`"arc to D3 with radius 3 and 2 and is large and is sweeping"`, () => {
 				const grid = new Grid(24)
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
@@ -250,12 +241,9 @@ describe('DrawCmdParser.js', () => {
 					'to',
 					'D3',
 					'with',
-					'x',
 					'radius',
 					'3',
-					'with',
-					'y',
-					'radius',
+					'and',
 					'2',
 					'and',
 					'is',
