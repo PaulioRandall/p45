@@ -122,13 +122,14 @@ export default class DrawCmdParser {
 
 	parseOptionllyArcParams(r, params) {
 		while (!r.empty()) {
-			if (r.accept('with')) {
-				r.expect('rotation')
+			r.expect('and')
+
+			if (r.accept('rotation')) {
 				params[2] = r.expectNumber()
 				continue
 			}
 
-			r.expectSequence('and', 'is')
+			r.expect('is')
 
 			if (r.accept('large')) {
 				params[3] = 1

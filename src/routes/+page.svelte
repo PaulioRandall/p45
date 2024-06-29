@@ -69,7 +69,7 @@
 			<Shape
 				draw="
 				move to H6
-				arc to V16 with radius 6 and 8 with rotation 60
+				arc to V16 with radius 6 and 8 and rotation 60
 			" />
 		</TestIcon>
 		<TestIcon title="Heart">

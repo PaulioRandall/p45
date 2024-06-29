@@ -193,7 +193,7 @@ describe('DrawCmdParser.js', () => {
 				expect(act).toEqual('A 3 2 0 0 0 3 3')
 			})
 
-			test(`"arc to D3 with radius 3 and 2 with rotation 45"`, () => {
+			test(`"arc to D3 with radius 3 and 2 and rotation 45"`, () => {
 				const grid = new Grid(24)
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
@@ -205,7 +205,7 @@ describe('DrawCmdParser.js', () => {
 					'3',
 					'and',
 					'2',
-					'with',
+					'and',
 					'rotation',
 					'45',
 				])
@@ -213,7 +213,7 @@ describe('DrawCmdParser.js', () => {
 				expect(act).toEqual('A 3 2 45 0 0 3 3')
 			})
 
-			test(`"arc to D3 with radius 3 and 2 with rotation 45"`, () => {
+			test(`"arc to D3 with radius 3 and 2 and rotation 45"`, () => {
 				const grid = new Grid(24)
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
@@ -225,7 +225,7 @@ describe('DrawCmdParser.js', () => {
 					'3',
 					'and',
 					'2',
-					'with',
+					'and',
 					'rotation',
 					'45',
 				])
