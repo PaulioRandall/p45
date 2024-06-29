@@ -1,13 +1,12 @@
 import DrawCmdParser from './DrawCmdParser.js'
 import Grid from './Grid.js'
 
-const grid = new Grid(24)
-
 describe('DrawCmdParser.js', () => {
 	describe('parse', () => {
 		describe('move', () => {
 			test(`"move to D3"`, () => {
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'move', //
 					'to',
@@ -22,7 +21,8 @@ describe('DrawCmdParser.js', () => {
 
 		describe('line', () => {
 			test(`"line to D3"`, () => {
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'line', //
 					'to',
@@ -35,7 +35,8 @@ describe('DrawCmdParser.js', () => {
 
 		describe('quadratic curve', () => {
 			test(`"quad curve to D3 control with D0"`, () => {
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'quad', //
 					'curve',
@@ -50,7 +51,8 @@ describe('DrawCmdParser.js', () => {
 			})
 
 			test(`"quadratic curve to D3 control with D0"`, () => {
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'quadratic', //
 					'curve',
@@ -67,7 +69,8 @@ describe('DrawCmdParser.js', () => {
 
 		describe('symmetric quadratic curve', () => {
 			test(`"quadratic curve to D3"`, () => {
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'quadratic', //
 					'curve',
@@ -79,7 +82,8 @@ describe('DrawCmdParser.js', () => {
 			})
 
 			test(`"quad curve to D3"`, () => {
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'quad', //
 					'curve',
@@ -93,7 +97,8 @@ describe('DrawCmdParser.js', () => {
 
 		describe('cubic curve', () => {
 			test(`"curve to D3 control with C2 and D0"`, () => {
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'curve', //
 					'to',
@@ -111,7 +116,8 @@ describe('DrawCmdParser.js', () => {
 
 		describe('symmetric quadratic cubic curve', () => {
 			test(`"curve to D3 control with D0"`, () => {
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'curve', //
 					'to',
@@ -127,7 +133,7 @@ describe('DrawCmdParser.js', () => {
 
 		describe('line/curve to start', () => {
 			test(`"line to start"`, () => {
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
 				cp.start = { x: 1, y: 1 }
 
 				const act = cp.parse([
@@ -142,8 +148,8 @@ describe('DrawCmdParser.js', () => {
 
 		describe('line/curve to center', () => {
 			test(`"line to center"`, () => {
-				const grid = new Grid(24)
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'line', //
 					'to',
@@ -154,19 +160,10 @@ describe('DrawCmdParser.js', () => {
 			})
 		})
 
-		describe('close path', () => {
-			test(`"close path"`, () => {
-				const cp = new DrawCmdParser(grid)
-				const act = cp.parse([
-					'close', //
-					'path',
-				])
+		describe('close', () => {
+			test(`"close"`, () => {
+				const cp = new DrawCmdParser(new Grid(24))
 
-				expect(act).toEqual('Z')
-			})
-
-			test(`"close path"`, () => {
-				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
 					'close', //
 				])
@@ -177,8 +174,8 @@ describe('DrawCmdParser.js', () => {
 
 		describe('arc', () => {
 			test(`"arc to D3 with radius 3 and 2"`, () => {
-				const grid = new Grid(24)
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'arc', //
 					'to',
@@ -194,8 +191,8 @@ describe('DrawCmdParser.js', () => {
 			})
 
 			test(`"arc to D3 with radius 3 and 2 and rotation 45"`, () => {
-				const grid = new Grid(24)
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'arc', //
 					'to',
@@ -214,8 +211,8 @@ describe('DrawCmdParser.js', () => {
 			})
 
 			test(`"arc to D3 with radius 3 and 2 and rotation 45"`, () => {
-				const grid = new Grid(24)
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'arc', //
 					'to',
@@ -234,8 +231,8 @@ describe('DrawCmdParser.js', () => {
 			})
 
 			test(`"arc to D3 with radius 3 and 2 and is large and is sweeping"`, () => {
-				const grid = new Grid(24)
-				const cp = new DrawCmdParser(grid)
+				const cp = new DrawCmdParser(new Grid(24))
+
 				const act = cp.parse([
 					'arc', //
 					'to',

@@ -5,11 +5,22 @@ export default class DrawCmdParser {
 		this.grid = grid
 		this.start = { x: 0, y: 0 }
 		this.pos = { x: 0, y: 0 }
+		this.history = []
 	}
 
 	parse(cmd) {
+		this.history.push(structuredClone(cmd))
 		const r = new TokenReader(cmd)
+		const result = this.parseCmd(r)
 
+		if (!r.empty()) {
+			throw new Error(`Unknown token '${r.get()}'`)
+		}
+
+		return result
+	}
+
+	parseCmd(r) {
 		if (r.is('move')) {
 			return this.parseMove(r)
 		}
@@ -34,13 +45,13 @@ export default class DrawCmdParser {
 			return this.parseArc(r)
 		}
 
-		return []
+		return ''
 	}
 
 	parseMove(r) {
 		r.expectSequence('move', 'to')
-
 		const to = this.parseNode(r)
+
 		this.start = to
 		return `M ${to.x} ${to.y}`
 	}
