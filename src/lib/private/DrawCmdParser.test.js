@@ -92,19 +92,16 @@ describe('DrawCmdParser.js', () => {
 		})
 
 		describe('cubic curve', () => {
-			test(`"curve to D3 control in with C2 control out with D0"`, () => {
+			test(`"curve to D3 control with C2 and D0"`, () => {
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
 					'curve', //
 					'to',
 					'D3',
 					'control',
-					'in',
 					'with',
 					'C2',
-					'control',
-					'out',
-					'with',
+					'and',
 					'D0',
 				])
 
@@ -113,14 +110,13 @@ describe('DrawCmdParser.js', () => {
 		})
 
 		describe('symmetric quadratic cubic curve', () => {
-			test(`"curve to D3 control out with D0"`, () => {
+			test(`"curve to D3 control with D0"`, () => {
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
 					'curve', //
 					'to',
 					'D3',
 					'control',
-					'out',
 					'with',
 					'D0',
 				])

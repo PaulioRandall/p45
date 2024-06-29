@@ -46,10 +46,10 @@
 				draw="
 				move to D3
 				line to M3
-				curve to V12 control out with V3
+				curve to V12 control with V3
 				line to V21
 				line to M21
-				curve to D12 control out with D21
+				curve to D12 control with D21
 				close
 			" />
 		</TestIcon>
@@ -57,11 +57,11 @@
 			<Shape
 				draw="
 				move to D14
-				curve to H6 control in with D6 control out with H2
-				curve to M18 control out with J18
-				curve to R6 control out with R10
-				curve to V14 control out with V6
-				curve to start control in with V24 control out with D24
+				curve to H6 control with D6 and H2
+				curve to M18 control with J18
+				curve to R6 control with R10
+				curve to V14 control with V6
+				curve to start control with V24 and D24
 				close
 			" />
 		</TestIcon>

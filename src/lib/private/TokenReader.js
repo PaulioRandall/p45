@@ -68,6 +68,12 @@ export default class TokenReader {
 		)
 	}
 
+	expectSequence(...sequence) {
+		for (const s of sequence) {
+			this.expect(s)
+		}
+	}
+
 	expectNumber() {
 		const numberPattern = /^[\-\+]?[0-9]+(\.[0-9]+)?$/
 		const tk = this.get()

@@ -38,8 +38,7 @@ export default class DrawCmdParser {
 	}
 
 	parseMove(r) {
-		r.expect('move')
-		r.expect('to')
+		r.expectSequence('move', 'to')
 
 		const to = this.parseNode(r)
 		this.start = to
@@ -48,106 +47,71 @@ export default class DrawCmdParser {
 
 	parseClose(r) {
 		r.expect('close')
-		r.accept('path')
 
 		this.pos = this.start
 		return `Z`
 	}
 
 	parseDrawLine(r) {
-		r.expect('line')
-		r.expect('to')
+		r.expectSequence('line', 'to')
 
 		const to = this.parseNode(r)
-		this.pos = to
-		return `L ${to.x} ${to.y}`
+		return this.compilePath('L', to)
 	}
 
 	parseQuadraticCurve(r) {
 		r.expect('quad', 'quadratic')
-		r.expect('curve')
-		r.expect('to')
+		r.expectSequence('curve', 'to')
 
 		const to = this.parseNode(r)
 
 		if (r.empty()) {
-			this.pos = to
-			return `T ${to.x} ${to.y}`
+			return this.compilePath('T', to)
 		}
 
 		r.expect('control')
 		r.expect('with')
 
 		const cp = this.parseNode(r)
-		this.pos = to
-		return `Q ${cp.x} ${cp.y}, ${to.x} ${to.y}`
+		return this.compilePath('Q', cp, to)
 	}
 
 	parseCubicCurve(r) {
 		r.accept('cubic')
-		r.expect('curve')
-		r.expect('to')
+		r.expectSequence('curve', 'to')
 
 		const to = this.parseNode(r)
-		const [cpIn, cpOut] = this.parseInOut(r)
 
-		if (cpIn === null && cpOut !== null) {
-			this.pos = to
-			return `S ${cpOut.x} ${cpOut.y}, ${to.x} ${to.y}`
+		r.expectSequence('control', 'with')
+
+		let cpIn = null
+		let cpOut = this.parseNode(r)
+
+		if (r.accept('and')) {
+			cpIn = cpOut
+			cpOut = this.parseNode(r)
 		}
 
-		if (cpIn !== null && cpOut !== null) {
-			this.pos = to
-			return `C ${cpIn.x} ${cpIn.y}, ${cpOut.x} ${cpOut.y}, ${to.x} ${to.y}`
+		if (cpIn === null) {
+			return this.compilePath('S', cpOut, to)
 		}
 
-		throw new Error(`Unable to determine cubic curve parameters`)
-	}
-
-	parseInOut(r) {
-		const result = [null, null]
-
-		for (let i = 0; i < 2; i++) {
-			if (!r.accept('control')) {
-				break
-			}
-
-			if (r.accept('in')) {
-				r.expect('with')
-				result[0] = this.parseNode(r)
-				continue
-			}
-
-			if (r.accept('out')) {
-				r.expect('with')
-				result[1] = this.parseNode(r)
-				continue
-			}
-
-			break
-		}
-
-		return result
+		return this.compilePath('C', cpIn, cpOut, to)
 	}
 
 	parseArc(r) {
 		// [rx, ry, ro, large, sweep, x, y]
 		const params = [0, 0, 0, 0, 0, 0, 0]
 
-		r.expect('arc')
-		r.expect('to')
+		r.expectSequence('arc', 'to')
 		const to = this.parseNode(r)
 		params[5] = to.x
 		params[6] = to.y
 
-		r.expect('with')
-		r.expect('x')
-		r.expect('radius')
+		r.expectSequence('with', 'x', 'radius')
 		params[0] = r.expectNumber()
 
-		r.expect('with')
-		r.expect('y')
-		r.expect('radius')
+		r.expectSequence('with', 'y', 'radius')
 		params[1] = r.expectNumber()
 
 		this.parseOptionllyArcParams(r, params)
@@ -164,8 +128,7 @@ export default class DrawCmdParser {
 				continue
 			}
 
-			r.expect('and')
-			r.expect('is')
+			r.expectSequence('and', 'is')
 
 			if (r.accept('large')) {
 				params[3] = 1
@@ -182,5 +145,13 @@ export default class DrawCmdParser {
 		}
 
 		return this.grid.parseNode(r.read())
+	}
+
+	compilePath(letter, ...coords) {
+		const lastIdx = coords.length - 1
+		this.pos = coords[lastIdx]
+
+		const coordStr = coords.map((c) => `${c.x} ${c.y}`)
+		return `${letter} ${coordStr.join(', ')}`
 	}
 }
