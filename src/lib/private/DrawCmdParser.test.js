@@ -34,45 +34,30 @@ describe('DrawCmdParser.js', () => {
 		})
 
 		describe('quadratic curve', () => {
-			test(`"q curve to D3 with slope D0"`, () => {
-				const cp = new DrawCmdParser(grid)
-				const act = cp.parse([
-					'q', //
-					'curve',
-					'to',
-					'D3',
-					'with',
-					'slope',
-					'D0',
-				])
-
-				expect(act).toEqual('Q 3 0, 3 3')
-			})
-
-			test(`"quad curve to D3 with slope D0"`, () => {
+			test(`"quad curve to D3 control with D0"`, () => {
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
 					'quad', //
 					'curve',
 					'to',
 					'D3',
+					'control',
 					'with',
-					'slope',
 					'D0',
 				])
 
 				expect(act).toEqual('Q 3 0, 3 3')
 			})
 
-			test(`"quadratic curve to D3 with slope D0"`, () => {
+			test(`"quadratic curve to D3 control with D0"`, () => {
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
 					'quadratic', //
 					'curve',
 					'to',
 					'D3',
+					'control',
 					'with',
-					'slope',
 					'D0',
 				])
 
@@ -107,16 +92,19 @@ describe('DrawCmdParser.js', () => {
 		})
 
 		describe('cubic curve', () => {
-			test(`"curve to D3 with slopes C2 and D0"`, () => {
+			test(`"curve to D3 control in with C2 control out with D0"`, () => {
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
 					'curve', //
 					'to',
 					'D3',
+					'control',
+					'in',
 					'with',
-					'slopes',
 					'C2',
-					'and',
+					'control',
+					'out',
+					'with',
 					'D0',
 				])
 
@@ -125,14 +113,15 @@ describe('DrawCmdParser.js', () => {
 		})
 
 		describe('symmetric quadratic cubic curve', () => {
-			test(`"curve to D3 with slope D0"`, () => {
+			test(`"curve to D3 control out with D0"`, () => {
 				const cp = new DrawCmdParser(grid)
 				const act = cp.parse([
 					'curve', //
 					'to',
 					'D3',
+					'control',
+					'out',
 					'with',
-					'slope',
 					'D0',
 				])
 

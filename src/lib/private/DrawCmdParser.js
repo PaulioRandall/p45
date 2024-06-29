@@ -22,7 +22,7 @@ export default class DrawCmdParser {
 			return this.parseDrawLine(r)
 		}
 
-		if (r.is('quadratic') || r.is('quad') || r.is('q')) {
+		if (r.is('quadratic') || r.is('quad')) {
 			return this.parseQuadraticCurve(r)
 		}
 
@@ -64,7 +64,7 @@ export default class DrawCmdParser {
 	}
 
 	parseQuadraticCurve(r) {
-		r.expect('q', 'quad', 'quadratic')
+		r.expect('quad', 'quadratic')
 		r.expect('curve')
 		r.expect('to')
 
@@ -75,8 +75,8 @@ export default class DrawCmdParser {
 			return `T ${to.x} ${to.y}`
 		}
 
+		r.expect('control')
 		r.expect('with')
-		r.expect('slope')
 
 		const cp = this.parseNode(r)
 		this.pos = to
@@ -89,30 +89,45 @@ export default class DrawCmdParser {
 		r.expect('to')
 
 		const to = this.parseNode(r)
+		const [cpIn, cpOut] = this.parseInOut(r)
 
-		r.expect('with')
+		if (cpIn === null && cpOut !== null) {
+			this.pos = to
+			return `S ${cpOut.x} ${cpOut.y}, ${to.x} ${to.y}`
+		}
 
-		if (r.accept('slope')) {
-			return this.parseCubicSymmetricCurve(r, to)
-		} else if (r.accept('slopes')) {
-			return this.parseCubicNonSymmetricCurve(r, to)
+		if (cpIn !== null && cpOut !== null) {
+			this.pos = to
+			return `C ${cpIn.x} ${cpIn.y}, ${cpOut.x} ${cpOut.y}, ${to.x} ${to.y}`
 		}
 
 		throw new Error(`Unable to determine cubic curve parameters`)
 	}
 
-	parseCubicSymmetricCurve(r, to) {
-		const cp = this.parseNode(r)
-		this.pos = to
-		return `S ${cp.x} ${cp.y}, ${to.x} ${to.y}`
-	}
+	parseInOut(r) {
+		const result = [null, null]
 
-	parseCubicNonSymmetricCurve(r, to) {
-		const cp1 = this.parseNode(r)
-		r.expect('and')
-		const cp2 = this.parseNode(r)
-		this.pos = to
-		return `C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${to.x} ${to.y}`
+		for (let i = 0; i < 2; i++) {
+			if (!r.accept('control')) {
+				break
+			}
+
+			if (r.accept('in')) {
+				r.expect('with')
+				result[0] = this.parseNode(r)
+				continue
+			}
+
+			if (r.accept('out')) {
+				r.expect('with')
+				result[1] = this.parseNode(r)
+				continue
+			}
+
+			break
+		}
+
+		return result
 	}
 
 	parseArc(r) {

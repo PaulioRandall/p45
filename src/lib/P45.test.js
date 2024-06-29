@@ -32,10 +32,10 @@ describe('P45.js', () => {
 			const act = new P45(8).parseDrawCommands(`
 				move to D3
 				line to M3
-				curve to V12 with slope V3
+				curve to V12 control out with V3
 				line to V21
 				line to M21
-				curve to D12 with slope D21
+				curve to D12 control out with D21
 				close
 			`)
 
