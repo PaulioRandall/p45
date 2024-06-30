@@ -1,5 +1,7 @@
 export default class Grid {
 	constructor(size = 24) {
+		size = Number(size)
+
 		if (size < 8) {
 			throw new Error(`Size must be 8 or more.`)
 		}
