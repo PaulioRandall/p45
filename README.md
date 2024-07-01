@@ -20,14 +20,14 @@ Creates a circle from a center origin and radius.
 
 ```svelte
 <script>
-	// P45 instance to use as grid and context.
-	export let p45 = getContext('p45')
+  // P45 instance to use as grid and context.
+  export let p45 = getContext('p45')
 
-	// Circle center point.
-	export let origin = P45.centerNode
+  // Circle center point.
+  export let origin = P45.centerNode
 
-	// Circle radius.
-	export let radius = P45.center-1
+  // Circle radius.
+  export let radius = P45.center-1
 </script>
 
 <!-- Animation and other inner elements. -->
@@ -36,11 +36,11 @@ Creates a circle from a center origin and radius.
 
 ```svelte
 <Circle
-	p45={getContext('p45')}
-	origin={P45.centerNode}
-	radius={P45.center-1}
+  p45={getContext('p45')}
+  origin={P45.centerNode}
+  radius={P45.center-1}
 >
-	<div />
+  <div />
 </Circle>
 ```
 
@@ -53,17 +53,17 @@ This means raw svg child elements maybe slotted in too.
 
 ```svelte
 <script>
-	// An instance of the P45 class.
-	export let p45 = getContext('p45')
+  // An instance of the P45 class.
+  export let p45 = getContext('p45')
 
-	// The icon's title applied using the SVG title tag.
-	export let title = ""
+  // The icon's title applied using the SVG title tag.
+  export let title = ""
 
-	// Description of the icon applied using the SVG description tag.
-	export let description = ""
+  // Description of the icon applied using the SVG description tag.
+  export let description = ""
 
-	// P45 instance used to size the icon and parse nodes.
-	setContext("p45", ...)
+  // P45 instance used to size the icon and parse nodes.
+  setContext("p45", ...)
 </script>
 
 <!-- SVG elments and components that form the icon. -->
@@ -72,11 +72,11 @@ This means raw svg child elements maybe slotted in too.
 
 ```svelte
 <Icon
-	p45={getContext('p45')}
-	title=""
-	description=""
+  p45={getContext('p45')}
+  title=""
+  description=""
 >
-	<div />
+  <div />
 </Icon>
 ```
 
@@ -86,18 +86,18 @@ Creates a referencable mask to cut out shapes in other shapes.
 
 ```svelte
 <script>
-	// P45 instance to use as grid and context.
-	export let p45 = getContext('p45')
+  // P45 instance to use as grid and context.
+  export let p45 = getContext('p45')
 
-	// Unique ID to reference the mask.
-	export let id
+  // Unique ID to reference the mask.
+  export let id
 </script>
 ```
 
 ```svelte
 <Mask
-	p45={getContext('p45')}
-	id
+  p45={getContext('p45')}
+  id
 />
 ```
 
@@ -108,8 +108,8 @@ and radius to a vertex.
 
 ```svelte
 <script>
-	// P45 instance to use as grid and context.
-	export let p45 = getContext('p45')
+  // P45 instance to use as grid and context.
+  export let p45 = getContext('p45')
 </script>
 
 <!-- Animation and other inner elements. -->
@@ -118,9 +118,9 @@ and radius to a vertex.
 
 ```svelte
 <RegularPolygon
-	p45={getContext('p45')}
+  p45={getContext('p45')}
 >
-	<div />
+  <div />
 </RegularPolygon>
 ```
 
@@ -130,20 +130,20 @@ Creates a shape from three or more points.
 
 ```svelte
 <script>
-	// P45 instance to use as grid and context.
-	export let p45 = getContext('p45')
+  // P45 instance to use as grid and context.
+  export let p45 = getContext('p45')
 
-	// Either an array off commands or a line separated list of commands.
-	export let commands = /* Simple drawing */
+  // Either an array off commands or a line separated list of commands.
+  export let commands = /* Simple drawing */
 
-	// ID of a mask cut out.
-	export let mask
+  // ID of a mask cut out.
+  export let mask
 
-	// Either an array off commands or a line separated list of commands.
-	export let transforms = /* Does nothing */
+  // Either an array off commands or a line separated list of commands.
+  export let transforms = /* Does nothing */
 
-	// Origin to use for transforms.
-	export let origin = P45.centerNode
+  // Origin to use for transforms.
+  export let origin = P45.centerNode
 </script>
 
 <!-- Animation and other inner elements. -->
@@ -152,13 +152,13 @@ Creates a shape from three or more points.
 
 ```svelte
 <Shape
-	p45={getContext('p45')}
-	commands={/* Simple drawing */}
-	mask
-	transforms={/* Does nothing */}
-	origin={P45.centerNode}
+  p45={getContext('p45')}
+  commands={/* Simple drawing */}
+  mask
+  transforms={/* Does nothing */}
+  origin={P45.centerNode}
 >
-	<div />
+  <div />
 </Shape>
 ```
 
@@ -168,14 +168,14 @@ Creates a group for simple transformations.
 
 ```svelte
 <script>
-	// P45 instance to use as grid and context.
-	export let p45 = getContext('p45')
+  // P45 instance to use as grid and context.
+  export let p45 = getContext('p45')
 
-	// Either an array off commands or a line separated list of commands.
-	export let transforms = /* Does nothing */
+  // Either an array off commands or a line separated list of commands.
+  export let transforms = /* Does nothing */
 
-	// Origin to use for transforms.
-	export let origin = P45.centerNode
+  // Origin to use for transforms.
+  export let origin = P45.centerNode
 </script>
 
 <!-- Components and elements to transform. -->
@@ -184,10 +184,10 @@ Creates a group for simple transformations.
 
 ```svelte
 <Transform
-	p45={getContext('p45')}
-	transforms={/* Does nothing */}
-	origin={P45.centerNode}
+  p45={getContext('p45')}
+  transforms={/* Does nothing */}
+  origin={P45.centerNode}
 >
-	<div />
+  <div />
 </Transform>
 ```
