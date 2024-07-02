@@ -21,12 +21,10 @@
 		y="0"
 		width={p45.size}
 		height={p45.size}
-		fill="white"
+		stroke-width="0"
 		{...$$restProps} />
-	<g stroke="black" fill="black">
-		<!--@slot
+	<!--@slot
 			Elments and components that form the hole in the referencing shape.
 		-->
-		<slot />
-	</g>
+	<slot />
 </mask>
