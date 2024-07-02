@@ -1,15 +1,24 @@
 <svg
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="24"
-  height="24"
+  width="300"
+  height="300"
   preserveAspectRatio="xMidYMid"
   aria-hidden="true"
   stroke-linecap="round"
   stroke-linejoin="round"
   stroke-width="1"
-  stroke="currentColor"
+  stroke="white"
   fill="transparent">
+    <path
+      stroke="black"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M 4 20
+        L 20 20
+        L 12 4
+        Z" />
     <path
       stroke-linecap="round"
       stroke-linejoin="round"
