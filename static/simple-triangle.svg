@@ -1,29 +1,29 @@
 <svg
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="300"
-  height="300"
+  width="240"
+  height="240"
   preserveAspectRatio="xMidYMid"
   aria-hidden="true"
   stroke-linecap="round"
   stroke-linejoin="round"
-  stroke-width="1"
+  stroke-width="10"
   stroke="white"
   fill="transparent">
     <path
       stroke="black"
-      stroke-width="1.5"
+      stroke-width="15"
       stroke-linecap="round"
       stroke-linejoin="round"
-      d="M 4 20
-        L 20 20
-        L 12 4
+      d="M 40 200
+        L 200 200
+        L 120 40
         Z" />
     <path
       stroke-linecap="round"
       stroke-linejoin="round"
-      d="M 4 20
-        L 20 20
-        L 12 4
+      d="M 40 200
+        L 200 200
+        L 120 40
         Z" />
 </svg>
