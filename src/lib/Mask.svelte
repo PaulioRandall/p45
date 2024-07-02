@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte'
 
 	/*@component
-		Creates a referencable mask to cut out shapes in other shapes.
+		Creates a referencable mask for cutting holes in other shapes.
 	*/
 
 	//@prop p45
@@ -25,7 +25,7 @@
 		{...$$restProps} />
 	<g stroke="black" fill="black">
 		<!--@slot
-			SVG elments and components that form the mask.
+			Elments and components that form the hole in the referencing shape.
 		-->
 		<slot />
 	</g>

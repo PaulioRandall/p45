@@ -22,9 +22,9 @@ It also provides functions for parsing command and transformation lists used by 
 
 ```js
 class P45 {
-	// Accepts size of the grid used as the unscaled width and height in pixels.
-	// Size must be between 8 and 64.
-	// Size must be divisible by 2.
+  // Accepts size of the grid used as the unscaled width and height in pixels.
+  // Size must be between 8 and 64.
+  // Size must be divisible by 2.
   constructor(size=24) {
     this.size = size
     this.center // '12' for default size
@@ -43,7 +43,7 @@ class P45 {
   // Parses nodes such as `M12` into coordinates such as `{ x: 12, y: 12 }`.
   parseNode(node);
 
-	// Converts coordinates such as `x=12` and `y=12` into nodes such as `M12`.
+  // Converts coordinates such as `x=12` and `y=12` into nodes such as `M12`.
   nodeOf(x, y);
 
   // Converts the number `n` into it's base 26 alphabetic representation.
@@ -73,11 +73,11 @@ class P45 {
 	<!-- Simple triangle -->
 	<Shape
 		draw="
-		move to E20
-		line to U20
-		line to M4
-		close
-	" />
+      move to E20
+      line to U20
+      line to M4
+      close
+  " />
 </Icon>
 ```
 

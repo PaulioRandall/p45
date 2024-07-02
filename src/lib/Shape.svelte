@@ -74,7 +74,7 @@
 	{d}
 	{transform}>
 	<!--@slot
-		Any elements allowable within an SVG `<path>`.
+		Any elements allowable within a `<path>`.
 	-->
 	<slot />
 </path>

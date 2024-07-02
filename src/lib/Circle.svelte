@@ -25,7 +25,7 @@
 
 <circle {...$$restProps} cx={cxy.x} cy={cxy.y} r={radius}>
 	<!--@slot
-		Any elements allowable within an SVG `<circle>`.
+		Any elements allowable within a `<circle>`.
 	-->
 	<slot />
 </circle>

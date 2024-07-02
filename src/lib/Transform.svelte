@@ -35,7 +35,7 @@
 	transform-origin={parseOrigin()}
 	transform={p45.parseTransformCommands(transforms)}>
 	<!--@slot
-		Components and elements to transform.
+		Components and elements to transform within a `<g>`.
 	-->
 	<slot />
 </g>

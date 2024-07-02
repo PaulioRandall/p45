@@ -22,9 +22,9 @@ It also provides functions for parsing command and transformation lists used by 
 
 ```js
 class P45 {
-	// Accepts size of the grid used as the unscaled width and height in pixels.
-	// Size must be between 8 and 64.
-	// Size must be divisible by 2.
+  // Accepts size of the grid used as the unscaled width and height in pixels.
+  // Size must be between 8 and 64.
+  // Size must be divisible by 2.
   constructor(size=24) {
     this.size = size
     this.center // '12' for default size
@@ -43,7 +43,7 @@ class P45 {
   // Parses nodes such as `M12` into coordinates such as `{ x: 12, y: 12 }`.
   parseNode(node);
 
-	// Converts coordinates such as `x=12` and `y=12` into nodes such as `M12`.
+  // Converts coordinates such as `x=12` and `y=12` into nodes such as `M12`.
   nodeOf(x, y);
 
   // Converts the number `n` into it's base 26 alphabetic representation.
@@ -73,11 +73,11 @@ class P45 {
 	<!-- Simple triangle -->
 	<Shape
 		draw="
-		move to E20
-		line to U20
-		line to M4
-		close
-	" />
+      move to E20
+      line to U20
+      line to M4
+      close
+  " />
 </Icon>
 ```
 
@@ -101,7 +101,7 @@ Creates a circle from a center origin and radius.
   export let radius = p45.center - 1
 </script>
 
-<!-- Any elements allowable within an SVG `<circle>`. -->
+<!-- Any elements allowable within a `<circle>`. -->
 <slot />
 ```
 
@@ -153,7 +153,7 @@ Raw svg child elements maybe slotted in too.
 
 ### `<Mask>`
 
-Creates a referencable mask to cut out shapes in other shapes.
+Creates a referencable mask for cutting holes in other shapes.
 
 ```svelte
 <script>
@@ -164,7 +164,7 @@ Creates a referencable mask to cut out shapes in other shapes.
   export let id
 </script>
 
-<!-- SVG elments and components that form the mask. -->
+<!-- Elments and components that form the hole in the referencing shape. -->
 <slot />
 ```
 
@@ -200,7 +200,7 @@ and radius to a vertex.
   export let rotate = 0
 </script>
 
-<!-- Any elements allowable within an SVG `<polygon>`. -->
+<!-- Any elements allowable within a `<polygon>`. -->
 <slot />
 ```
 
@@ -238,7 +238,7 @@ Creates a shape from three or more points.
   export let origin = p45.centerNode
 </script>
 
-<!-- Any elements allowable within an SVG `<path>`. -->
+<!-- Any elements allowable within a `<path>`. -->
 <slot />
 ```
 
@@ -270,7 +270,7 @@ Creates a group for simple transformations.
   export let origin = p45.centerNode
 </script>
 
-<!-- Components and elements to transform. -->
+<!-- Components and elements to transform within a `<g>`. -->
 <slot />
 ```
 

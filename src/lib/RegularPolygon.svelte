@@ -39,7 +39,7 @@
 
 <polygon {...$$restProps} {points}>
 	<!--@slot
-		Any elements allowable within an SVG `<polygon>`.
+		Any elements allowable within a `<polygon>`.
 	-->
 	<slot />
 </polygon>
