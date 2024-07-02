@@ -16,20 +16,50 @@ Fork, pillage, and plunder! Do whatever as long as you adhere to the project's p
 
 ### `P45`
 
-The core class supplied to P45 components. It provides the context for P45 components such as grid size and certain named nodes, e.g. `centerNode`. It also provides functions for parsing command and transformation lists used by components such as `<Shape>` and `<Transform>`.
+The core class supplied to P45 components. It provides the context for P45 components such as grid size and certain named nodes.
+
+It also provides functions for parsing command and transformation lists used by components such as `<Shape>` and `<Transform>`.
 
 ```js
-import { P45 } from 'p45'
-let p45
+class P45 {
+	// Accepts size of the grid used as the unscaled width and height in pixels.
+	// Size must be between 8 and 64.
+	// Size must be divisible by 2.
+  constructor(size=24) {
+    this.size = size
+    this.center // '12' for default size
+    this.centerNode // 'M12' for default size
+    this.topLeftNode
+    this.topCenterNode
+    this.topRightNode
+    this.centerLeftNode
+    this.centerCenterNode
+    this.centerRightNode
+    this.bottomLeftNode
+    this.bottomCenterNode
+    this.bottomRightNode
+  }
 
-// A 24x24 pixel grid.
-p45 = new P45()
+  // Parses nodes such as `M12` into coordinates such as `{ x: 12, y: 12 }`.
+  parseNode(node);
 
-// A 32x32 pixel grid.
-// - Min 8
-// - Max 64
-// - Must be divisible by 2
-p45 = new P45(32)
+	// Converts coordinates such as `x=12` and `y=12` into nodes such as `M12`.
+  nodeOf(x, y);
+
+  // Converts the number `n` into it's base 26 alphabetic representation.
+  numberToAlpha(n);
+
+  // Parses a string or array of strings representing
+  // draw commands for a single shape and returns a
+  // string used in SVG paths like this `<path d={result} />`.
+  parseDrawCommands(commands);
+
+  // Parses a string or array of strings representing
+  // transform commands for a single element and returns a
+  // string used for the SVG transform attribute like this
+  // `<path transform={result} />` or `<g transform={result} />`.
+  parseTransformCommands(commands);
+}
 ```
 
 ```svelte
@@ -51,7 +81,7 @@ p45 = new P45(32)
 </Icon>
 ```
 
-![Latest version](static/simple-triangle.svg)
+![Illustration of the above but with some minor modifications so it's visible on GitHub and other platforms](static/simple-triangle.svg)
 
 ## Components
 
