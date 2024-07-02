@@ -51,7 +51,7 @@ p45 = new P45(32)
 </Icon>
 ```
 
-![Latest version](static/simple-trangle.svg)
+![Latest version](./static/simple-trangle.svg)
 
 ## Components
 
