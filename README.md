@@ -85,6 +85,83 @@ Illustration of the above drawing but with some minor modifications so it's visi
 
 ![Approximate illustration of the last code snippet](static/simple-triangle.svg)
 
+### Draw Commands
+
+**`move to <node>`**
+
+- _move to D3_ => `M 3 3`
+- _move to M8_ => `M 12 8`
+
+**`line to <node>`**
+
+- _line to D3_ => `L 3 3`
+- _line to M8_ => `L 12 8`
+
+**`[cubic] curve to <node> control with <node> [and <node>]`**
+
+- _curve to M8 control with D3_ => `S 3 3 12 8`
+- _curve to M8 control with D3 and F6_ => `C 3 3 6 6 12 8`
+
+**`(quad|quadratic) curve to <node> [control with <node>]`**
+
+- _(quad | quadratic) curve to M8_ => `T 12 8`
+- _(quad | quadratic) curve to M8 control with D3_ => `Q 3 3 12 8`
+
+**`arc to <node> with radius <number> and <number> [and rotation <number>] [and is large] [and is sweeping]`**
+
+- _arc to M8 with radius 6 and 10_ => `A 6 10 0 0 0 12 8`
+- _arc to M8 with radius 6 and 10 and rotation 45_ => `A 6 10 45 0 0 12 8`
+- _arc to M8 with radius 6 and 10 and is large_ => `A 6 10 0 1 0 12 8`
+- _arc to M8 with radius 6 and 10 and is sweeping_ => `A 6 10 0 0 1 12 8`
+- _arc to M8 with radius 6 and 10 and rotation 45 and is large and is sweeping_ => `A 6 10 45 1 1 12 8`
+
+**`close`** (connects the ends of the shape together)
+
+- _close_ => `z`
+
+### Transform Commands
+
+**`move by <number>`**
+
+- _move by D3_ => `translate(3 3)`
+- _move by M8_ => `translate(12 8)`
+
+**`move <direction> by <number>`**
+
+- _move up by 3_ => `translate(0 -3)`
+- _move down by 3_ => `translate(0 3)`
+- _move left by 3_ => `translate(-3 0)`
+- _move right by 3_ => `translate(3 0)`
+
+**`rotate by <number> [around <node>]`**
+
+- rotate by 45\_ => `rotate(45)`
+- rotate by 45 around M8\_ => `rotate(45, 12, 8)`
+
+**`scale [x|y] by <number>`**
+
+- _scale by 2_ => `scale(2 2)`
+- _scale x by 2_ => `scale(2 0)`
+- _scale y by 2_ => `scale(0 2)`
+
+**`scale [x|y|width|height|horizontally|vertically] by <number>`**
+
+- _scale by 2_ => `scale(2 2)`
+- _scale x by 2_ => `scale(2 1)`
+- _scale y by 2_ => `scale(1 2)`
+
+**`flip [x|y|width|height|horizontally|vertically]`**
+
+- _flip_ => `scale(-1 -1)`
+- _flip x_ => `scale(-1 1)`
+- _flip y_ => `scale(1 -1)`
+
+**`skew [x|y|width|height|horizontally|vertically] by <number>`**
+
+- _skew by 20_ => `skewX(20) skewY(20)`
+- _skew x by 20_ => `skewX(20)`
+- _skew y by 20_ => `skewY(20)`
+
 ## Components
 
 ### `<Circle>`
