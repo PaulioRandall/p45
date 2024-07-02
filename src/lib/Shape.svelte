@@ -12,7 +12,7 @@
 
 	//@prop commands
 	// Either an array off commands or a line separated list of commands.
-	// @default /* Simple drawing */
+	// @default /* Simple Wallace & Gromit rocket drawing */
 	export let draw = `
 		move to E1
 		line to H4
@@ -35,7 +35,7 @@
 
 	//@prop origin
 	// Origin to use for transforms.
-	// @default P45.centerNode
+	// @default p45.centerNode
 	export let origin = p45.centerNode
 
 	const parseOrigin = (origin) => {

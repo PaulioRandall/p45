@@ -12,12 +12,12 @@
 
 	//@prop origin
 	// Circle center point.
-	// @default P45.centerNode
+	// @default p45.centerNode
 	export let origin = p45.centerNode
 
 	//@prop radius
 	// Circle radius.
-	// @default P45.center - 1
+	// @default p45.center - 1
 	export let radius = p45.center - 1
 
 	const cxy = p45.parseNode(origin)

@@ -25,7 +25,7 @@
 		{...$$restProps} />
 	<g stroke="black" fill="black">
 		<!--@slot
-			SVG elments and components that form the icon.
+			SVG elments and components that form the mask.
 		-->
 		<slot />
 	</g>

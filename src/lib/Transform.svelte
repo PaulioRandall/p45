@@ -17,7 +17,7 @@
 
 	//@prop origin
 	// Origin to use for transforms.
-	// @default P45.centerNode
+	// @default p45.centerNode
 	export let origin = p45.centerNode
 
 	const parseOrigin = () => {

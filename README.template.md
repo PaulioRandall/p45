@@ -10,7 +10,48 @@ Svelte library for programmatically crafting grid based SVG icons.
 
 ## Made to be Plundered
 
-Do whatever as long as you adhere to the permissive MIT license found within.
+Fork, pillage, and plunder! Do whatever as long as you adhere to the project's permissive MIT license.
+
+## Classes
+
+### `P45`
+
+The core class supplied to P45 components. It provides the context for P45 components such as grid size and certain named nodes, e.g. `centerNode`. It also provides functions for parsing command and transformation lists used by components such as `<Shape>` and `<Transform>`.
+
+```js
+import { P45 } from 'p45'
+let p45
+
+// A 24x24 pixel grid.
+p45 = new P45()
+
+// A 32x32 pixel grid.
+// - Min 8
+// - Max 64
+// - Must be divisible by 2
+p45 = new P45(32)
+```
+
+```svelte
+<script>
+	import { P45, Icon, Shape } from 'p45'
+
+	const p45 = new P45()
+</script>
+
+<Icon {p45} width="300" height="300">
+	<!-- Simple triangle -->
+	<Shape
+		draw="
+		move to E20
+		line to U20
+		line to M4
+		close
+	" />
+</Icon>
+```
+
+![Latest version](static/simple-trangle.svg)
 
 ## Components
 

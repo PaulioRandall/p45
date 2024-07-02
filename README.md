@@ -10,7 +10,48 @@ Svelte library for programmatically crafting grid based SVG icons.
 
 ## Made to be Plundered
 
-Do whatever as long as you adhere to the permissive MIT license found within.
+Fork, pillage, and plunder! Do whatever as long as you adhere to the project's permissive MIT license.
+
+## Classes
+
+### `P45`
+
+The core class supplied to P45 components. It provides the context for P45 components such as grid size and certain named nodes, e.g. `centerNode`. It also provides functions for parsing command and transformation lists used by components such as `<Shape>` and `<Transform>`.
+
+```js
+import { P45 } from 'p45'
+let p45
+
+// A 24x24 pixel grid.
+p45 = new P45()
+
+// A 32x32 pixel grid.
+// - Min 8
+// - Max 64
+// - Must be divisible by 2
+p45 = new P45(32)
+```
+
+```svelte
+<script>
+	import { P45, Icon, Shape } from 'p45'
+
+	const p45 = new P45()
+</script>
+
+<Icon {p45} width="300" height="300">
+	<!-- Simple triangle -->
+	<Shape
+		draw="
+		move to E20
+		line to U20
+		line to M4
+		close
+	" />
+</Icon>
+```
+
+![Latest version](static/simple-trangle.svg)
 
 ## Components
 
@@ -24,10 +65,10 @@ Creates a circle from a center origin and radius.
   export let p45 = getContext('p45')
 
   // Circle center point.
-  export let origin = P45.centerNode
+  export let origin = p45.centerNode
 
   // Circle radius.
-  export let radius = P45.center - 1
+  export let radius = p45.center - 1
 </script>
 
 <!-- Any elements allowable within an SVG `<circle>`. -->
@@ -37,8 +78,8 @@ Creates a circle from a center origin and radius.
 ```svelte
 <Circle
   p45={getContext('p45')}
-  origin={P45.centerNode}
-  radius={P45.center - 1}
+  origin={p45.centerNode}
+  radius={p45.center - 1}
 >
   <div />
 </Circle>
@@ -48,8 +89,8 @@ Creates a circle from a center origin and radius.
 
 Container for slotted shapes that form an Icon.
 
-It's represented by an svg element sized by the passed P45b instance.
-This means raw svg child elements maybe slotted in too.
+It's represented by an svg element sized by the passed P45 instance.
+Raw svg child elements maybe slotted in too.
 
 ```svelte
 <script>
@@ -93,7 +134,7 @@ Creates a referencable mask to cut out shapes in other shapes.
   export let id
 </script>
 
-<!-- SVG elments and components that form the icon. -->
+<!-- SVG elments and components that form the mask. -->
 <slot />
 ```
 
@@ -117,13 +158,13 @@ and radius to a vertex.
   export let p45 = getContext('p45')
 
   // Origin to use for transforms.
-  export let origin = P45.centerNode
+  export let origin = p45.centerNode
 
   // Number of sides.
   export let sides = 6
 
   // Circle radius.
-  export let radius = P45.center - 1
+  export let radius = p45.center - 1
 
   // Amount to rotate counter clockwise in degrees, may be negative.
   export let rotate = 0
@@ -136,9 +177,9 @@ and radius to a vertex.
 ```svelte
 <RegularPolygon
   p45={getContext('p45')}
-  origin={P45.centerNode}
+  origin={p45.centerNode}
   sides={6}
-  radius={P45.center - 1}
+  radius={p45.center - 1}
   rotate={0}
 >
   <div />
@@ -155,7 +196,7 @@ Creates a shape from three or more points.
   export let p45 = getContext('p45')
 
   // Either an array off commands or a line separated list of commands.
-  export let commands = /* Simple drawing */
+  export let commands = /* Simple Wallace & Gromit rocket drawing */
 
   // ID of a mask cut out.
   export let mask = ""
@@ -164,7 +205,7 @@ Creates a shape from three or more points.
   export let transforms = ""
 
   // Origin to use for transforms.
-  export let origin = P45.centerNode
+  export let origin = p45.centerNode
 </script>
 
 <!-- Any elements allowable within an SVG `<path>`. -->
@@ -174,10 +215,10 @@ Creates a shape from three or more points.
 ```svelte
 <Shape
   p45={getContext('p45')}
-  commands={/* Simple drawing */}
+  commands={/* Simple Wallace & Gromit rocket drawing */}
   mask=""
   transforms=""
-  origin={P45.centerNode}
+  origin={p45.centerNode}
 >
   <div />
 </Shape>
@@ -196,7 +237,7 @@ Creates a group for simple transformations.
   export let transforms = ""
 
   // Origin to use for transforms.
-  export let origin = P45.centerNode
+  export let origin = p45.centerNode
 </script>
 
 <!-- Components and elements to transform. -->
@@ -207,7 +248,7 @@ Creates a group for simple transformations.
 <Transform
   p45={getContext('p45')}
   transforms=""
-  origin={P45.centerNode}
+  origin={p45.centerNode}
 >
   <div />
 </Transform>

@@ -4,8 +4,8 @@
 	/*@component
 		Container for slotted shapes that form an Icon.
 
-		It's represented by an svg element sized by the passed P45b instance.
-		This means raw svg child elements maybe slotted in too.
+		It's represented by an svg element sized by the passed P45 instance.
+		Raw svg child elements maybe slotted in too.
 	*/
 
 	//@prop p45
