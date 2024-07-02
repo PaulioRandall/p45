@@ -81,7 +81,9 @@ class P45 {
 </Icon>
 ```
 
-![Illustration of the above but with some minor modifications so it's visible on GitHub and other platforms](static/simple-triangle.svg)
+Illustration of the above drawing but with some minor modifications so it's visible on GitHub and other platforms.
+
+![Approximate illustration of the last code snippet](static/simple-triangle.svg)
 
 ## Components
 
