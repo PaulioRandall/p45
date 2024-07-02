@@ -13,23 +13,19 @@
 	//@prop origin
 	// Circle center point.
 	// @default P45.centerNode
-	// @alias o
-	export let o = p45.centerNode
-	export let origin = o
+	export let origin = p45.centerNode
 
 	//@prop radius
 	// Circle radius.
-	// @default P45.center-1
-	// @alias r
-	export let r = p45.center - 1
-	export let radius = r
+	// @default P45.center - 1
+	export let radius = p45.center - 1
 
 	const cxy = p45.parseNode(origin)
 </script>
 
 <circle {...$$restProps} cx={cxy.x} cy={cxy.y} r={radius}>
 	<!--@slot
-		Animation and other inner elements.
+		Any elements allowable within an SVG `<circle>`.
 	-->
 	<slot />
 </circle>

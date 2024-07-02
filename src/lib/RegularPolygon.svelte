@@ -12,30 +12,25 @@
 	// @default getContext('p45')
 	export let p45 = getContext('p45')
 
-	//p24.p.let.o: Alias for start.
-	//p24.p.let.origin: Origin node representing the center of the polygon.
-	//p24.d.p.let.origin: P45.centerNode
-	export let o = p45.centerNode
-	export let origin = o
+	//@prop origin
+	// Origin to use for transforms.
+	// @default P45.centerNode
+	export let origin = p45.centerNode
 
-	//p24.p.let.s: Alias for side.
-	//p24.p.let.sides: Number of sides.
-	//p24.d.p.let.sides: 6
-	export let s = 6
-	export let sides = s
+	//@prop sides
+	// Number of sides.
+	// @default 6
+	export let sides = 6
 
-	//p24.p.let.r: Alias for radius.
-	//p24.p.let.radius: Radius to a vertex.
-	//p24.d.p.let.radius: P45.center - 1
-	export let r = p45.center - 1
-	export let radius = r
+	//@prop radius
+	// Circle radius.
+	// @default P45.center - 1
+	export let radius = p45.center - 1
 
-	//p24.p.let.ro: Alias for rotate.
-	//p24.p.let.rotate:
+	//@prop rotate
 	// Amount to rotate counter clockwise in degrees, may be negative.
-	//p24.d.p.let.rotate: 0
-	export let ro = 0
-	export let rotate = ro
+	// @default 0
+	export let rotate = 0
 
 	const rp = new RegularPolygon(p45)
 
@@ -44,7 +39,7 @@
 
 <polygon {...$$restProps} {points}>
 	<!--@slot
-		Animation and other inner elements.
+		Any elements allowable within an SVG `<polygon>`.
 	-->
 	<slot />
 </polygon>

@@ -27,10 +27,10 @@ Creates a circle from a center origin and radius.
   export let origin = P45.centerNode
 
   // Circle radius.
-  export let radius = P45.center-1
+  export let radius = P45.center - 1
 </script>
 
-<!-- Animation and other inner elements. -->
+<!-- Any elements allowable within an SVG `<circle>`. -->
 <slot />
 ```
 
@@ -38,7 +38,7 @@ Creates a circle from a center origin and radius.
 <Circle
   p45={getContext('p45')}
   origin={P45.centerNode}
-  radius={P45.center-1}
+  radius={P45.center - 1}
 >
   <div />
 </Circle>
@@ -92,13 +92,18 @@ Creates a referencable mask to cut out shapes in other shapes.
   // Unique ID to reference the mask.
   export let id
 </script>
+
+<!-- SVG elments and components that form the icon. -->
+<slot />
 ```
 
 ```svelte
 <Mask
   p45={getContext('p45')}
   id
-/>
+>
+  <div />
+</Mask>
 ```
 
 ### `<RegularPolygon>`
@@ -110,15 +115,31 @@ and radius to a vertex.
 <script>
   // P45 instance to use as grid and context.
   export let p45 = getContext('p45')
+
+  // Origin to use for transforms.
+  export let origin = P45.centerNode
+
+  // Number of sides.
+  export let sides = 6
+
+  // Circle radius.
+  export let radius = P45.center - 1
+
+  // Amount to rotate counter clockwise in degrees, may be negative.
+  export let rotate = 0
 </script>
 
-<!-- Animation and other inner elements. -->
+<!-- Any elements allowable within an SVG `<polygon>`. -->
 <slot />
 ```
 
 ```svelte
 <RegularPolygon
   p45={getContext('p45')}
+  origin={P45.centerNode}
+  sides={6}
+  radius={P45.center - 1}
+  rotate={0}
 >
   <div />
 </RegularPolygon>
@@ -137,16 +158,16 @@ Creates a shape from three or more points.
   export let commands = /* Simple drawing */
 
   // ID of a mask cut out.
-  export let mask
+  export let mask = ""
 
   // Either an array off commands or a line separated list of commands.
-  export let transforms = /* Does nothing */
+  export let transforms = ""
 
   // Origin to use for transforms.
   export let origin = P45.centerNode
 </script>
 
-<!-- Animation and other inner elements. -->
+<!-- Any elements allowable within an SVG `<path>`. -->
 <slot />
 ```
 
@@ -154,8 +175,8 @@ Creates a shape from three or more points.
 <Shape
   p45={getContext('p45')}
   commands={/* Simple drawing */}
-  mask
-  transforms={/* Does nothing */}
+  mask=""
+  transforms=""
   origin={P45.centerNode}
 >
   <div />
@@ -172,7 +193,7 @@ Creates a group for simple transformations.
   export let p45 = getContext('p45')
 
   // Either an array off commands or a line separated list of commands.
-  export let transforms = /* Does nothing */
+  export let transforms = ""
 
   // Origin to use for transforms.
   export let origin = P45.centerNode
@@ -185,7 +206,7 @@ Creates a group for simple transformations.
 ```svelte
 <Transform
   p45={getContext('p45')}
-  transforms={/* Does nothing */}
+  transforms=""
   origin={P45.centerNode}
 >
   <div />

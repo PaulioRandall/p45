@@ -35,7 +35,7 @@
 		"package": "svelte-package -t false",
 		"dev": "npm run fmt && vite dev --port 3000",
 		"docs": "p24 -g \"dist/*.svelte\"",
-		"commit": "npm run fmt && npm run test && npm run build && npm run package && npm run docs && cat ./scripts/ready-to-ship.txt"
+		"commit": "npm run fmt && npm run test && npm run build && npm run package && npm run docs && cat ./ready-to-ship.txt"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "3.2.2",

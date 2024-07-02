@@ -25,12 +25,13 @@
 
 	//@prop mask
 	// ID of a mask cut out.
+	// @default ""
 	export let mask = ''
 
 	//@prop transforms
 	// Either an array off commands or a line separated list of commands.
-	// @default /* Does nothing */
-	export let transforms = ``
+	// @default ""
+	export let transforms = ''
 
 	//@prop origin
 	// Origin to use for transforms.
@@ -73,7 +74,7 @@
 	{d}
 	{transform}>
 	<!--@slot
-		Animation and other inner elements.
+		Any elements allowable within an SVG `<path>`.
 	-->
 	<slot />
 </path>
